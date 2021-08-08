@@ -55,7 +55,6 @@ class _LocationPageState extends State<LocationPage> {
                   padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
                   child: new TextField(
                       onChanged: (text){
-                        print(text);
                         _location = text;
                       },
                       decoration: InputDecoration(

@@ -15,16 +15,16 @@ class HeavyEquipmentPage extends StatefulWidget {
 class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
 
   final Worklog worklog;
+  final _equipmentList = ['크레인', '굴삭기', '포크레인']; //todo 서버에서 리스트 받아오기
+  final _sepcList = ['25T', '50T', '100T'];
+  var _selectedEquipment = '크레인';
+  var _selectedSpec = '25T';
+
 
   _HeavyEquipmentState({required this.worklog});
 
   @override
   Widget build(BuildContext context) {
-    var _equipmentList = {'크레인'}; //todo 서버에서 리스트 받아오기
-    var _sepcList = {'25T', '50T', '100T'};
-    var _selectedEquipment = '크레인';
-    var _selectedSpec = '';
-
 
     return Scaffold(
         appBar: AppBar(
@@ -55,38 +55,66 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                     ),
                   ),
                 ),
+               new Row(
+                 mainAxisSize : MainAxisSize.max,
+                 mainAxisAlignment : MainAxisAlignment.start,
+                 crossAxisAlignment : CrossAxisAlignment.center,
+                 children: [
+                   new Padding(
+                     padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
+                     child:Text('장비'),
+                   ),
+                   new Padding(
+                     padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
+                     child: DropdownButton(
+                         value: this._selectedEquipment,
+                         items: _equipmentList.map((value) {
 
+                           return DropdownMenuItem(
+                               value: value,
+                               child: Text(value)
+                           );
+                         }
+                         ).toList(),
+                         onChanged: (value){
+                           setState(() {
+                             _selectedEquipment = value as String;
 
-
-
-
+                           });
+                         }
+                     ),
+                   ),
+                 ],
+               ),
+          new Row(
+              mainAxisSize : MainAxisSize.max,
+              mainAxisAlignment : MainAxisAlignment.start,
+              crossAxisAlignment : CrossAxisAlignment.center,
+              children: [
                 new Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
+                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                  child:Text('규격'),
+                ),
+                new Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                   child: DropdownButton(
-                    value: _selectedEquipment,
-                      items: _equipmentList.map(
-                          (value) {
-                            return DropdownMenuItem(
-                              value: value,
-                                child: Text(value)
-                            );
-                          }
+                      value: _selectedSpec,
+                      items: _sepcList.map((value) {
+                        return DropdownMenuItem(
+                            value: value,
+                            child: Text(value)
+                        );
+                      }
                       ).toList(),
                       onChanged: (value){
                         setState(() {
-                          _selectedEquipment = value as String;
+                          _selectedSpec = value as String;
                         });
                       }
                   ),
                 ),
-                new Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
-                    child: Icon(
-                        Icons.mic,
-                        color: Colors.teal,
-                        size: 100
-                    )
-                ),
+              ]
+          ),
                 new Container(
                     margin: const EdgeInsets.only(top: 16.0),
                     padding: const EdgeInsets.all(5.0),

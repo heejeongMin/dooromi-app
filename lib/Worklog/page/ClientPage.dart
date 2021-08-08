@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class ClientPage extends StatefulWidget {
   final Worklog worklog;
 
+
   ClientPage({required this.worklog});
 
   @override
@@ -15,12 +16,14 @@ class ClientPage extends StatefulWidget {
 class _ClientPageState extends State<ClientPage> {
 
   final Worklog worklog;
+  final _clientList = ['쌍둥이크레인', '성신크레인'];
+  var _selectedClient = '쌍둥이크레인';
 
   _ClientPageState({required this.worklog});
 
   @override
   Widget build(BuildContext context) {
-    var _location = '';
+
 
     return Scaffold(
         appBar: AppBar(
@@ -43,7 +46,7 @@ class _ClientPageState extends State<ClientPage> {
                   )   ,
                   child:
                   new Text(
-                    "근무장소 입력",
+                    "거래처 입력",
                     style: new TextStyle(
                         fontSize:25.0,
                         color: Colors.white,
@@ -51,40 +54,76 @@ class _ClientPageState extends State<ClientPage> {
                     ),
                   ),
                 ),
-                new Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
-                  child: new TextField(
-                    onChanged: (text){
-                      print(text);
-                      _location = text;
-                    },
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: '장소  ex) 쌍문동'
-                    ),
-                  ),
-                ),
-                new Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
-                    child: Icon(
-                        Icons.mic,
-                        color: Colors.teal,
-                        size: 100
-                    )
+                new Row(
+                    mainAxisSize : MainAxisSize.max,
+                    mainAxisAlignment : MainAxisAlignment.start,
+                    crossAxisAlignment : CrossAxisAlignment.center,
+                    children: [
+                      new Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
+                        child:Text('거래처'),
+                      ),
+                      new Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
+                        child: DropdownButton(
+                            value: _selectedClient,
+                            items: _clientList.map((value) {
+                              return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value)
+                              );
+                            }
+                            ).toList(),
+                            onChanged: (value){
+                              setState(() {
+                                _selectedClient = value as String;
+                              });
+                            }
+                        ),
+                      ),
+                    ]
                 ),
                 new Container(
                     margin: const EdgeInsets.only(top: 16.0),
                     padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerRight,
                     child:
-                    ElevatedButton(
-                      child: Text('다음'),
-                      onPressed: () {
-                        worklog.setLocation(_location);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => new HeavyEquipmentPage(worklog: worklog))
-                        );
+                      ElevatedButton(
+                        child: Text('저장'),
+                        onPressed: () {
+                          worklog.setClient(_selectedClient);
+
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('근무일정 저장'),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: [
+                                      Text('해당 내용으로 저장하시겠습니까?'),
+                                      Text(worklog.toString())
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                      child: Text('저장'),
+                                      onPressed: (){
+                                        Navigator.of(context).pop();
+                                      },
+                                  ),
+                                  TextButton(
+                                    child: Text('취소'),
+                                    onPressed: (){
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            }
+                          );
                       },
                     )
                 ),
@@ -92,5 +131,11 @@ class _ClientPageState extends State<ClientPage> {
           ),
         )
     );
+
+
+
   }
+
+
+
 }

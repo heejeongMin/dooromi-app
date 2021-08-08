@@ -54,7 +54,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(40.0, 30.0, 30.0, 10.0),
+                        padding: const EdgeInsets.fromLTRB(40.0, 50.0, 30.0, 10.0),
                         child:  ElevatedButton(
                           onPressed: (){
                             Future<DateTime?> selectedDate = showDatePicker(
@@ -74,7 +74,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 40),
                         child: Text(
                           '$_workDate',
                           style: new TextStyle(
@@ -113,7 +113,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                       Text(
                           '$_startTime',
                            style: new TextStyle(
-                              fontSize: 22.0,
+                              fontSize: 12.0,
                               color: const Color(0xFF000000),
                               fontWeight: FontWeight.bold,
                               fontFamily: "Roboto"),
@@ -146,7 +146,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                       Text(
                         '$_endTime',
                         style: new TextStyle(
-                            fontSize: 22.0,
+                            fontSize: 12.0,
                             color: const Color(0xFF000000),
                             fontWeight: FontWeight.bold,
                             fontFamily: "Roboto"),
