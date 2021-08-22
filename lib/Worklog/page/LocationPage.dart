@@ -16,11 +16,13 @@ class _LocationPageState extends State<LocationPage> {
 
   final Worklog worklog;
 
+
   _LocationPageState({required this.worklog});
 
   @override
   Widget build(BuildContext context) {
-    var _location = '';
+
+    var _location = worklog.location ?? '';
 
     return Scaffold(
         appBar: AppBar(
@@ -53,13 +55,14 @@ class _LocationPageState extends State<LocationPage> {
                 ),
                 new Padding(
                   padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
-                  child: new TextField(
+                  child: new TextFormField(
+                      initialValue: '$_location',
                       onChanged: (text){
                         _location = text;
                       },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: '장소  ex) 쌍문동'
+                          hintText: '장소  ex) 쌍문동',
                       ),
                   ),
                 ),

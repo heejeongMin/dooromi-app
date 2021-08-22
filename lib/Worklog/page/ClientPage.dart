@@ -1,7 +1,8 @@
 import 'package:dooromi/Worklog/model/Worklog.dart';
 
-import 'package:dooromi/Worklog/page/HeavyEquipmentPage.dart';
 import 'package:flutter/material.dart';
+
+import 'WorklogDetailPage.dart';
 
 class ClientPage extends StatefulWidget {
   final Worklog worklog;
@@ -23,6 +24,7 @@ class _ClientPageState extends State<ClientPage> {
 
   @override
   Widget build(BuildContext context) {
+
 
 
     return Scaffold(
@@ -112,6 +114,7 @@ class _ClientPageState extends State<ClientPage> {
                                       child: Text('저장'),
                                       onPressed: (){
                                         Navigator.of(context).pop();
+                                        this.saveWorklog(worklog);
                                       },
                                   ),
                                   TextButton(
@@ -131,11 +134,44 @@ class _ClientPageState extends State<ClientPage> {
           ),
         )
     );
-
-
-
   }
 
+  saveWorklog(worklog){
+    //todo call api to save worklog
+    //todo loading bar?
+
+    String message = (true)? "성공적으로 저장되었습니다." : "저장에 실패하였습니다.";
+
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(''),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  Text(message),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: Text('OK'),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => new WorklogDetailPage(worklog: worklog))
+                  );
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
 
 
 }

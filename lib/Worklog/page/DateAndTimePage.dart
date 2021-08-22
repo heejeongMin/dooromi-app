@@ -1,4 +1,4 @@
-import 'package:dooromi/Worklog/model/Equipment.dart';
+
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:flutter/material.dart';
 
@@ -6,18 +6,30 @@ import 'LocationPage.dart';
 
 
 class DateAndTimePage extends StatefulWidget {
+  final Worklog? worklog;
+
+  DateAndTimePage({this.worklog});
+
   @override
-  _DateAndTimePageState createState() => new _DateAndTimePageState();
+  _DateAndTimePageState createState() => new _DateAndTimePageState(worklog: worklog);
 }
 
 
 class _DateAndTimePageState extends State<DateAndTimePage> {
+  final Worklog? worklog;
   var _workDate = '';
   var _startTime = '';
   var _endTime= '';
 
+  _DateAndTimePageState({this.worklog});
+
   @override
   Widget build(BuildContext context) {
+    if(worklog != null) {
+      this._workDate = worklog!.date;
+      this._startTime = worklog!.startTime;
+      this._endTime = worklog!.endTime;
+    }
 
     return new Scaffold(
       appBar: new AppBar(
@@ -161,11 +173,14 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                     ElevatedButton(
                         child: Text('다음'),
                         onPressed: () {
-                          final worklog = Worklog(_workDate, _startTime, _endTime);
+
+                          final Worklog? myWorklog =
+                          (worklog == null)? new Worklog(_workDate, _startTime, _endTime) : this.worklog;
+
 
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => new LocationPage(worklog: worklog))
+                            MaterialPageRoute(builder: (context) => new LocationPage(worklog: myWorklog!))
                           );
                           },
                     )

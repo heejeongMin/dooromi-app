@@ -1,6 +1,7 @@
 import 'package:dooromi/Worklog/model/Equipment.dart';
 
 class Worklog {
+  int? worklogNumber;
   String date;
   String startTime;
   String endTime;
