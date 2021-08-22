@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'User/page/JoinPage.dart';
 import 'Worklog/page/DateAndTimePage.dart';
 
 void main() {
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: new DateAndTimePage(),
+      // home: new DateAndTimePage(),
+      home: new JoinPage()
     );
   }
 }
