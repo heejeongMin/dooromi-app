@@ -1,35 +1,15 @@
+import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // Hide the debug banner
-        debugShowCheckedModeBanner: false,
-        title: 'Kindacode.com',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          primaryColor: const Color(0xFF2196f3),
-          accentColor: const Color(0xFF2196f3),
-          canvasColor: const Color(0xFFfafafa),
-        ),
-        home: HomeScreen());
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class ScheduleListPage extends StatefulWidget {
+  const ScheduleListPage({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ScheduleListPageState createState() => _ScheduleListPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ScheduleListPageState extends State<ScheduleListPage> {
   DataTableSource _data = MyData();
 
   @override
@@ -38,7 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('근무일정 목록'),
       ),
-      body: Column(
+      body:
+      new SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      padding: const EdgeInsets.all(40),
+      child:
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,22 +68,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
           Padding(
             child:
-            new RaisedButton(key:null, onPressed:buttonPressed,
-                color: const Color(0xFFe0e0e0),
-                child:
-                new Text(
-                  "근무일정 생성",
-                  style: new TextStyle(fontSize:12.0,
-                      color: const Color(0xFF000000),
-                      fontWeight: FontWeight.w200,
-                      fontFamily: "Roboto"),
-                )
+            new ElevatedButton(
+                child: Text('근무일정 생성'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => new DateAndTimePage(worklog: null))
+                  );
+                },
+
             ),
 
             padding: const EdgeInsets.all(24.0),
           )
         ],
       ),
+      )
+
     );
   }
 }

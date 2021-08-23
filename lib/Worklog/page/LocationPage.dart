@@ -1,5 +1,4 @@
 import 'package:dooromi/Worklog/model/Worklog.dart';
-import 'package:dooromi/Worklog/page/ClientPage.dart';
 import 'package:dooromi/Worklog/page/HeavyEquipmentPage.dart';
 import 'package:flutter/material.dart';
 
@@ -15,14 +14,19 @@ class LocationPage extends StatefulWidget {
 class _LocationPageState extends State<LocationPage> {
 
   final Worklog worklog;
-
+  var _location = '';
 
   _LocationPageState({required this.worklog});
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _location = worklog.location ?? '';
+  }
 
-    var _location = worklog.location ?? '';
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(

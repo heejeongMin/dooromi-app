@@ -1,5 +1,6 @@
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
+import 'package:dooromi/Worklog/page/ScheduleListPage.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,14 +17,11 @@ class WorklogDetailPage extends StatefulWidget {
 class _WorklogDetailPageState extends State<WorklogDetailPage> {
 
   final Worklog worklog;
-  final _clientList = ['쌍둥이크레인', '성신크레인'];
-  var _selectedClient = '쌍둥이크레인';
 
   _WorklogDetailPageState({required this.worklog});
 
   @override
   Widget build(BuildContext context) {
-
 
     return Scaffold(
         appBar: AppBar(
@@ -199,10 +197,10 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                           ElevatedButton(
                             child: Text('목록'),
                             onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(builder: (context) => new WorklogDetailPage(worklog: worklog))
-                              // );
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => ScheduleListPage(),
+                                  ), (Route<dynamic> route) => false);
                             },
                           )
                       ),
@@ -213,9 +211,6 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
           ),
         )
     );
-
-
-
   }
 
 
@@ -241,7 +236,10 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                 child: Text('OK'),
                 onPressed: (){
                   Navigator.of(context).pop();
-                  //todo 목록으로
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => ScheduleListPage(),
+                      ), (Route<dynamic> route) => false);
                 },
               ),
             ],

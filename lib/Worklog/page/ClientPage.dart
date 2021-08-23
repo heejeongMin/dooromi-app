@@ -23,8 +23,13 @@ class _ClientPageState extends State<ClientPage> {
   _ClientPageState({required this.worklog});
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _selectedClient = worklog.client ?? "쌍둥이크레인";
+  }
 
+  @override
+  Widget build(BuildContext context) {
 
 
     return Scaffold(
@@ -172,6 +177,4 @@ class _ClientPageState extends State<ClientPage> {
         }
     );
   }
-
-
 }

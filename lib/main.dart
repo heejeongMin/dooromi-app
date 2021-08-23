@@ -4,6 +4,7 @@ import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
 import 'package:flutter/material.dart';
 
 import 'User/page/JoinPage.dart';
+import 'Worklog/page/ScheduleListPage.dart';
 
 
 void main() {
@@ -19,21 +20,21 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: new MyHomePage()
+      home: new Navigator()
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class Navigator extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _NavigatorState createState() => _NavigatorState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _NavigatorState extends State<Navigator> {
   var _index = 0;
   var _pages = [
     JoinPage(),
-    DateAndTimePage(),
+    ScheduleListPage(),
     PartnerListPage(),
   ];
 
