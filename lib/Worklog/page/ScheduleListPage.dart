@@ -16,7 +16,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('근무일정 목록'),
+        title: Text('두루미'),
       ),
       body:
       new SingleChildScrollView(
@@ -28,6 +28,24 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          new Container(
+            width: 250,
+            height: 60,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: Colors.teal,
+                borderRadius: BorderRadius.circular(30)
+            )   ,
+            child:
+            new Text(
+              "근무일정 목록",
+              style: new TextStyle(
+                  fontSize:25.0,
+                  color: Colors.white,
+                  fontFamily: "Roboto"
+              ),
+            ),
+          ),
           Padding(
             child:
             Row(
