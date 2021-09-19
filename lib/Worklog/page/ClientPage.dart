@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:dooromi/Worklog/function/DoroomiAPI.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
+
+
 
 import 'package:flutter/material.dart';
 
@@ -20,12 +25,17 @@ class _ClientPageState extends State<ClientPage> {
   final _clientList = ['쌍둥이크레인', '성신크레인'];
   var _selectedClient = '쌍둥이크레인';
 
+
   _ClientPageState({required this.worklog});
 
   @override
+  void initState() {
+    super.initState();
+    _selectedClient = worklog.client ?? "쌍둥이크레인";
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-
 
     return Scaffold(
         appBar: AppBar(
@@ -114,7 +124,7 @@ class _ClientPageState extends State<ClientPage> {
                                       child: Text('저장'),
                                       onPressed: (){
                                         Navigator.of(context).pop();
-                                        this.saveWorklog(worklog);
+                                        DoroomiAPI.saveWorklog(worklog, context);
                                       },
                                   ),
                                   TextButton(
@@ -133,43 +143,6 @@ class _ClientPageState extends State<ClientPage> {
               ]
           ),
         )
-    );
-  }
-
-  saveWorklog(worklog){
-    //todo call api to save worklog
-    //todo loading bar?
-
-    String message = (true)? "성공적으로 저장되었습니다." : "저장에 실패하였습니다.";
-
-
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(''),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: [
-                  Text(message),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                child: Text('OK'),
-                onPressed: (){
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => new WorklogDetailPage(worklog: worklog))
-                  );
-                },
-              ),
-            ],
-          );
-        }
     );
   }
 

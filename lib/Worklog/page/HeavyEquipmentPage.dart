@@ -24,11 +24,16 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
   _HeavyEquipmentState({required this.worklog});
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     if(worklog.equipment != null) {
       _selectedEquipment = worklog.equipment!.equipment;
       _selectedSpec = worklog.equipment!.spec;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(
@@ -70,20 +75,23 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                    ),
                    new Padding(
                      padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
-                     child: new DropdownButton(
+                     child: DropdownButton(
                          value: this._selectedEquipment,
                          items: _equipmentList.map((value) {
-
+                           print(123);
                            return new DropdownMenuItem(
+
                                value: value,
                                child: Text(value)
                            );
                          }
                          ).toList(),
+
                          onChanged: (value){
                            setState(() {
-                             _selectedEquipment = value as String;
+                             this._selectedEquipment = value as String;
                              print(_selectedEquipment);
+
                            });
                          }
                      ),

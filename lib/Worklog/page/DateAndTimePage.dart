@@ -24,13 +24,17 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
   _DateAndTimePageState({this.worklog});
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     if(worklog != null) {
       this._workDate = worklog!.date;
       this._startTime = worklog!.startTime;
       this._endTime = worklog!.endTime;
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('두루미'),
@@ -176,7 +180,6 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
 
                           final Worklog? myWorklog =
                           (worklog == null)? new Worklog(_workDate, _startTime, _endTime) : this.worklog;
-
 
                           Navigator.push(
                             context,

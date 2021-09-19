@@ -1,48 +1,55 @@
+import 'dart:collection';
+
+import 'package:dooromi/Worklog/function/DoroomiAPI.dart';
+import 'package:dooromi/Worklog/model/Worklog.dart';
+import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // Hide the debug banner
-        debugShowCheckedModeBanner: false,
-        title: 'Kindacode.com',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          primaryColor: const Color(0xFF2196f3),
-          accentColor: const Color(0xFF2196f3),
-          canvasColor: const Color(0xFFfafafa),
-        ),
-        home: HomeScreen());
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class ScheduleListPage extends StatefulWidget {
+  const ScheduleListPage({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ScheduleListPageState createState() => _ScheduleListPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  DataTableSource _data = MyData();
+class _ScheduleListPageState extends State<ScheduleListPage> {
+  DataTableSource _data = RowData();
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('근무일정 목록'),
+        title: Text('두루미'),
       ),
-      body: Column(
+      body: new SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      padding: const EdgeInsets.all(40),
+      child:
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          new Container(
+            width: 250,
+            height: 60,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: Colors.teal,
+                borderRadius: BorderRadius.circular(30)
+            )   ,
+            child:
+            new Text(
+              "근무일정 목록",
+              style: new TextStyle(
+                  fontSize:25.0,
+                  color: Colors.white,
+                  fontFamily: "Roboto"
+              ),
+            ),
+          ),
           Padding(
             child:
             Row(
@@ -83,33 +90,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
           Padding(
             child:
-            new RaisedButton(key:null, onPressed:buttonPressed,
-                color: const Color(0xFFe0e0e0),
-                child:
-                new Text(
-                  "근무일정 생성",
-                  style: new TextStyle(fontSize:12.0,
-                      color: const Color(0xFF000000),
-                      fontWeight: FontWeight.w200,
-                      fontFamily: "Roboto"),
-                )
+            new ElevatedButton(
+                child: Text('근무일정 생성'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => new DateAndTimePage(worklog: null))
+                  );
+                },
+
             ),
 
             padding: const EdgeInsets.all(24.0),
           )
         ],
       ),
+      )
+
     );
   }
+
 }
+
+
 
 void buttonPressed(){}
 
 // The "soruce" of the table
-class MyData extends DataTableSource {
-  // Generate some made-up data
+class RowData extends DataTableSource {
+  Future<List<Worklog>> _worklogList = DoroomiAPI.getAllWorklog();
+
+
+  RowData(){
+    buildFutureBuilder();
+  }
+
   final List<Map<String, dynamic>> _data = List.generate(
-      200,
+      10,
           (index) => {
         "no": index+1,
         "name": "crane $index",
@@ -120,12 +137,42 @@ class MyData extends DataTableSource {
   bool get isRowCountApproximate => false;
   int get rowCount => _data.length;
   int get selectedRowCount => 0;
+
+
   DataRow getRow(int index) {
+
+    print(_data);
+
+    
     return DataRow(cells: [
-      DataCell(Text(_data[index]['no'].toString(), style: TextStyle(fontWeight: FontWeight.w500),)),
-      DataCell(Text(_data[index]["name"], style: TextStyle(fontWeight: FontWeight.w500),)),
+      DataCell(Text(index.toString(), style: TextStyle(fontWeight: FontWeight.w500),)),
+      DataCell(Text("희정3", style: TextStyle(fontWeight: FontWeight.w500),)),
       DataCell(Text(_data[index]["place"].toString(), style: TextStyle(fontWeight: FontWeight.w500),)),
       DataCell(Text(_data[index]["time"].toString(), style: TextStyle(fontWeight: FontWeight.w500),)),
     ]);
   }
+
+
+  FutureBuilder<List<Worklog>> buildFutureBuilder() {
+
+    print("12312312313123123123123");
+
+    return FutureBuilder<List<Worklog>>(
+      future: _worklogList,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          print("123");
+
+        } else if (snapshot.hasError) {
+          print("456");
+          return Text('${snapshot.error}');
+        }
+
+        print("789");
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
 }
+
