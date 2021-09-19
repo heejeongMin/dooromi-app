@@ -1,3 +1,7 @@
+import 'dart:collection';
+
+import 'package:dooromi/Worklog/function/DoroomiAPI.dart';
+import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -10,16 +14,16 @@ class ScheduleListPage extends StatefulWidget {
 }
 
 class _ScheduleListPageState extends State<ScheduleListPage> {
-  DataTableSource _data = MyData();
+  DataTableSource _data = RowData();
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('두루미'),
       ),
-      body:
-      new SingleChildScrollView(
+      body: new SingleChildScrollView(
       scrollDirection: Axis.vertical,
       padding: const EdgeInsets.all(40),
       child:
@@ -105,15 +109,24 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
 
     );
   }
+
 }
+
+
 
 void buttonPressed(){}
 
 // The "soruce" of the table
-class MyData extends DataTableSource {
-  // Generate some made-up data
+class RowData extends DataTableSource {
+  Future<List<Worklog>> _worklogList = DoroomiAPI.getAllWorklog();
+
+
+  RowData(){
+    buildFutureBuilder();
+  }
+
   final List<Map<String, dynamic>> _data = List.generate(
-      200,
+      10,
           (index) => {
         "no": index+1,
         "name": "crane $index",
@@ -124,12 +137,42 @@ class MyData extends DataTableSource {
   bool get isRowCountApproximate => false;
   int get rowCount => _data.length;
   int get selectedRowCount => 0;
+
+
   DataRow getRow(int index) {
+
+    print(_data);
+
+    
     return DataRow(cells: [
-      DataCell(Text(_data[index]['no'].toString(), style: TextStyle(fontWeight: FontWeight.w500),)),
-      DataCell(Text(_data[index]["name"], style: TextStyle(fontWeight: FontWeight.w500),)),
+      DataCell(Text(index.toString(), style: TextStyle(fontWeight: FontWeight.w500),)),
+      DataCell(Text("희정3", style: TextStyle(fontWeight: FontWeight.w500),)),
       DataCell(Text(_data[index]["place"].toString(), style: TextStyle(fontWeight: FontWeight.w500),)),
       DataCell(Text(_data[index]["time"].toString(), style: TextStyle(fontWeight: FontWeight.w500),)),
     ]);
   }
+
+
+  FutureBuilder<List<Worklog>> buildFutureBuilder() {
+
+    print("12312312313123123123123");
+
+    return FutureBuilder<List<Worklog>>(
+      future: _worklogList,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          print("123");
+
+        } else if (snapshot.hasError) {
+          print("456");
+          return Text('${snapshot.error}');
+        }
+
+        print("789");
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
 }
+

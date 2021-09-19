@@ -20,17 +20,17 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: new Navigator()
+      home: new DooroomiNavigator()
     );
   }
 }
 
-class Navigator extends StatefulWidget {
+class DooroomiNavigator extends StatefulWidget {
   @override
-  _NavigatorState createState() => _NavigatorState();
+  _DooroomiNavigatorState createState() => _DooroomiNavigatorState();
 }
 
-class _NavigatorState extends State<Navigator> {
+class _DooroomiNavigatorState extends State<DooroomiNavigator> {
   var _index = 0;
   var _pages = [
     JoinPage(),
