@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:dooromi/Worklog/page/ScheduleListPage.dart';
 import 'package:http/http.dart' as http;
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/WorklogDetailPage.dart';
@@ -14,12 +15,13 @@ import 'package:flutter/material.dart';
 class DoroomiAPI {
 
   static final localhost = 'http://10.0.2.2:7070';
+  // static final localhost = 'http://localhost:8080';
   static final uri = '/crane/v1/worklog';
 
   static Future<List<Worklog>> getAllWorklog() async {
 
     final queryParam = {
-      'startDate' : '2021-04-19T10:46:00',
+      'startDate' : '2021-10-04T10:46:00',
       'endDate' : '2021-10-20T03:00:00',
       'page' : '0',
       'size' : '20'
@@ -32,11 +34,11 @@ class DoroomiAPI {
         }
     );
 
-   return Worklog.fromJson(jsonDecode(response.body));
+   return Worklog.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   }
 
 
-  static saveWorklog(Worklog worklog, BuildContext context){
+  static saveWorklog(Worklog worklog, BuildContext context) {
 
     fetchPost(worklog);
 
@@ -74,6 +76,9 @@ class DoroomiAPI {
 
 
   static Future<bool> fetchPost(Worklog worklog) async {
+    worklog.startTime = '2021-10-18T10:46:00';
+    worklog.endTime = '2021-10-19T10:46:00';
+
     final response =  http.post(
         Uri.parse(localhost + uri),
         headers: <String, String> {
@@ -82,9 +87,13 @@ class DoroomiAPI {
         body: jsonEncode(worklog.toJson())
     );
 
+    response.then((value) => {
+      print(value.body)
+    });
+
     bool result = true;
     response.onError((error, stackTrace) =>
-    throw Exception('Fail to save')
+      throw Exception('Fail to save')
     );
 
     return result;

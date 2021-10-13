@@ -33,7 +33,7 @@ class Worklog {
         + "근무시간 : " + startTime + " ~ " + endTime + "\n"
         + "근무장소 : " + location! + "\n"
         + "근무장비 : " + equipment!.toString() + "\n"
-        + "근무거래처 : " + client!;
+        + "근무거래처 : " ;
   }
 
   Map<String, dynamic> toJson() => {
@@ -76,8 +76,9 @@ class Worklog {
       worklog.setEquipment(
           new Equipment(
               value['heavyEquipmentDto']['equipmentType'],
-              value['heavyEquipmentDto']['weight']
-                  + value['heavyEquipmentDto']['equipmentUnit']));
+              // (String) value['heavyEquipmentDto']['weight']
+              //     +
+                  value['heavyEquipmentDto']['equipmentUnit']));
 
       worklogList.add(worklog);
     }
