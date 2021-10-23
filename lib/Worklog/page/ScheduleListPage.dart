@@ -13,14 +13,16 @@ class ScheduleListPage extends StatefulWidget {
 
 class _ScheduleListPageState extends State<ScheduleListPage> {
   List<Map<String, dynamic>> tableSource = [];
-  DataTableSource data = new RowData(data: []);
+  DataTableSource data = new RowData(data: [], totalItems: 0);
+  var offset = 0;
 
   @override
   void initState() {
     super.initState();
 
-    DoroomiAPI.getAllWorklog().then((result) {
-      result.forEach((element) {
+    DoroomiAPI.getAllWorklog(offset).then((result) {
+
+      result.worklogList.forEach((element) {
         Map<String, dynamic> map =
           {
             "no" : 0,
@@ -32,7 +34,9 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
       });
 
       setState(() {
-        this.data = new RowData(data: tableSource);
+        print(tableSource);
+        if(result.totalItems - tableSource.length > 8) offset++;
+        this.data = new RowData(data: tableSource, totalItems: result.totalItems);
       });
     });
   }
@@ -135,8 +139,9 @@ void buttonPressed(){}
 
 class RowData extends DataTableSource {
   final List<Map<String, dynamic>> data;
+  final int totalItems;
 
-  RowData({required this.data});
+  RowData({required this.data, required this.totalItems});
 
   bool get isRowCountApproximate => false;
   int get rowCount => data.length;

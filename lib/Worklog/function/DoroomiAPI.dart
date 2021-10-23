@@ -1,10 +1,8 @@
 
 
-import 'dart:collection';
 import 'dart:convert';
-import 'dart:math';
 
-import 'package:dooromi/Worklog/page/ScheduleListPage.dart';
+import 'package:dooromi/Worklog/model/WorklogRes.dart';
 import 'package:http/http.dart' as http;
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/WorklogDetailPage.dart';
@@ -18,14 +16,18 @@ class DoroomiAPI {
   // static final localhost = 'http://localhost:8080';
   static final uri = '/crane/v1/worklog';
 
-  static Future<List<Worklog>> getAllWorklog() async {
+  static Future<WorklogRes> getAllWorklog(offset) async {
+    var now = DateTime.now();
+
 
     final queryParam = {
-      'startDate' : '2021-10-04T10:46:00',
-      'endDate' : '2021-10-20T03:00:00',
-      'page' : '0',
-      'size' : '20'
+      'startDate' : now.subtract(const Duration(days: 90)).toIso8601String(),
+      'endDate' : now.add(const Duration(days: 1)).toIso8601String(),
+      'page' : offset.toString(),
+      'size' : '8'
     };
+
+    print(queryParam);
 
     final response = await http.get(
         localhost + uri + "?" + Uri(queryParameters: queryParam).query,
@@ -34,7 +36,7 @@ class DoroomiAPI {
         }
     );
 
-   return Worklog.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+   return WorklogRes.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   }
 
 
@@ -76,8 +78,6 @@ class DoroomiAPI {
 
 
   static Future<bool> fetchPost(Worklog worklog) async {
-    worklog.startTime = '2021-10-18T10:46:00';
-    worklog.endTime = '2021-10-19T10:46:00';
 
     final response =  http.post(
         Uri.parse(localhost + uri),
