@@ -1,9 +1,8 @@
 
 
-import 'dart:collection';
 import 'dart:convert';
-import 'dart:math';
 
+import 'package:dooromi/Worklog/model/WorklogRes.dart';
 import 'package:http/http.dart' as http;
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/WorklogDetailPage.dart';
@@ -14,16 +13,21 @@ import 'package:flutter/material.dart';
 class DoroomiAPI {
 
   static final localhost = 'http://10.0.2.2:7070';
+  // static final localhost = 'http://localhost:8080';
   static final uri = '/crane/v1/worklog';
 
-  static Future<List<Worklog>> getAllWorklog() async {
+  static Future<WorklogRes> getAllWorklog(offset) async {
+    var now = DateTime.now();
+
 
     final queryParam = {
-      'startDate' : '2021-04-19T10:46:00',
-      'endDate' : '2021-10-20T03:00:00',
-      'page' : '0',
-      'size' : '20'
+      'startDate' : now.subtract(const Duration(days: 90)).toIso8601String(),
+      'endDate' : now.add(const Duration(days: 1)).toIso8601String(),
+      'page' : offset.toString(),
+      'size' : '8'
     };
+
+    print(queryParam);
 
     final response = await http.get(
         localhost + uri + "?" + Uri(queryParameters: queryParam).query,
@@ -32,11 +36,11 @@ class DoroomiAPI {
         }
     );
 
-   return Worklog.fromJson(jsonDecode(response.body));
+   return WorklogRes.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   }
 
 
-  static saveWorklog(Worklog worklog, BuildContext context){
+  static saveWorklog(Worklog worklog, BuildContext context) {
 
     fetchPost(worklog);
 
@@ -74,6 +78,7 @@ class DoroomiAPI {
 
 
   static Future<bool> fetchPost(Worklog worklog) async {
+
     final response =  http.post(
         Uri.parse(localhost + uri),
         headers: <String, String> {
@@ -82,9 +87,13 @@ class DoroomiAPI {
         body: jsonEncode(worklog.toJson())
     );
 
+    response.then((value) => {
+      print(value.body)
+    });
+
     bool result = true;
     response.onError((error, stackTrace) =>
-    throw Exception('Fail to save')
+      throw Exception('Fail to save')
     );
 
     return result;
