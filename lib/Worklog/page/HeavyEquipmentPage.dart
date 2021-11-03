@@ -27,8 +27,12 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
   void initState() {
     super.initState();
     if(worklog.equipment != null) {
-      _selectedEquipment = worklog.equipment!.equipment;
-      _selectedSpec = worklog.equipment!.spec;
+      switch(worklog.equipment!.equipment) {
+        case "CRANE" :  _selectedEquipment = "크레인"; break;
+      }
+      if(worklog.equipment!.spec.contains("TON")) {
+        _selectedSpec = worklog.equipment!.spec.substring(0, worklog.equipment!.spec.indexOf("TON")) + "T";
+      }
     }
   }
 
@@ -135,7 +139,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                     ElevatedButton(
                       child: Text('다음'),
                       onPressed: () {
-                        worklog.setEquipment(new Equipment(_selectedEquipment, _selectedSpec));
+                        worklog.setEquipment(new Equipment(1, _selectedEquipment, _selectedSpec));
                         Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => new ClientPage(worklog: worklog))

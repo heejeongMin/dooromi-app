@@ -1,3 +1,4 @@
+import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
 import 'package:dooromi/Worklog/page/ScheduleListPage.dart';
@@ -173,7 +174,7 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                                           child: Text('삭제'),
                                           onPressed: (){
                                             Navigator.of(context).pop();
-                                            this.deleteWorklog(worklog);
+                                            DooroomiAPI.deleteWorklog(worklog, context);
                                           },
                                         ),
                                         TextButton(
@@ -197,10 +198,10 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                           ElevatedButton(
                             child: Text('목록'),
                             onPressed: () {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) => ScheduleListPage(),
-                                  ), (Route<dynamic> route) => false);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => new ScheduleListPage(),)
+                              );
                             },
                           )
                       ),

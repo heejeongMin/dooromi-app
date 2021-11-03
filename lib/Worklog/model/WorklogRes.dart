@@ -27,15 +27,21 @@ class WorklogRes {
           timeFormatter.format(DateTime.parse(startDateAndTime)),
           timeFormatter.format(DateTime.parse(endDateAndTime)));
 
+      worklog.setWorklogNumber(value['id']);
       worklog.setLocation(value['workLocationDto']['gu'] + " "
           + value['workLocationDto']['dong']);
 
       worklog.setEquipment(
           new Equipment(
-              value['heavyEquipmentDto']['equipmentType'],
-              // (String) value['heavyEquipmentDto']['weight']
-              //     +
-                  value['heavyEquipmentDto']['equipmentUnit']));
+              1,
+              "",
+              ""));
+          // new Equipment(
+          //     1,
+          //     value['heavyEquipmentDto']['equipmentType'],
+          //     value['heavyEquipmentDto']['weight'].toString()
+          //         +
+          //         value['heavyEquipmentDto']['equipmentUnit']));
 
       worklogList.add(worklog);
     }

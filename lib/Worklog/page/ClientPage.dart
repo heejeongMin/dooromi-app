@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dooromi/Worklog/function/DoroomiAPI.dart';
+import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 
 
@@ -124,7 +124,7 @@ class _ClientPageState extends State<ClientPage> {
                                       child: Text('저장'),
                                       onPressed: (){
                                         Navigator.of(context).pop();
-                                        DoroomiAPI.saveWorklog(worklog, context);
+                                        DooroomiAPI.saveWorklog(worklog, context);
                                       },
                                   ),
                                   TextButton(

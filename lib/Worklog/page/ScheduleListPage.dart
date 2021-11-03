@@ -1,6 +1,9 @@
 
-import 'package:dooromi/Worklog/function/DoroomiAPI.dart';
+import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
+import 'package:dooromi/Worklog/model/Equipment.dart';
+import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
+import 'package:dooromi/Worklog/page/WorklogDetailPage.dart';
 import 'package:flutter/material.dart';
 
 
@@ -20,15 +23,19 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
   void initState() {
     super.initState();
 
-    DoroomiAPI.getAllWorklog(offset).then((result) {
+    DooroomiAPI.getAllWorklog(offset).then((result) {
 
       result.worklogList.forEach((element) {
         Map<String, dynamic> map =
           {
-            "no" : 0,
+            "id" : element.worklogNumber,
             "name" : element.client,
             "place" :  element.location,
-            "time" : element.date
+            "date" : element.date,
+            "startTime" : element.startTime,
+            "endTime" : element.endTime,
+            "equipment" : element.equipment!.equipment,
+            "spec" : element.equipment!.spec
           };
         tableSource.add(map);
       });
@@ -43,6 +50,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
 
   @override
   Widget build(BuildContext context) {
+    (data as RowData).scheduleListPageBuildContext = context;
+
       return Scaffold(
           appBar: AppBar(
             title: Text('두루미'),
@@ -109,7 +118,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                   columnSpacing: 5,
                   horizontalMargin: 10,
                   rowsPerPage: 8,
-                  showCheckboxColumn: false,
+                  showCheckboxColumn: true,
                 ),
 
                 Padding(
@@ -134,12 +143,13 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
   }
 }
 
-void buttonPressed(){}
+
 
 
 class RowData extends DataTableSource {
   final List<Map<String, dynamic>> data;
   final int totalItems;
+  late BuildContext scheduleListPageBuildContext;
 
   RowData({required this.data, required this.totalItems});
 
@@ -149,10 +159,33 @@ class RowData extends DataTableSource {
 
   DataRow getRow(int index) {
     return DataRow(cells: [
-      DataCell(Text(index.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12))),
-      DataCell(Text(data[index]["name"]?? '임시거래처', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),)),
-      DataCell(Text(data[index]["place"].toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),)),
-      DataCell(Text(data[index]["time"].toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),)),
-    ]);
+      DataCell(
+          Text(index.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12)),
+          onTap:() { buttonPressed(data[index]);}),
+      DataCell(
+          Text(data[index]["name"]?? '임시거래처', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),),
+          onTap:() { buttonPressed(data[index]);}),
+      DataCell(
+          Text(data[index]["place"].toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),),
+          onTap:() { buttonPressed(data[index]);}),
+      DataCell(
+          Text(data[index]["date"].toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),),
+          onTap:() { buttonPressed(data[index]);}),
+    ]
+    );
   }
+
+  void buttonPressed(value){
+    Worklog wl = new Worklog(value["date"], value["startTime"], value["endTime"]);
+    wl.setWorklogNumber(value["id"]);
+    wl.setLocation(value["place"]);
+    wl.setEquipment(new Equipment(1, "크레인", "25T"));
+    wl.setClient("쌍둥이크레인");
+
+    Navigator.push(
+        scheduleListPageBuildContext,
+        MaterialPageRoute(builder: (scheduleListPageBuildContext) =>
+        new WorklogDetailPage(worklog : wl)));
+  }
+
 }

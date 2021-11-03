@@ -1,4 +1,3 @@
-import 'dart:collection';
 
 import 'package:dooromi/Worklog/model/Equipment.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +12,10 @@ class Worklog {
   String? client;
 
   Worklog(this.date, this.startTime, this.endTime);
+
+  setWorklogNumber(worklogNumber){
+    this.worklogNumber = worklogNumber;
+  }
 
   setLocation(location){
     this.location = location;
@@ -29,31 +32,34 @@ class Worklog {
   @override
   String toString() {
     return
-          "근무일자 : " + date + "\n"
+          "id : " + worklogNumber.toString() + "\n"
+        + "근무일자 : " + date + "\n"
         + "근무시간 : " + startTime + " ~ " + endTime + "\n"
         + "근무장소 : " + location! + "\n"
         + "근무장비 : " + equipment!.toString() + "\n"
-        + "근무거래처 : " ;
+        + "근무거래처 : " + "\n";
   }
 
   Map<String, dynamic> toJson() => {
+    "id" : this.worklogNumber.toString(),
     "startDate" : this.date.trimRight()+ "T" + this.startTime + ":00",
     "endDate" :  this.date.trimRight()+ "T" + this.endTime + ":00",
-    "heavyEquipmentDto" : {
-      'equipmentType' : 'CRANE',
-      'weight' : this.equipment?.spec.replaceAll("T", ""),
-      'equipmentUnit' : 'TON',
-      'priceDto' : {
-        'pricePerUnit' : 300000,
-        'unit' : 'WON'
-      }
-    },
-    "city" : "서울",
-    "gu" : "도봉구",
-    "dong" : "창4동"
+    "equipmentId" : this.equipment?.id.toString(),
+    // "heavyEquipmentDto" : {
+    //   'equipmentType' : 'CRANE',
+    //   'weight' : this.equipment?.spec.replaceAll("T", ""),
+    //   'equipmentUnit' : 'TON',
+    //   'priceDto' : {
+    //     'pricePerUnit' : 300000,
+    //     'unit' : 'WON'
+    //   }
+    // },
+    "city" : "",
+    "gu" : "",
+    "dong" : this.location
   };
 
-  static List<Worklog> fromJson(LinkedHashMap<String, dynamic> response) {
+  static List<Worklog> fromJson(Map<String, dynamic> response) {
     List<dynamic> body = response['worklogDtoList'];
     final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
     final DateFormat timeFormatter = DateFormat('H:m');
@@ -75,9 +81,10 @@ class Worklog {
 
       worklog.setEquipment(
           new Equipment(
+             1,
               value['heavyEquipmentDto']['equipmentType'],
-              // (String) value['heavyEquipmentDto']['weight']
-              //     +
+              value['heavyEquipmentDto']['weight'].toString()
+                  +
                   value['heavyEquipmentDto']['equipmentUnit']));
 
       worklogList.add(worklog);
