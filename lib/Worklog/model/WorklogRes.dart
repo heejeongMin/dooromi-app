@@ -11,6 +11,7 @@ class WorklogRes {
   late List<Worklog> worklogList;
 
   static WorklogRes fromJson(LinkedHashMap<String, dynamic> response) {
+
     List<dynamic> body = response['worklogDtoList'];
     final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
     final DateFormat timeFormatter = DateFormat('H:m');

@@ -110,10 +110,30 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                   source: data,
                   //header: Text('My Products'),
                   columns: [
-                    DataColumn(label: Text('No')),
-                    DataColumn(label: Text('거래처')),
-                    DataColumn(label: Text('장소')),
-                    DataColumn(label: Text('시간')),
+                    // DataColumn(
+                    //     label: Container(
+                    //       width: MediaQuery.of(context).size.width * .05,
+                    //       child: Text('No'),
+                    //     ),
+                    // ),
+                    DataColumn(
+                      label: Container(
+                        width: MediaQuery.of(context).size.width * .25,
+                        child: Text('거래처'),
+                      ),
+                    ),
+                    DataColumn(
+                        label: Container(
+                          width: MediaQuery.of(context).size.width * .25,
+                          child: Text('장소'),
+                        ),
+                    ),
+                    DataColumn(
+                        label: Container(
+                          width: MediaQuery.of(context).size.width * .2,
+                          child: Text('날짜'),
+                        ),
+                    ),
                   ],
                   columnSpacing: 5,
                   horizontalMargin: 10,
@@ -158,10 +178,11 @@ class RowData extends DataTableSource {
   int get selectedRowCount => 0;
 
   DataRow getRow(int index) {
+    print("testsetset");
     return DataRow(cells: [
-      DataCell(
-          Text(index.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12)),
-          onTap:() { buttonPressed(data[index]);}),
+      // DataCell(
+      //     Text(index.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12)),
+      //     onTap:() { buttonPressed(data[index]);}),
       DataCell(
           Text(data[index]["name"]?? '임시거래처', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),),
           onTap:() { buttonPressed(data[index]);}),
