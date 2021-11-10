@@ -18,15 +18,32 @@ class WorklogRes {
 
     List<Worklog> worklogList = [];
 
+    print("before loop");
     for (var value in body) {
+      print("in");
       String startDateAndTime = value['startDate'];
       String endDateAndTime = value['endDate'];
+
+      String startHour = (DateTime.parse(startDateAndTime).hour < 10)
+          ? "0" + DateTime.parse(startDateAndTime).hour.toString()
+          : DateTime.parse(startDateAndTime).hour.toString();
+
+      String startMinute = (DateTime.parse(startDateAndTime).minute < 10)
+          ? "0" + DateTime.parse(startDateAndTime).minute.toString()
+          : DateTime.parse(startDateAndTime).minute.toString();
+
+      String endHour = (DateTime.parse(endDateAndTime).hour < 10)
+          ? "0" + DateTime.parse(endDateAndTime).hour.toString()
+          : DateTime.parse(endDateAndTime).hour.toString();
+
+      String endMinute = (DateTime.parse(endDateAndTime).minute < 10)
+          ? "0" + DateTime.parse(endDateAndTime).minute.toString()
+          : DateTime.parse(endDateAndTime).minute.toString();
 
       Worklog worklog =
         new Worklog(
           dateFormatter.format(DateTime.parse(startDateAndTime)),
-          timeFormatter.format(DateTime.parse(startDateAndTime)),
-          timeFormatter.format(DateTime.parse(endDateAndTime)));
+            startHour + ":" + startMinute, endHour + ":" + endMinute);
 
       worklog.setWorklogNumber(value['id']);
       worklog.setLocation(value['workLocationDto']['gu'] + " "

@@ -119,7 +119,13 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
 
                             selectedTime.then((timeOfDay){
                               setState((){
-                                _startTime = '${timeOfDay!.hour}:${timeOfDay.minute}';
+
+                                var hour = timeOfDay!.hour < 10 ? "0"+ timeOfDay.hour.toString()
+                                    : timeOfDay.hour;
+                                var min = timeOfDay.minute < 10 ? "0"+ timeOfDay.minute.toString()
+                                    : timeOfDay.minute;
+
+                                _startTime = '${hour}:${min}';
                               });
                             });
                           },
@@ -152,7 +158,12 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
 
                             selectedTime.then((timeOfDay){
                               setState((){
-                                _endTime = '${timeOfDay!.hour}:${timeOfDay.minute}';
+                                var hour = timeOfDay!.hour < 10 ? "0"+ timeOfDay.hour.toString()
+                                    : timeOfDay.hour;
+                                var min = timeOfDay.minute < 10 ? "0"+ timeOfDay.minute.toString()
+                                    : timeOfDay.minute;
+
+                                _endTime = '${hour}:${min}';
                               });
                             });
                           },
@@ -181,10 +192,16 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                           final Worklog? myWorklog =
                           (worklog == null)? new Worklog(_workDate, _startTime, _endTime) : this.worklog;
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => new LocationPage(worklog: myWorklog!))
-                          );
+
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  settings: RouteSettings(name: "/LocationPage"),
+                                  builder: (context) => new LocationPage(worklog: myWorklog!)
+                              ));
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => new LocationPage(worklog: myWorklog!))
+                          // );
                           },
                     )
                 ),

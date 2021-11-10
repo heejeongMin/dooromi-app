@@ -140,10 +140,17 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                       child: Text('다음'),
                       onPressed: () {
                         worklog.setEquipment(new Equipment(1, _selectedEquipment, _selectedSpec));
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => new ClientPage(worklog: worklog))
-                        );
+
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                settings: RouteSettings(name: "/ClientPage"),
+                                builder: (context) =>  new ClientPage(worklog: worklog)
+                            ));
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => new ClientPage(worklog: worklog))
+                        // );
                       },
                     )
                 ),

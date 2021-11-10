@@ -133,21 +133,21 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                     mainAxisAlignment : MainAxisAlignment.spaceAround,
                     crossAxisAlignment : CrossAxisAlignment.center,
                     children: [
-                      new Container(
-                          margin: const EdgeInsets.only(top: 16.0),
-                          padding: const EdgeInsets.all(5.0),
-                          alignment: Alignment.centerRight,
-                          child:
-                          ElevatedButton(
-                            child: Text('수정'),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => new DateAndTimePage(worklog: worklog))
-                              );
-                            },
-                          )
-                      ),
+                      // new Container(
+                      //     margin: const EdgeInsets.only(top: 16.0),
+                      //     padding: const EdgeInsets.all(5.0),
+                      //     alignment: Alignment.centerRight,
+                      //     child:
+                      //     ElevatedButton(
+                      //       child: Text('수정'),
+                      //       onPressed: () {
+                      //         Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(builder: (context) => new DateAndTimePage(worklog: worklog))
+                      //         );
+                      //       },
+                      //     )
+                      // ),
                       new Container(
                           margin: const EdgeInsets.only(top: 16.0),
                           padding: const EdgeInsets.all(5.0),
@@ -198,10 +198,14 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                           ElevatedButton(
                             child: Text('목록'),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => new ScheduleListPage(),)
-                              );
+
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      ScheduleListPage()), (route) => false);
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(builder: (context) => new ScheduleListPage(),)
+                              // );
                             },
                           )
                       ),

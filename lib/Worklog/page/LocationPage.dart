@@ -70,14 +70,14 @@ class _LocationPageState extends State<LocationPage> {
                       ),
                   ),
                 ),
-                new Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
-                  child: Icon(
-                    Icons.mic,
-                    color: Colors.teal,
-                    size: 100
-                  )
-                ),
+                // new Padding(
+                //   padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+                //   child: Icon(
+                //     Icons.mic,
+                //     color: Colors.teal,
+                //     size: 100
+                //   )
+                // ),
                 new Container(
                     margin: const EdgeInsets.only(top: 16.0),
                     padding: const EdgeInsets.all(5.0),
@@ -87,10 +87,15 @@ class _LocationPageState extends State<LocationPage> {
                       child: Text('다음'),
                       onPressed: () {
                         worklog.setLocation(_location);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => new HeavyEquipmentPage(worklog: worklog))
-                        );
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                              settings: RouteSettings(name: "/HeavyEquipmentPage"),
+                              builder: (context) => new HeavyEquipmentPage(worklog: worklog)
+                            ));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => new HeavyEquipmentPage(worklog: worklog))
+                        // );
                       },
                     )
                 ),

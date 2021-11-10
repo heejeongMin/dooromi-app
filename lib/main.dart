@@ -49,10 +49,8 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    print("main.dart");
     return WillPopScope(
       onWillPop: () async {
-        print("onWillPop");
         final isFirstRouteInCurrentTab =
         !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
         if (isFirstRouteInCurrentTab) {
@@ -98,8 +96,6 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
   }
 
   Widget _buildOffstageNavigator(String tabItem) {
-    print("_buildOffstageNavigator");
-
     return Offstage(
       offstage: _currentPage != tabItem,
       child: new TabNavigator(
@@ -109,75 +105,3 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
     );
   }
 }
-
-// class _DooroomiNavigatorState extends State<DooroomiNavigator> {
-//   var _index = 0;
-//   final List<Widget> _pages = [
-//     JoinPage(),
-//     ScheduleListPage(),
-//     PartnerListPage(),
-//   ];
-//
-//   void onTabTapped(int index){
-//     setState(() {
-//       _index = index;
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//           body: _pages[_index],
-//           bottomNavigationBar: BottomNavigationBar(
-//             onTap: onTabTapped,
-//             currentIndex: _index,
-//             items: [
-//               BottomNavigationBarItem(
-//                 icon: Icon(Icons.account_circle),
-//                 label: '내정보',
-//               ),
-//               BottomNavigationBarItem(
-//                   icon: Icon(Icons.assignment),
-//                   label: '근무일지'
-//               ),
-//               BottomNavigationBarItem(
-//                   icon: Icon(Icons.people),
-//                   label: '거래처관리'
-//               ),
-//             ],
-//           ),
-//         );
-//
-//
-//
-//
-//     // return DefaultTabController(
-//     //     length: 3,
-//     //     child: Scaffold(
-//     //       body: _pages[_index],
-//     //       bottomNavigationBar: BottomNavigationBar(
-//     //         onTap: (index){
-//     //           setState(() {
-//     //             _index = index;
-//     //           });
-//     //         },
-//     //         currentIndex: _index,
-//     //         items: [
-//     //           BottomNavigationBarItem(
-//     //               icon: Icon(Icons.account_circle),
-//     //               label: '내정보',
-//     //           ),
-//     //           BottomNavigationBarItem(
-//     //               icon: Icon(Icons.assignment),
-//     //               label: '근무일지'
-//     //           ),
-//     //           BottomNavigationBarItem(
-//     //               icon: Icon(Icons.people),
-//     //               label: '거래처관리'
-//     //           ),
-//     //         ],
-//     //       ),
-//     //     )
-//     // );
-//   }
-// }

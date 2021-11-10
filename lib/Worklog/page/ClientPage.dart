@@ -108,14 +108,14 @@ class _ClientPageState extends State<ClientPage> {
                         showDialog(
                             context: context,
                             barrierDismissible: false,
-                            builder: (BuildContext context) {
+                            builder: (BuildContext newContext) {
                               return AlertDialog(
                                 title: Text('근무일정 저장'),
                                 content: SingleChildScrollView(
                                   child: ListBody(
                                     children: [
                                       Text('해당 내용으로 저장하시겠습니까?'),
-                                      Text(worklog.toString())
+                                      Text(worklog.forDialog())
                                     ],
                                   ),
                                 ),

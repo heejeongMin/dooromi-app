@@ -29,6 +29,15 @@ class Worklog {
     this.client = client;
   }
 
+  String forDialog(){
+    return
+            "근무일자 : " + date + "\n"
+          + "근무시간 : " + startTime + " ~ " + endTime + "\n"
+          + "근무장소 : " + location! + "\n"
+          + "근무장비 : " + equipment!.equipment + " " + equipment!.spec + "\n"
+          + "근무거래처 : " + "\n";
+  }
+
   @override
   String toString() {
     return
@@ -44,7 +53,8 @@ class Worklog {
     "id" : this.worklogNumber.toString(),
     "startDate" : this.date.trimRight()+ "T" + this.startTime + ":00",
     "endDate" :  this.date.trimRight()+ "T" + this.endTime + ":00",
-    "equipmentId" : this.equipment?.id.toString(),
+    "equipmentId" : 1,
+    // "equipmentId" : this.equipment?.id.toString(),
     // "heavyEquipmentDto" : {
     //   'equipmentType' : 'CRANE',
     //   'weight' : this.equipment?.spec.replaceAll("T", ""),
@@ -62,13 +72,15 @@ class Worklog {
   static List<Worklog> fromJson(Map<String, dynamic> response) {
     List<dynamic> body = response['worklogDtoList'];
     final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
-    final DateFormat timeFormatter = DateFormat('H:m');
+    final DateFormat timeFormatter = DateFormat('HH:mm');
 
     List<Worklog> worklogList = [];
 
     for (var value in body) {
       String startDateAndTime = value['startDate'];
       String endDateAndTime = value['endDate'];
+
+      print("hour " + DateTime.parse(startDateAndTime).hour.toString());
 
       Worklog worklog =
         new Worklog(

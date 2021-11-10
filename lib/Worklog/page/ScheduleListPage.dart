@@ -23,6 +23,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
   void initState() {
     super.initState();
 
+    print("initstate");
+
     DooroomiAPI.getAllWorklog(offset).then((result) {
 
       result.worklogList.forEach((element) {
@@ -141,21 +143,62 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                   showCheckboxColumn: true,
                 ),
 
-                Padding(
-                  child:
-                  new ElevatedButton(
-                    child: Text('근무일정 생성'),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => new DateAndTimePage(worklog: null))
-                      );
-                    },
+              new Row(
+                    mainAxisSize : MainAxisSize.max,
+                    mainAxisAlignment : MainAxisAlignment.spaceAround,
+                    crossAxisAlignment : CrossAxisAlignment.center,
+                    children: [
+                      new Container(
+                          margin: const EdgeInsets.only(top: 16.0),
+                          padding: const EdgeInsets.all(5.0),
+                          alignment: Alignment.centerRight,
+                          child:
+                          ElevatedButton(
+                            child: Text('엑셀로 추출'),
+                            onPressed: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(builder: (context) => new ScheduleListPage(),)
+                              // );
+                            },
+                          )
+                      ),
+                      new Container(
+                          margin: const EdgeInsets.only(top: 16.0),
+                          padding: const EdgeInsets.all(5.0),
+                          alignment: Alignment.centerRight,
+                          child:
+                          ElevatedButton(
+                            child: Text('근무일정 생성'),
+                            onPressed: () {
 
-                  ),
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  settings: RouteSettings(name: "/DateAndTimePage"),
+                                  builder: (context) => new DateAndTimePage(worklog: null
+                                ),
+                              ));
 
-                  padding: const EdgeInsets.all(24.0),
-                )
+                            },
+                          )
+                      ),
+                  ]),
+                // Padding(
+                //   child:
+                //   new ElevatedButton(
+                //     child: Text('근무일정 생성'),
+                //     onPressed: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(builder: (context) => new DateAndTimePage(worklog: null))
+                //       );
+                //     },
+                //
+                //   ),
+                //
+                //   padding: const EdgeInsets.all(24.0),
+                // ),
+
               ],
             ),
           )
