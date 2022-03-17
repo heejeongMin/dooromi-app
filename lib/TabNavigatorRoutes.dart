@@ -1,7 +1,9 @@
+import 'package:dooromi/User/model/AuthToken.dart';
+import 'package:dooromi/User/page/LoginPage.dart';
 import 'package:flutter/material.dart';
 
 import 'Partner/page/PartnerListPage.dart';
-import 'User/page/JoinPage.dart';
+import 'User/page/UserProfilePage.dart';
 import 'Worklog/page/ScheduleListPage.dart';
 
 class TabNavigatorRoutes {
@@ -18,11 +20,12 @@ class TabNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget child = LoginPage();
 
-    Widget child = JoinPage();
-
-    if(tabItem == "JoinPage")
-      child = JoinPage();
+    if(tabItem == "LoginPage")
+      child = LoginPage();
+    else if(tabItem == "UserProfilePage")
+      child = UserProfilePage(user: AuthToken.user);
     else if(tabItem == "ScheduleListPage")
       child = ScheduleListPage();
     else if(tabItem == "PartnerListPage")
@@ -36,10 +39,6 @@ class TabNavigator extends StatelessWidget {
             settings: RouteSettings(name: "/"+tabItem),
             builder: (context) => child,
           );
-        //   MaterialPageRoute(
-        //     builder: (context) => child,
-        //
-        // );
       },
     );
   }

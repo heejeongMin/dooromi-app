@@ -1,10 +1,13 @@
 
+import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
 import 'package:dooromi/Worklog/model/Equipment.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
 import 'package:dooromi/Worklog/page/WorklogDetailPage.dart';
 import 'package:flutter/material.dart';
+
+import 'WorklogToExcelPage.dart';
 
 
 class ScheduleListPage extends StatefulWidget {
@@ -23,21 +26,22 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
   void initState() {
     super.initState();
 
-    print("initstate");
-
     DooroomiAPI.getAllWorklog(offset).then((result) {
 
       result.worklogList.forEach((element) {
+        print(element);
         Map<String, dynamic> map =
           {
             "id" : element.worklogNumber,
-            "name" : element.client,
+            "name" : element.partner!.companyName,
             "place" :  element.location,
             "date" : element.date,
             "startTime" : element.startTime,
             "endTime" : element.endTime,
             "equipment" : element.equipment!.equipment,
-            "spec" : element.equipment!.spec
+            "spec" : element.equipment!.spec,
+            "partnerId" : element.partner!.id,
+            "companyName" : element.partner!.companyName
           };
         tableSource.add(map);
       });
@@ -156,10 +160,11 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                           ElevatedButton(
                             child: Text('엑셀로 추출'),
                             onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(builder: (context) => new ScheduleListPage(),)
-                              // );
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    settings: RouteSettings(name: "/WorklogToExcelPage"),
+                                    builder: (context) => new WorklogToExcelPage(),
+                                  ));
                             },
                           )
                       ),
@@ -183,22 +188,6 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                           )
                       ),
                   ]),
-                // Padding(
-                //   child:
-                //   new ElevatedButton(
-                //     child: Text('근무일정 생성'),
-                //     onPressed: () {
-                //       Navigator.push(
-                //           context,
-                //           MaterialPageRoute(builder: (context) => new DateAndTimePage(worklog: null))
-                //       );
-                //     },
-                //
-                //   ),
-                //
-                //   padding: const EdgeInsets.all(24.0),
-                // ),
-
               ],
             ),
           )
@@ -220,12 +209,10 @@ class RowData extends DataTableSource {
   int get rowCount => data.length;
   int get selectedRowCount => 0;
 
+
+
   DataRow getRow(int index) {
-    print("testsetset");
     return DataRow(cells: [
-      // DataCell(
-      //     Text(index.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12)),
-      //     onTap:() { buttonPressed(data[index]);}),
       DataCell(
           Text(data[index]["name"]?? '임시거래처', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),),
           onTap:() { buttonPressed(data[index]);}),
@@ -244,7 +231,7 @@ class RowData extends DataTableSource {
     wl.setWorklogNumber(value["id"]);
     wl.setLocation(value["place"]);
     wl.setEquipment(new Equipment(1, "크레인", "25T"));
-    wl.setClient("쌍둥이크레인");
+    wl.setPartner(Partner.simplePartner(value["partnerId"], value["companyName"]));
 
     Navigator.push(
         scheduleListPageBuildContext,

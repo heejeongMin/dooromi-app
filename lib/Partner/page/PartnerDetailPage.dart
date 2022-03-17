@@ -1,6 +1,5 @@
+import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:flutter/material.dart';
-import '../model/Partner.dart';
-import '../page/PartnerModifyPage.dart';
 
 class PartnerDetailPage extends StatefulWidget {
   final Partner partner;
@@ -20,124 +19,107 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('거래처 상세보기'),
+        title: new Text('두루미'),
       ),
       body:
       new SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      padding: const EdgeInsets.all(40),
-      child:
-      new Container(
+        scrollDirection: Axis.vertical,
+        padding: const EdgeInsets.all(40),
         child:
-        new Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              _buildTop(),
-              _buildBottom(),
-              Padding(
-                child:
-                new ElevatedButton(
+            new Column(
+              children: [
+                new Container(
+                  width: 250,
+                  height: 60,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Colors.teal,
+                      borderRadius: BorderRadius.circular(30)
+                  )   ,
                   child:
                   new Text(
-                    "거래처 수정",
-                    style: new TextStyle(fontSize:12.0,
-                        color: const Color(0xFF000000),
-                        fontWeight: FontWeight.w200,
-                        fontFamily: "Roboto"),
+                    "거래처 상세",
+                    style: new TextStyle(
+                        fontSize:25.0,
+                        color: Colors.white,
+                        fontFamily: "Roboto"
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => new PartnerModifyPage(partner: partner))
-                    );
-                  },
+                ),
+                new Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Padding(
+                        child:
+                        new Icon(
+                            Icons.contact_phone,
+                            color: const Color(0xFF000000),
+                            size: 48.0),
+                        padding: const EdgeInsets.fromLTRB(35, 30, 0, 10),
+                      ),
+
+                      new Padding(
+                        child:
+                        new Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new Padding(
+                                child:
+                                new Text(
+                                  partner.companyName,
+                                  style: new TextStyle(fontSize: 23.0,
+                                      color: const Color(0xFF000000),
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: "Roboto"),
+                                ),
+
+                                padding: const EdgeInsets.fromLTRB(18.0, 24.0, 24.0, 0.0),
+                              ),
+
+                              new Padding(
+                                child:
+                                new Text(
+                                  partner.ceoName,
+                                  style: new TextStyle(fontSize: 20.0,
+                                      color: const Color(0xFF000000),
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Roboto"),
+                                ),
+
+                                padding: const EdgeInsets.fromLTRB(18.0, 10.0, 24.0, 0.0),
+                              ),
+
+                              new Padding(
+                                child:
+                                new Text(
+                                  partner.phoneNumber,
+                                  style: new TextStyle(fontSize: 15.0,
+                                      color: const Color(0xFF000000),
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Roboto"),
+                                ),
+
+                                padding: const EdgeInsets.fromLTRB(18.0, 10.0, 24.0, 0.0),
+                              ),
+
+
+                            ]
+
+                        ),
+
+                        padding: const EdgeInsets.all(24.0),
+                      ),
+                    ]
                 ),
 
-                padding: const EdgeInsets.all(24.0),
-              )
-            ]
-
-        ),
-
-        padding: const EdgeInsets.all(0.0),
-        alignment: Alignment.center,
-      ),
+                _buildBottom()
+              ],
+            )
       )
-
-
-    );
-  }
-
-  Widget _buildTop() {
-    return new Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Padding(
-            child:
-            new Icon(
-                Icons.contact_phone,
-                color: const Color(0xFF000000),
-                size: 48.0),
-
-            padding: const EdgeInsets.all(24.0),
-          ),
-
-          new Padding(
-            child:
-            new Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Padding(
-                    child:
-                    new Text(
-                      partner.companyName,
-                      style: new TextStyle(fontSize: 25.0,
-                          color: const Color(0xFF000000),
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "Roboto"),
-                    ),
-
-                    padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
-                  ),
-
-                  new Padding(
-                    child:
-                    new Text(
-                      partner.phoneNumber,
-                      style: new TextStyle(fontSize: 20.0,
-                          color: const Color(0xFF000000),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Roboto"),
-                    ),
-
-                    padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
-                  ),
-
-                  new Padding(
-                    child:
-                    new Text(
-                      partner.ceoName,
-                      style: new TextStyle(fontSize: 20.0,
-                          color: const Color(0xFF000000),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Roboto"),
-                    ),
-
-                    padding: const EdgeInsets.all(24.0),
-                  )
-                ]
-
-            ),
-
-            padding: const EdgeInsets.all(24.0),
-          ),
-        ]
     );
   }
 

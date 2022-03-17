@@ -1,5 +1,5 @@
+import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:flutter/material.dart';
-import '../model/Partner.dart';
 import '../page/PartnerDetailPage.dart';
 
 class PartnerModifyPage extends StatefulWidget {

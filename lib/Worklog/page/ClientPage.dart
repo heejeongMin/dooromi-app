@@ -1,29 +1,27 @@
-import 'dart:convert';
+import 'dart:collection';
 
+import 'package:dooromi/Partner/funciton/PartnerApi.dart';
+import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
-
-
-
 import 'package:flutter/material.dart';
 
-import 'WorklogDetailPage.dart';
 
 class ClientPage extends StatefulWidget {
   final Worklog worklog;
 
-
   ClientPage({required this.worklog});
 
   @override
-  _ClientPageState createState() => new _ClientPageState(worklog: worklog);
+  _ClientPageState createState() =>
+      new _ClientPageState(worklog: worklog);
 }
 
 class _ClientPageState extends State<ClientPage> {
 
   final Worklog worklog;
-  final _clientList = ['쌍둥이크레인', '성신크레인'];
-  var _selectedClient = '쌍둥이크레인';
+  List<Partner> partnerList = [];
+  var _selectedClient = '';
 
 
   _ClientPageState({required this.worklog});
@@ -31,12 +29,25 @@ class _ClientPageState extends State<ClientPage> {
   @override
   void initState() {
     super.initState();
-    _selectedClient = worklog.client ?? "쌍둥이크레인";
+
+    PartnerApi.getAllPartner(0).then((result) {
+      partnerList = result.partners;
+      // result.partners.forEach((element) {
+      //   _clientMap.putIfAbsent(element.id.toString(), () => element.companyName);
+      // });
+
+      setState(() {
+        if(worklog.partner != null){
+          _selectedClient = worklog.partner!.companyName;
+        } else {
+          _selectedClient =  result.partners.first.companyName;
+        }
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: Text('두루미'),
@@ -79,10 +90,11 @@ class _ClientPageState extends State<ClientPage> {
                         padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
                         child: DropdownButton(
                             value: _selectedClient,
-                            items: _clientList.map((value) {
+
+                            items: partnerList.map((value) {
                               return DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value)
+                                  value: value.companyName,
+                                  child: Text(value.companyName)
                               );
                             }
                             ).toList(),
@@ -103,8 +115,12 @@ class _ClientPageState extends State<ClientPage> {
                       ElevatedButton(
                         child: Text('저장'),
                         onPressed: () {
-                          worklog.setClient(_selectedClient);
-
+                          partnerList.forEach((element) {
+                            if(element.companyName == _selectedClient) {
+                              worklog.setPartner(element);
+                              return;
+                            }
+                          });
                         showDialog(
                             context: context,
                             barrierDismissible: false,
@@ -123,14 +139,16 @@ class _ClientPageState extends State<ClientPage> {
                                   TextButton(
                                       child: Text('저장'),
                                       onPressed: (){
-                                        Navigator.of(context).pop();
+
+
+                                        Navigator.of(context,rootNavigator: true).pop();
                                         DooroomiAPI.saveWorklog(worklog, context);
                                       },
                                   ),
                                   TextButton(
                                     child: Text('취소'),
                                     onPressed: (){
-                                      Navigator.of(context).pop();
+                                      Navigator.of(context,rootNavigator: true).pop();
                                     },
                                   ),
                                 ],

@@ -1,4 +1,5 @@
 
+import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:dooromi/Worklog/model/Equipment.dart';
 import 'package:intl/intl.dart';
 
@@ -9,7 +10,7 @@ class Worklog {
   String endTime;
   String? location;
   Equipment? equipment;
-  String? client;
+  Partner? partner;
 
   Worklog(this.date, this.startTime, this.endTime);
 
@@ -25,8 +26,8 @@ class Worklog {
     this.equipment = equipment;
   }
 
-  setClient(client){
-    this.client = client;
+  setPartner(partner){
+    this.partner = partner;
   }
 
   String forDialog(){
@@ -35,7 +36,7 @@ class Worklog {
           + "근무시간 : " + startTime + " ~ " + endTime + "\n"
           + "근무장소 : " + location! + "\n"
           + "근무장비 : " + equipment!.equipment + " " + equipment!.spec + "\n"
-          + "근무거래처 : " + "\n";
+          + "근무거래처 : " + partner!.companyName + "\n";
   }
 
   @override
@@ -46,7 +47,7 @@ class Worklog {
         + "근무시간 : " + startTime + " ~ " + endTime + "\n"
         + "근무장소 : " + location! + "\n"
         + "근무장비 : " + equipment!.toString() + "\n"
-        + "근무거래처 : " + "\n";
+        + "근무거래처 : " + partner!.companyName +  "\n";
   }
 
   Map<String, dynamic> toJson() => {
@@ -54,19 +55,10 @@ class Worklog {
     "startDate" : this.date.trimRight()+ "T" + this.startTime + ":00",
     "endDate" :  this.date.trimRight()+ "T" + this.endTime + ":00",
     "equipmentId" : 1,
-    // "equipmentId" : this.equipment?.id.toString(),
-    // "heavyEquipmentDto" : {
-    //   'equipmentType' : 'CRANE',
-    //   'weight' : this.equipment?.spec.replaceAll("T", ""),
-    //   'equipmentUnit' : 'TON',
-    //   'priceDto' : {
-    //     'pricePerUnit' : 300000,
-    //     'unit' : 'WON'
-    //   }
-    // },
     "city" : "",
     "gu" : "",
-    "dong" : this.location
+    "dong" : this.location,
+    "partnerId" : this.partner!.id
   };
 
   static List<Worklog> fromJson(Map<String, dynamic> response) {
@@ -98,6 +90,8 @@ class Worklog {
               value['heavyEquipmentDto']['weight'].toString()
                   +
                   value['heavyEquipmentDto']['equipmentUnit']));
+
+      worklog.setPartner(Partner.simplePartner(value['partnerId'], ""));
 
       worklogList.add(worklog);
     }

@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:dooromi/Worklog/model/Equipment.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:intl/intl.dart';
@@ -18,9 +19,7 @@ class WorklogRes {
 
     List<Worklog> worklogList = [];
 
-    print("before loop");
     for (var value in body) {
-      print("in");
       String startDateAndTime = value['startDate'];
       String endDateAndTime = value['endDate'];
 
@@ -61,6 +60,10 @@ class WorklogRes {
           //         +
           //         value['heavyEquipmentDto']['equipmentUnit']));
 
+
+      worklog.setPartner(Partner.of(value['partnerDto']['id'], value['partnerDto']['partnerNumber'],
+          value['partnerDto']['companyName'], value['partnerDto']['ceoName'],
+          value['partnerDto']['phoneNumber'], value['partnerDto']['createdBy']));
       worklogList.add(worklog);
     }
 

@@ -1,6 +1,5 @@
 import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
-import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
 import 'package:dooromi/Worklog/page/ScheduleListPage.dart';
 
 import 'package:flutter/material.dart';
@@ -124,7 +123,7 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                       ),
                       new Padding(
                         padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-                        child:Text(worklog.client!),
+                        child:Text(worklog.partner!.companyName),
                       ),
                     ]
                 ),
@@ -133,21 +132,6 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                     mainAxisAlignment : MainAxisAlignment.spaceAround,
                     crossAxisAlignment : CrossAxisAlignment.center,
                     children: [
-                      // new Container(
-                      //     margin: const EdgeInsets.only(top: 16.0),
-                      //     padding: const EdgeInsets.all(5.0),
-                      //     alignment: Alignment.centerRight,
-                      //     child:
-                      //     ElevatedButton(
-                      //       child: Text('수정'),
-                      //       onPressed: () {
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(builder: (context) => new DateAndTimePage(worklog: worklog))
-                      //         );
-                      //       },
-                      //     )
-                      // ),
                       new Container(
                           margin: const EdgeInsets.only(top: 16.0),
                           padding: const EdgeInsets.all(5.0),

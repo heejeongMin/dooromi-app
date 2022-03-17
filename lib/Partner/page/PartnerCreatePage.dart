@@ -1,16 +1,19 @@
+import 'package:dooromi/Partner/funciton/PartnerApi.dart';
+import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:flutter/material.dart';
-import '../model/Partner.dart';
-import '../page/PartnerDetailPage.dart';
 
 class PartnerCreatePage extends StatefulWidget {
+
   @override
-  _PartnerCreatePageState createState() => new _PartnerCreatePageState();
+  _PartnerCreatePageState createState() =>
+      new _PartnerCreatePageState();
 }
 
 class _PartnerCreatePageState extends State<PartnerCreatePage> {
   var _companyName = "";
   var _phoneNumber = "";
   var _ceoName = "";
+
 
   @override
   Widget build(BuildContext context) {
@@ -113,31 +116,51 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
 
                   padding: const EdgeInsets.fromLTRB(24.0, 15.0, 24.0, 35.0),
                 ),
-
-                new Padding(
-                  child:
-                  new ElevatedButton(
+                new Container(
+                    margin: const EdgeInsets.only(top: 16.0),
+                    padding: const EdgeInsets.all(5.0),
+                    alignment: Alignment.centerRight,
                     child:
-                    new Text(
-                      "등록",
-                      style: new TextStyle(fontSize:12.0,
-                          color: const Color(0xFF000000),
-                          fontWeight: FontWeight.w200,
-                          fontFamily: "Roboto"),
-                    ),
+                    ElevatedButton(
+                      child: Text('저장'),
+                      onPressed: () {
+                        final partner = Partner(_companyName, _ceoName, _phoneNumber);
 
-                    onPressed: () {
-                      final partner = Partner(_companyName, _phoneNumber, _ceoName);
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => new PartnerDetailPage(partner: partner))
-                      );
-                    },
-                  ),
-
-                  padding: const EdgeInsets.fromLTRB(24.0, 40.0, 24.0, 24.0),
-                )
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext newContext) {
+                              return AlertDialog(
+                                title: Text('파트너 저장'),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: [
+                                      Text('해당 내용으로 저장하시겠습니까?'),
+                                      Text(partner.forDialog())
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    child: Text('저장'),
+                                    onPressed: (){
+                                      Navigator.of(context, rootNavigator: true).pop();
+                                      PartnerApi.createPartner(partner, context);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('취소'),
+                                    onPressed: (){
+                                      Navigator.of(context, rootNavigator: true).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            }
+                        );
+                      },
+                    )
+                ),
               ]
 
           ),

@@ -1,5 +1,6 @@
 
-import 'package:dooromi/tab_navigator.dart';
+import 'package:dooromi/TabNavigatorRoutes.dart';
+import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:flutter/material.dart';
 
 
@@ -23,22 +24,45 @@ class MyApp extends StatelessWidget {
 
 class DooroomiNavigator extends StatefulWidget {
   @override
-  _DooroomiNavigatorState createState() => _DooroomiNavigatorState();
+  _DooroomiNavigatorState createState()
+      => new _DooroomiNavigatorState();
 }
 
 class _DooroomiNavigatorState extends State<DooroomiNavigator> {
   int _selectedIndex = 0;
-  String _currentPage = "JoinPage";
-  List<String> pageKeys = ["JoinPage", "ScheduleListPage", "PartnerListPage"];
+  String _currentPage = "LoginPage";
+  List<String> pageKeys =
+  ["LoginPage", "ScheduleListPage", "PartnerListPage"];
   Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
-    "JoinPage": GlobalKey<NavigatorState>(),
+    "LoginPage": GlobalKey<NavigatorState>(),
+    "UserProfilePage": GlobalKey<NavigatorState>(),
     "ScheduleListPage": GlobalKey<NavigatorState>(),
     "PartnerListPage": GlobalKey<NavigatorState>(),
   };
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _selectTab(String tabItem, int index) {
-    if(tabItem == _currentPage ){
-      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
+    if(tabItem == "LoginPage"){
+      _navigatorKeys[tabItem]!.currentState!
+          .popUntil((route) => route.isFirst);
+
+      if(AuthToken.token.isEmpty) {
+        setState(() {
+          _currentPage = pageKeys[0];
+          _selectedIndex = index;
+        });
+      } else {
+        setState(() {
+          _currentPage = "UserProfilePage";
+          _selectedIndex = 0;
+        });
+      }
+
+
     } else {
       setState(() {
         _currentPage = pageKeys[index];
@@ -54,8 +78,14 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
         final isFirstRouteInCurrentTab =
         !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
         if (isFirstRouteInCurrentTab) {
-          if (_currentPage != "JoinPage") {
-            _selectTab("JoinPage", 1);
+          if (_currentPage != "LoginPage") {
+              _selectTab("LoginPage", 0);
+
+            // if(AuthToken.token.isEmpty) {
+            //   _selectTab("LoginPage", 0);
+            // } else {
+            //   _selectTab("UserProfilePage", 0);
+            // }
 
             return false;
           }
@@ -66,7 +96,8 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
       child: Scaffold(
         body: Stack(
         children:<Widget>[
-        _buildOffstageNavigator("JoinPage"),
+        _buildOffstageNavigator("LoginPage"),
+          _buildOffstageNavigator("UserProfilePage"),
         _buildOffstageNavigator("ScheduleListPage"),
         _buildOffstageNavigator("PartnerListPage"),
         ]
@@ -78,15 +109,15 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
           items: [
             BottomNavigationBarItem(
               icon: new Icon(Icons.account_circle),
-              title: new Text('JoinPage'),
+              title: new Text('개인'),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.assignment),
-              title: new Text('ScheduleListPage'),
+              title: new Text('근무일정'),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.people),
-              title: new Text('PartnerListPage'),
+              title: new Text('거래처'),
             ),
           ],
           type: BottomNavigationBarType.fixed,
