@@ -173,11 +173,17 @@ class AuthApi {
       AuthToken.token = token;
       AuthToken.user = detailUser;
 
+      // Navigator.pushAndRemoveUntil(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => new DooroomiNavigator()),
+      //     (route) => true);
+
       Navigator.of(context).push(
           MaterialPageRoute(
               settings: RouteSettings(name: "/UserProfilePage"),
               builder: (context) =>
-                new UserProfilePage(user : detailUser)),
+                new UserProfilePage(user : AuthToken.user)),
           );
     });
   }

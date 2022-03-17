@@ -21,6 +21,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     print("userprofile : " + AuthToken.token);
+    print(user.toString());
+    print(user.email);
+    print(user.joinedAt);
+    print(AuthToken.user.email);
+    print(AuthToken.user.joinedAt);
+
+
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('프로필'),
@@ -51,7 +59,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 child: new Padding(
                   child:
                   new Text(
-                    user.username,
+                    AuthToken.user.username,
                     style: new TextStyle(fontSize:38.0,
                         color: const Color(0xFF000000),
                         fontWeight: FontWeight.w400,
@@ -66,7 +74,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 child: new Padding(
                   child:
                   new Text(
-                    user.email,
+                    AuthToken.user.email,
                     style: new TextStyle(fontSize:18.0,
                         color: const Color(0xFF000000),
                         fontWeight: FontWeight.w200,
@@ -80,7 +88,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 child: new Padding(
                   child:
                   new Text(
-                    user.joinedAt,
+                    AuthToken.user.joinedAt,
                     style: new TextStyle(
                         fontSize:20.0,
                         color: const Color(0xFF000000),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:dooromi/Partner/model/PartnerRes.dart';
+import 'package:dooromi/Partner/page/PartnerListPage.dart';
 import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:dooromi/Worklog/model/WorklogRes.dart';
 import 'package:http/http.dart' as http;
@@ -17,8 +18,6 @@ class PartnerApi {
 
   static createPartner(Partner partner, BuildContext context) async {
     Future<http.Response> response = createPartnerWithPOST(partner);
-
-    print("createPartner");
 
     response.then((value) {
       if(value.statusCode != 201) {
@@ -48,6 +47,14 @@ class PartnerApi {
                         context,
                         MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
                             (route) => false);
+
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          settings: RouteSettings(name: "/PartnerListPage"),
+                          builder: (context) =>
+                          new PartnerListPage()),
+                    );
                   },
                 ),
               ],
@@ -77,10 +84,11 @@ class PartnerApi {
         Uri.http(localHost, partnerUri, queryParam),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
         });
 
+    print(jsonDecode(utf8.decode(response.bodyBytes)));
     return PartnerRes.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-
   }
 
 }

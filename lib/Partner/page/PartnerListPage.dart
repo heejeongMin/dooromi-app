@@ -23,7 +23,10 @@ class _PartnerListPageState extends State<PartnerListPage> {
 
     PartnerApi.getAllPartner(offset).then((result) {
 
+      print(result);
+      int size = 0;
       result.partners.forEach((element) {
+        ++size;
         Map<String, dynamic> map =
         {
           "id": element.id,
@@ -38,7 +41,7 @@ class _PartnerListPageState extends State<PartnerListPage> {
 
       setState(() {
         print(tableSource);
-        if(result.totalItems - tableSource.length > 8) offset++;
+        if(size - tableSource.length > 8) offset++;
         this.data = new RowData(data: tableSource, totalItems: result.totalItems);
       });
     });
