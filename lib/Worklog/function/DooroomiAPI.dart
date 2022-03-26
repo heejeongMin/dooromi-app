@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:dooromi/Worklog/model/WorklogRes.dart';
 import 'package:http/http.dart' as http;
 import 'package:dooromi/Worklog/model/Worklog.dart';
@@ -23,7 +24,7 @@ class DooroomiAPI {
     };
 
     final response = await http.get(
-        Uri.http(cloudHost, worklogUri, queryParam),
+        Uri.http(localHost, worklogUri, queryParam),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
@@ -71,27 +72,24 @@ class DooroomiAPI {
               ],
           );
         });
-
-
     });
-
   }
 
   static Future<http.Response> fetchPost(Worklog worklog) async {
-    return await http.post(Uri.http(cloudHost, worklogUri),
+    return await http.post(Uri.http(localHost, worklogUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
         },
         body: jsonEncode(worklog.toJson()));
   }
 
   static deleteWorklog(Worklog worklog, BuildContext context) {
     final response = http.delete(
-        Uri.http(cloudHost, worklogUri, {'ids': worklog.worklogNumber.toString()}),
+        Uri.http(localHost, worklogUri, {'ids': worklog.worklogNumber.toString()}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-
 
       response.then((value) {
         if(value.statusCode != 200) {
@@ -142,7 +140,7 @@ class DooroomiAPI {
 
     print(json);
 
-    final response =  http.post(Uri.http(cloudHost, worklogUri + "/email"),
+    final response =  http.post(Uri.http(localHost, worklogUri + "/email"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -179,7 +177,6 @@ class DooroomiAPI {
                         context,
                         MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
                             (route) => false);
-
                   },
                 ),
               ],

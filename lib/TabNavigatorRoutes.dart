@@ -20,11 +20,8 @@ class TabNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = LoginPage();
-
-    if(tabItem == "LoginPage")
-      child = LoginPage();
-    else if(tabItem == "UserProfilePage")
+    Widget child = UserProfilePage(user: AuthToken.user);
+      if(tabItem == "UserProfilePage")
       child = UserProfilePage(user: AuthToken.user);
     else if(tabItem == "ScheduleListPage")
       child = ScheduleListPage();

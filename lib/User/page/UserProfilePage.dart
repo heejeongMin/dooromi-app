@@ -1,7 +1,8 @@
 import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:flutter/material.dart';
 import '../model/DetailUser.dart';
-import 'package:dooromi/Partner/page/PartnerListPage.dart';
+
+import 'LoginPage.dart';
 
 class UserProfilePage extends StatefulWidget {
   final DetailUser user;
@@ -27,7 +28,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
     print(AuthToken.user.email);
     print(AuthToken.user.joinedAt);
 
-
+    if(AuthToken.token == null || AuthToken.token.isEmpty) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+              new LoginPage()),
+              (route) => false);
+    }
 
     return new Scaffold(
       appBar: new AppBar(

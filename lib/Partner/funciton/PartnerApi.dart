@@ -2,11 +2,8 @@ import 'dart:convert';
 
 import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:dooromi/Partner/model/PartnerRes.dart';
-import 'package:dooromi/Partner/page/PartnerListPage.dart';
 import 'package:dooromi/User/model/AuthToken.dart';
-import 'package:dooromi/Worklog/model/WorklogRes.dart';
 import 'package:http/http.dart' as http;
-import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
@@ -45,16 +42,10 @@ class PartnerApi {
                     Navigator.of(context, rootNavigator: true).pop();
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
+                        MaterialPageRoute(
+                            builder: (context) =>
+                            new DooroomiNavigator()),
                             (route) => false);
-
-
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                          settings: RouteSettings(name: "/PartnerListPage"),
-                          builder: (context) =>
-                          new PartnerListPage()),
-                    );
                   },
                 ),
               ],

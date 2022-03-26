@@ -51,7 +51,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                   height: 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.teal,
+                      color: Colors.brown,
                       borderRadius: BorderRadius.circular(30)
                   )   ,
                   child:

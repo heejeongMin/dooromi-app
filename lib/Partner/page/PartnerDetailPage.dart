@@ -33,7 +33,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
                   height: 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.teal,
+                      color: Colors.brown,
                       borderRadius: BorderRadius.circular(30)
                   )   ,
                   child:
@@ -116,25 +116,25 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
                     ]
                 ),
 
-                _buildBottom()
+                // _buildBottom()
               ],
             )
       )
     );
   }
 
-  Widget _buildBottom() {
-    final items = List.generate(10, (i) {     // List.generate() 함수는 0부터 9까지의 수(10개)를 생성하여 두 번째 인수의 함수에 i 매개변수로 전달함.
-      return ListTile(    // i값을 전달받아 ListTile 위잿 형태로 변환하여 그것들의 리스트가 반환됨.
-        leading: Icon(Icons.notifications_none),
-        title: Text('최근 거래일 및 장소'),
-      );
-    });
-
-    return ListView(
-      physics: NeverScrollableScrollPhysics(),    // 이 리스트의 스크롤 동작 금지 - 이걸 안써주면 스크롤 동작이 안되는 현상 발생 -> 스크롤 안에 스크롤을 넣은 경우로 안쪽 스크롤을 막아서 정상 동작되도록 함.
-      shrinkWrap: true,     // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함.
-      children: items,
-    );
-  }
+  // Widget _buildBottom() {
+  //   final items = List.generate(10, (i) {     // List.generate() 함수는 0부터 9까지의 수(10개)를 생성하여 두 번째 인수의 함수에 i 매개변수로 전달함.
+  //     return ListTile(    // i값을 전달받아 ListTile 위잿 형태로 변환하여 그것들의 리스트가 반환됨.
+  //       leading: Icon(Icons.notifications_none),
+  //       title: Text('최근 거래일 및 장소'),
+  //     );
+  //   });
+  //
+  //   return ListView(
+  //     physics: NeverScrollableScrollPhysics(),    // 이 리스트의 스크롤 동작 금지 - 이걸 안써주면 스크롤 동작이 안되는 현상 발생 -> 스크롤 안에 스크롤을 넣은 경우로 안쪽 스크롤을 막아서 정상 동작되도록 함.
+  //     shrinkWrap: true,     // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함.
+  //     children: items,
+  //   );
+  // }
 }

@@ -76,7 +76,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                   height: 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.teal,
+                      color: Colors.brown,
                       borderRadius: BorderRadius.circular(30)
                   )   ,
                   child:
