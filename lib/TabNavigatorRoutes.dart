@@ -24,7 +24,7 @@ class TabNavigator extends StatelessWidget {
       if(tabItem == "UserProfilePage")
       child = UserProfilePage(user: AuthToken.user);
     else if(tabItem == "ScheduleListPage")
-      child = ScheduleListPage();
+      child = ScheduleListPage(partnerName: "");
     else if(tabItem == "PartnerListPage")
       child = PartnerListPage();
 

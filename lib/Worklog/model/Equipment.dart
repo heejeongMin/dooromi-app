@@ -12,4 +12,12 @@ class Equipment {
   String toString() {
     return id.toString() + " " + equipment + " " + spec;
   }
+
+  String nameAndSpec(){
+    String equipmentKr = "";
+    if(equipment == "CRANE") {
+      equipmentKr = "크레인";
+    }
+    return equipmentKr + " " + spec;
+  }
 }

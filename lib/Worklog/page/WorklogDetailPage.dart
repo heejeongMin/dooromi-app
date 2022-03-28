@@ -118,6 +118,21 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                     crossAxisAlignment : CrossAxisAlignment.center,
                     children: [
                       new Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                        child:Text('근무장비'),
+                      ),
+                      new Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                        child:Text(worklog.equipment!.nameAndSpec()),
+                      ),
+                    ]
+                ),
+                new Row(
+                    mainAxisSize : MainAxisSize.max,
+                    mainAxisAlignment : MainAxisAlignment.start,
+                    crossAxisAlignment : CrossAxisAlignment.center,
+                    children: [
+                      new Padding(
                         padding: const EdgeInsets.fromLTRB(30, 10, 40, 10),
                         child:Text('거래처'),
                       ),
@@ -185,7 +200,7 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
 
                               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      ScheduleListPage()), (route) => false);
+                                      ScheduleListPage(partnerName: "")), (route) => false);
                               // Navigator.push(
                               //     context,
                               //     MaterialPageRoute(builder: (context) => new ScheduleListPage(),)
@@ -227,7 +242,7 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                   Navigator.of(context).pop();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (BuildContext context) => ScheduleListPage(),
+                        builder: (BuildContext context) => ScheduleListPage(partnerName: ""),
                       ), (Route<dynamic> route) => false);
                 },
               ),

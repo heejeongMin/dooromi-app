@@ -13,15 +13,16 @@ class WorklogRes {
 
   static WorklogRes fromJson(LinkedHashMap<String, dynamic> response) {
 
-    List<dynamic> body = response['worklogDtoList'];
+    List<dynamic> body = response['worklogDtos'];
     final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
     final DateFormat timeFormatter = DateFormat('H:m');
 
     List<Worklog> worklogList = [];
 
     for (var value in body) {
-      String startDateAndTime = value['startDate'];
-      String endDateAndTime = value['endDate'];
+
+      String startDateAndTime = value['workPeriodDto']['startedAt'];
+      String endDateAndTime = value['workPeriodDto']['finishedAt'];
 
       String startHour = (DateTime.parse(startDateAndTime).hour < 10)
           ? "0" + DateTime.parse(startDateAndTime).hour.toString()
@@ -44,24 +45,20 @@ class WorklogRes {
           dateFormatter.format(DateTime.parse(startDateAndTime)),
             startHour + ":" + startMinute, endHour + ":" + endMinute);
 
-      worklog.setWorklogNumber(value['id']);
-      worklog.setLocation(value['workLocationDto']['gu'] + " "
-          + value['workLocationDto']['dong']);
+      worklog.setId(value['id']);
+      worklog.setLocation(value['location']);
 
       worklog.setEquipment(
           new Equipment(
-              1,
-              "",
-              ""));
-          // new Equipment(
-          //     1,
-          //     value['heavyEquipmentDto']['equipmentType'],
-          //     value['heavyEquipmentDto']['weight'].toString()
-          //         +
-          //         value['heavyEquipmentDto']['equipmentUnit']));
+              value['heavyEquipmentDto']['id'],
+              value['heavyEquipmentDto']['equipmentType'],
+              value['heavyEquipmentDto']['equipmentWeight'].toString()
+                  +
+                  value['heavyEquipmentDto']['equipmentUnit']));
 
 
-      worklog.setPartner(Partner.of(value['partnerDto']['id'], value['partnerDto']['partnerNumber'],
+      worklog.setPartner(
+          Partner.of(value['partnerDto']['id'], value['partnerDto']['partnerNumber'],
           value['partnerDto']['companyName'], value['partnerDto']['ceoName'],
           value['partnerDto']['phoneNumber'], value['partnerDto']['createdBy']));
       worklogList.add(worklog);
