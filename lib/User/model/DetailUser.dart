@@ -36,4 +36,9 @@ class DetailUser {
           response['email'],
           dateFormatter.format(DateTime.parse(response['createdAt'])));
   }
+
+  @override
+  String toString() {
+    return this.username + " " + this.email;
+  }
 }

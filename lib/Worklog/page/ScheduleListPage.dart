@@ -11,34 +11,42 @@ import 'WorklogToExcelPage.dart';
 
 
 class ScheduleListPage extends StatefulWidget {
-  const ScheduleListPage({Key? key}) : super(key: key);
+  late final String partnerName;
+
+  ScheduleListPage({required this.partnerName});
 
   @override
-  _ScheduleListPageState createState() => _ScheduleListPageState();
+  _ScheduleListPageState createState() => _ScheduleListPageState(partnerName: partnerName);
 }
 
 class _ScheduleListPageState extends State<ScheduleListPage> {
+  final String partnerName;
   List<Map<String, dynamic>> tableSource = [];
   DataTableSource data = new RowData(data: [], totalItems: 0);
   var offset = 0;
+
+  _ScheduleListPageState({required this.partnerName});
 
   @override
   void initState() {
     super.initState();
 
-    DooroomiAPI.getAllWorklog(offset).then((result) {
+    DooroomiAPI.getAllWorklog(partnerName, offset).then((result) {
 
       result.worklogList.forEach((element) {
+        print("elemeeememe");
         print(element);
         Map<String, dynamic> map =
           {
-            "id" : element.worklogNumber,
+            "id" : element.id,
             "name" : element.partner!.companyName,
             "place" :  element.location,
             "date" : element.date,
             "startTime" : element.startTime,
             "endTime" : element.endTime,
-            "equipment" : element.equipment!.equipment,
+            "equipmentId" : element.equipment!.id,
+            "equipmentName" : element.equipment!.equipment,
+            "equipmentSpec" : element.equipment!.spec,
             "spec" : element.equipment!.spec,
             "partnerId" : element.partner!.id,
             "companyName" : element.partner!.companyName
@@ -57,6 +65,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
   @override
   Widget build(BuildContext context) {
     (data as RowData).scheduleListPageBuildContext = context;
+    var _partnerName = "";
 
       return Scaffold(
           appBar: AppBar(
@@ -76,7 +85,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                   height: 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.teal,
+                      color: Colors.brown,
                       borderRadius: BorderRadius.circular(30)
                   )   ,
                   child:
@@ -98,11 +107,20 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                           decoration: InputDecoration(
                             labelText: '거래처명으로 검색',
                           ),
+                          onChanged: (text){
+                            _partnerName = text;
+                          },
                         ),
                       ),
                       ElevatedButton(
                         child: Text('검색'),
-                        onPressed: () => {},
+                        onPressed: () => {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                            settings: RouteSettings(name: "/ScheduleListPage"),
+                            builder: (context) => ScheduleListPage(partnerName: _partnerName),
+                          ))
+                        },
                       ),
                     ],
                   ),
@@ -214,7 +232,7 @@ class RowData extends DataTableSource {
   DataRow getRow(int index) {
     return DataRow(cells: [
       DataCell(
-          Text(data[index]["name"]?? '임시거래처', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),),
+          Text(data[index]["companyName"], style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),),
           onTap:() { buttonPressed(data[index]);}),
       DataCell(
           Text(data[index]["place"].toString(), style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),),
@@ -227,10 +245,12 @@ class RowData extends DataTableSource {
   }
 
   void buttonPressed(value){
+    print("valueeeeee");
+    print(value);
     Worklog wl = new Worklog(value["date"], value["startTime"], value["endTime"]);
-    wl.setWorklogNumber(value["id"]);
+    wl.setId(value["id"]);
     wl.setLocation(value["place"]);
-    wl.setEquipment(new Equipment(1, "크레인", "25T"));
+    wl.setEquipment(new Equipment(value["equipmentId"], value["equipmentName"], value["equipmentSpec"]));
     wl.setPartner(Partner.simplePartner(value["partnerId"], value["companyName"]));
 
     Navigator.push(

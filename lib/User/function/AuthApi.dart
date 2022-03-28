@@ -4,7 +4,6 @@ import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:dooromi/User/model/CreateUser.dart';
 import 'package:dooromi/User/model/DetailUser.dart';
 import 'package:dooromi/User/model/SigninUser.dart';
-import 'package:dooromi/User/page/UserProfilePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -173,12 +172,11 @@ class AuthApi {
       AuthToken.token = token;
       AuthToken.user = detailUser;
 
-      Navigator.of(context).push(
+      Navigator.pushAndRemoveUntil(
+          context,
           MaterialPageRoute(
-              settings: RouteSettings(name: "/UserProfilePage"),
-              builder: (context) =>
-                new UserProfilePage(user : detailUser)),
-          );
+              builder: (context) => new DooroomiNavigator()),
+          (route) => true);
     });
   }
 

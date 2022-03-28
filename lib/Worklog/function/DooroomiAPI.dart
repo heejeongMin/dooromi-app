@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:dooromi/Worklog/model/WorklogRes.dart';
 import 'package:http/http.dart' as http;
 import 'package:dooromi/Worklog/model/Worklog.dart';
@@ -12,20 +13,23 @@ class DooroomiAPI {
   static final cloudHost = '34.64.124.123';
   static final worklogUri = '/crane/v1/worklog';
 
-  static Future<WorklogRes> getAllWorklog(offset) async {
+
+  static Future<WorklogRes> getAllWorklog(partnerName, offset) async {
     var now = DateTime.now();
 
     final queryParam = {
-      'startDate': now.subtract(const Duration(days: 90)).toIso8601String(),
-      'endDate': now.add(const Duration(days: 1)).toIso8601String(),
+      'startedAt': now.subtract(const Duration(days: 90)).toIso8601String(),
+      'finishedAt': now.add(const Duration(days: 1)).toIso8601String(),
+      'partnerName' : partnerName,
       'page': offset.toString(),
       'size': '8'
     };
 
     final response = await http.get(
-        Uri.http(cloudHost, worklogUri, queryParam),
+        Uri.http(localHost, worklogUri, queryParam),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
         });
 
     print(" body  : " + response.body);
@@ -71,27 +75,25 @@ class DooroomiAPI {
               ],
           );
         });
-
-
     });
-
   }
 
   static Future<http.Response> fetchPost(Worklog worklog) async {
-    return await http.post(Uri.http(cloudHost, worklogUri),
+    return await http.post(Uri.http(localHost, worklogUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
         },
         body: jsonEncode(worklog.toJson()));
   }
 
   static deleteWorklog(Worklog worklog, BuildContext context) {
     final response = http.delete(
-        Uri.http(cloudHost, worklogUri, {'ids': worklog.worklogNumber.toString()}),
+        Uri.http(localHost, worklogUri + "/" + worklog.id.toString()),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
         });
-
 
       response.then((value) {
         if(value.statusCode != 200) {
@@ -142,9 +144,10 @@ class DooroomiAPI {
 
     print(json);
 
-    final response =  http.post(Uri.http(cloudHost, worklogUri + "/email"),
+    final response =  http.post(Uri.http(localHost, worklogUri + "/email"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
         },
         body: jsonEncode(json));
 
@@ -179,7 +182,6 @@ class DooroomiAPI {
                         context,
                         MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
                             (route) => false);
-
                   },
                 ),
               ],

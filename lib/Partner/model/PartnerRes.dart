@@ -7,7 +7,7 @@ class PartnerRes {
   late List<Partner> partners;
 
   static PartnerRes fromJson(Map<String, dynamic> response) {
-    List<dynamic> body = response['partnerDtoList'];
+    List<dynamic> body = response['partners'];
     List<Partner> partnerList = [];
 
     for (var value in body) {

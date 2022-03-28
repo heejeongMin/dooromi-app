@@ -4,7 +4,7 @@ import 'package:dooromi/Worklog/model/Equipment.dart';
 import 'package:intl/intl.dart';
 
 class Worklog {
-  int? worklogNumber;
+  int? id;
   String date;
   String startTime;
   String endTime;
@@ -14,8 +14,8 @@ class Worklog {
 
   Worklog(this.date, this.startTime, this.endTime);
 
-  setWorklogNumber(worklogNumber){
-    this.worklogNumber = worklogNumber;
+  setId(id){
+    this.id = id;
   }
 
   setLocation(location){
@@ -42,7 +42,7 @@ class Worklog {
   @override
   String toString() {
     return
-          "id : " + worklogNumber.toString() + "\n"
+          "id : " + id.toString() + "\n"
         + "근무일자 : " + date + "\n"
         + "근무시간 : " + startTime + " ~ " + endTime + "\n"
         + "근무장소 : " + location! + "\n"
@@ -51,13 +51,11 @@ class Worklog {
   }
 
   Map<String, dynamic> toJson() => {
-    "id" : this.worklogNumber.toString(),
-    "startDate" : this.date.trimRight()+ "T" + this.startTime + ":00",
-    "endDate" :  this.date.trimRight()+ "T" + this.endTime + ":00",
+    "id" : this.id.toString(),
+    "startedAt" : this.date.trimRight()+ "T" + this.startTime + ":00",
+    "finishedAt" :  this.date.trimRight()+ "T" + this.endTime + ":00",
     "equipmentId" : 1,
-    "city" : "",
-    "gu" : "",
-    "dong" : this.location,
+    "location" : this.location,
     "partnerId" : this.partner!.id
   };
 
@@ -79,7 +77,7 @@ class Worklog {
           dateFormatter.format(DateTime.parse(startDateAndTime)),
           timeFormatter.format(DateTime.parse(startDateAndTime)),
           timeFormatter.format(DateTime.parse(endDateAndTime)));
-
+      worklog.setId(value['id']);
       worklog.setLocation(value['workLocationDto']['gu'] + " "
           + value['workLocationDto']['dong']);
 
