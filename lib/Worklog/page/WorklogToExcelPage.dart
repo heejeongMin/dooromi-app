@@ -1,9 +1,8 @@
 
+import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
-import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:flutter/material.dart';
 
-import 'LocationPage.dart';
 
 class WorklogToExcelPage extends StatefulWidget {
   @override
@@ -132,12 +131,18 @@ class _WorklogToExcelPageState extends State<WorklogToExcelPage> {
                         new Padding(
                           padding: const EdgeInsets.fromLTRB(40.0, 5.0, 30.0, 10.0),
                           child:  ElevatedButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              setState((){
+                                email = AuthToken.user.email;
+                              });
+
+                            },
                             child: Text('이메일'),
                           ),
                         ),
                         new Flexible(
                           child: new TextField(
+                            controller: TextEditingController()..text = email,
                             decoration: const InputDecoration(helperText: "example123@gmail.com"),
                             style: Theme.of(context).textTheme.body1,
                             onChanged: (text){

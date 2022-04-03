@@ -54,7 +54,7 @@ class Worklog {
     "id" : this.id.toString(),
     "startedAt" : this.date.trimRight()+ "T" + this.startTime + ":00",
     "finishedAt" :  this.date.trimRight()+ "T" + this.endTime + ":00",
-    "equipmentId" : 1,
+    "equipmentId" : this.equipment!.id,
     "location" : this.location,
     "partnerId" : this.partner!.id
   };

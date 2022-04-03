@@ -19,11 +19,9 @@ class _PartnerListPageState extends State<PartnerListPage> {
   @override
   void initState() {
     super.initState();
-    print("pagein");
 
     PartnerApi.getAllPartner(offset).then((result) {
 
-      print(result);
       int size = 0;
       result.partners.forEach((element) {
         ++size;
@@ -52,7 +50,6 @@ class _PartnerListPageState extends State<PartnerListPage> {
   Widget build(BuildContext context) {
 
     (data as RowData).partnerListContext = context;
-    print(123);
 
     return Scaffold(
       appBar: AppBar(
