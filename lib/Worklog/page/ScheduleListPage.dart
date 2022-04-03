@@ -34,8 +34,6 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
     DooroomiAPI.getAllWorklog(partnerName, offset).then((result) {
 
       result.worklogList.forEach((element) {
-        print("elemeeememe");
-        print(element);
         Map<String, dynamic> map =
           {
             "id" : element.id,

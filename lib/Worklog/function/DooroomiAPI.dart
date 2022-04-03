@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dooromi/User/model/AuthToken.dart';
+import 'package:dooromi/Worklog/model/HeavyEquipmentRes.dart';
 import 'package:dooromi/Worklog/model/WorklogRes.dart';
 import 'package:http/http.dart' as http;
 import 'package:dooromi/Worklog/model/Worklog.dart';
@@ -12,6 +13,7 @@ class DooroomiAPI {
   static final localHost = '10.0.2.2:7070';
   static final cloudHost = '34.64.124.123';
   static final worklogUri = '/crane/v1/worklog';
+  static final heavyEquipmentUri = '/crane/v1/heavyEquipment';
 
 
   static Future<WorklogRes> getAllWorklog(partnerName, offset) async {
@@ -142,8 +144,6 @@ class DooroomiAPI {
       "email" :  email,
     };
 
-    print(json);
-
     final response =  http.post(Uri.http(localHost, worklogUri + "/email"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -191,4 +191,13 @@ class DooroomiAPI {
   }
 
 
+  static Future<HeavyEquipmentRes> getAllHeavyEquipment() async {
+    final response = await http.get(
+        Uri.http(localHost, heavyEquipmentUri),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
+        });
+    return HeavyEquipmentRes.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+  }
 }
