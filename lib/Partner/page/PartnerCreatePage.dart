@@ -43,7 +43,7 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
                         fontFamily: "Roboto"),
                   ),
 
-                  padding: const EdgeInsets.fromLTRB(24.0, 40.0, 24.0, 5.0),
+                  padding: const EdgeInsets.fromLTRB(24.0, 10.0, 24.0, 0.0),
                 ),
 
                 new Padding(
@@ -58,7 +58,7 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
                         fontFamily: "Roboto"),
                   ),
 
-                  padding: const EdgeInsets.fromLTRB(24.0, 15.0, 24.0, 24.0),
+                  padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 24.0),
                 ),
 
                 new Padding(
@@ -71,7 +71,7 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
                         fontFamily: "Roboto"),
                   ),
 
-                  padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 5.0),
+                  padding: const EdgeInsets.fromLTRB(24.0, 15.0, 24.0, 0.0),
                 ),
 
                 new Padding(
@@ -86,7 +86,7 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
                         fontFamily: "Roboto"),
                   ),
 
-                  padding: const EdgeInsets.fromLTRB(24.0, 15.0, 24.0, 24.0),
+                  padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 24.0),
                 ),
 
                 new Padding(
@@ -99,7 +99,7 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
                         fontFamily: "Roboto"),
                   ),
 
-                  padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 5.0),
+                  padding: const EdgeInsets.fromLTRB(24.0, 15.0, 24.0, 0.0),
                 ),
 
                 new Padding(
@@ -114,7 +114,7 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
                         fontFamily: "Roboto"),
                   ),
 
-                  padding: const EdgeInsets.fromLTRB(24.0, 15.0, 24.0, 35.0),
+                  padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 10.0),
                 ),
                 new Container(
                     margin: const EdgeInsets.only(top: 16.0),

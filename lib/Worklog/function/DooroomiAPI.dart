@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dooromi/User/model/AuthToken.dart';
-import 'package:dooromi/Worklog/model/HeavyEquipmentRes.dart';
 import 'package:dooromi/Worklog/model/WorklogRes.dart';
 import 'package:http/http.dart' as http;
 import 'package:dooromi/Worklog/model/Worklog.dart';
@@ -188,16 +187,5 @@ class DooroomiAPI {
             );
           });
     });
-  }
-
-
-  static Future<HeavyEquipmentRes> getAllHeavyEquipment() async {
-    final response = await http.get(
-        Uri.http(localHost, heavyEquipmentUri),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + AuthToken.token
-        });
-    return HeavyEquipmentRes.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   }
 }

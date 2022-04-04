@@ -1,4 +1,4 @@
-import 'package:dooromi/Worklog/model/Equipment.dart';
+import 'package:dooromi/HeavyEquipment/model/Equipment.dart';
 import 'package:intl/intl.dart';
 
 class Partner {
