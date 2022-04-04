@@ -1,6 +1,6 @@
 
 import 'package:dooromi/Partner/model/Partner.dart';
-import 'package:dooromi/Worklog/model/Equipment.dart';
+import 'package:dooromi/HeavyEquipment/model/Equipment.dart';
 import 'package:intl/intl.dart';
 
 class Worklog {
@@ -87,7 +87,8 @@ class Worklog {
               value['heavyEquipmentDto']['equipmentType'],
               value['heavyEquipmentDto']['weight'].toString()
                   +
-                  value['heavyEquipmentDto']['equipmentUnit']));
+                  value['heavyEquipmentDto']['equipmentUnit'],
+          value['heavyEquipmentDto']['createdAt']));
 
       worklog.setPartner(Partner.simplePartner(value['partnerId'], ""));
 

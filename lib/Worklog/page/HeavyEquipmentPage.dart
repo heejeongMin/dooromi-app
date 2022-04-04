@@ -1,8 +1,8 @@
 import 'dart:collection';
 
-import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
-import 'package:dooromi/Worklog/model/Equipment.dart';
-import 'package:dooromi/Worklog/model/HeavyEquipmentRes.dart';
+import 'package:dooromi/HeavyEquipment/function/HeavyEquipmentAPI.dart';
+import 'package:dooromi/HeavyEquipment/model/Equipment.dart';
+import 'package:dooromi/HeavyEquipment/model/HeavyEquipmentRes.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/ClientPage.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class HeavyEquipmentPage extends StatefulWidget {
 
 class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
   final Future<HeavyEquipmentRes> heavyEquipments =
-      DooroomiAPI.getAllHeavyEquipment();
+      HeavyEquipmentAPI.getAllHeavyEquipment();
   final Worklog worklog;
   var _equipments = HashSet<String>();
   var _specs = [];
@@ -64,7 +64,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
   }
 
   Equipment findEquipment(){
-    Equipment equipment = new Equipment(0, "", "");
+    Equipment equipment = new Equipment(0, "", "", "");
     apiResult.forEach((element) {
       if (element.spec == _selectedSpec) {
         equipment = element;

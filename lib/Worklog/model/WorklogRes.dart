@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:dooromi/Partner/model/Partner.dart';
-import 'package:dooromi/Worklog/model/Equipment.dart';
+import 'package:dooromi/HeavyEquipment/model/Equipment.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:intl/intl.dart';
 
@@ -54,7 +54,8 @@ class WorklogRes {
               value['heavyEquipmentDto']['equipmentType'],
               value['heavyEquipmentDto']['equipmentWeight'].toString()
                   +
-                  value['heavyEquipmentDto']['equipmentUnit']));
+                  value['heavyEquipmentDto']['equipmentUnit'],
+              value['heavyEquipmentDto']['createdAt']));
 
 
       worklog.setPartner(

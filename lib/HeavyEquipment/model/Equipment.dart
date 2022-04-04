@@ -4,9 +4,9 @@ class Equipment {
   int id;
   String equipment;
   String spec;
+  String createdAt;
 
-  Equipment(this.id, this.equipment, this.spec);
-
+  Equipment(this.id, this.equipment, this.spec, this.createdAt);
 
   @override
   String toString() {
@@ -19,5 +19,13 @@ class Equipment {
       equipmentKr = "크레인";
     }
     return equipmentKr + " " + spec;
+  }
+
+  String equipmentKR(){
+    if(equipment == "CRANE") {
+      print("return");
+      return "크레인";
+    }
+    return "";
   }
 }

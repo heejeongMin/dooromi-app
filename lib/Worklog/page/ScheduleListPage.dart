@@ -1,7 +1,7 @@
 
 import 'package:dooromi/Partner/model/Partner.dart';
 import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
-import 'package:dooromi/Worklog/model/Equipment.dart';
+import 'package:dooromi/HeavyEquipment/model/Equipment.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/DateAndTimePage.dart';
 import 'package:dooromi/Worklog/page/WorklogDetailPage.dart';
@@ -243,12 +243,16 @@ class RowData extends DataTableSource {
   }
 
   void buttonPressed(value){
-    print("valueeeeee");
     print(value);
     Worklog wl = new Worklog(value["date"], value["startTime"], value["endTime"]);
     wl.setId(value["id"]);
     wl.setLocation(value["place"]);
-    wl.setEquipment(new Equipment(value["equipmentId"], value["equipmentName"], value["equipmentSpec"]));
+    wl.setEquipment(
+        new Equipment(
+            value["equipmentId"],
+            value["equipmentName"],
+            value["equipmentSpec"],
+            ""));
     wl.setPartner(Partner.simplePartner(value["partnerId"], value["companyName"]));
 
     Navigator.push(
