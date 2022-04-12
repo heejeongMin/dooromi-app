@@ -132,7 +132,7 @@ class _HeavyEquipmentCreatePageState extends State<HeavyEquipmentCreatePage> {
                             equipmentType = "CRANE";
                           }
 
-                          Navigator.of(context, rootNavigator: true).pop();
+                          // Navigator.of(context, rootNavigator: true).pop();
                           HeavyEquipmentAPI.createHeavyEquipment(
                             new HeavyEquipmentCreateReq(
                                 equipmentType,

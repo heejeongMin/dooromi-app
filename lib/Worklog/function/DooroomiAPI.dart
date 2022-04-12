@@ -10,7 +10,7 @@ import '../../main.dart';
 
 class DooroomiAPI {
   static final localHost = '10.0.2.2:7070';
-  static final cloudHost = '34.64.124.123';
+  static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
   static final worklogUri = '/crane/v1/worklog';
   static final heavyEquipmentUri = '/crane/v1/heavyEquipment';
 
@@ -27,7 +27,7 @@ class DooroomiAPI {
     };
 
     final response = await http.get(
-        Uri.http(localHost, worklogUri, queryParam),
+        Uri.http(herokuHost, worklogUri, queryParam),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -80,7 +80,7 @@ class DooroomiAPI {
   }
 
   static Future<http.Response> fetchPost(Worklog worklog) async {
-    return await http.post(Uri.http(localHost, worklogUri),
+    return await http.post(Uri.http(herokuHost, worklogUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -90,16 +90,19 @@ class DooroomiAPI {
 
   static deleteWorklog(Worklog worklog, BuildContext context) {
     final response = http.delete(
-        Uri.http(localHost, worklogUri + "/" + worklog.id.toString()),
+        Uri.http(herokuHost, worklogUri + "/" + worklog.id.toString()),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
         });
 
+
       response.then((value) {
+        print("statuscode : " + value.statusCode.toString());
+
         if(value.statusCode != 200) {
           print(value);
-      }
+        }
 
       String message = (value.statusCode == 200) ? "성공적으로 삭제되었습니다." : "삭제에 실패하였습니다.";
 
@@ -120,7 +123,7 @@ class DooroomiAPI {
                 TextButton(
                   child: Text('OK'),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context, rootNavigator: true).pop();
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
@@ -143,7 +146,7 @@ class DooroomiAPI {
       "email" :  email,
     };
 
-    final response =  http.post(Uri.http(localHost, worklogUri + "/email"),
+    final response =  http.post(Uri.http(herokuHost, worklogUri + "/email"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token

@@ -12,6 +12,7 @@ import '../../main.dart';
 
 class AuthApi {
   static final localHost = '10.0.2.2:7070';
+  static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
   static final authUri = '/auth/';
 
   static createUser(CreateUser user, BuildContext context) async {
@@ -83,7 +84,7 @@ class AuthApi {
   }
 
   static Future<http.Response> createUserWithPOST(CreateUser user) async {
-    return await http.post(Uri.http(localHost, authUri + "signup"),
+    return await http.post(Uri.http(herokuHost, authUri + "signup"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -160,7 +161,7 @@ class AuthApi {
           });
 
       final userDetailResponse = await http.get(
-          Uri.http(localHost, authUri + "user/detail"),
+          Uri.http(herokuHost, authUri + "user/detail"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer ' + token
@@ -181,7 +182,7 @@ class AuthApi {
   }
 
   static Future<http.Response> signinWithPost(SigninUser user) async {
-    return await http.post(Uri.http(localHost, authUri + "signin"),
+    return await http.post(Uri.http(herokuHost, authUri + "signin"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

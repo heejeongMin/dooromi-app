@@ -96,11 +96,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   new Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
-                          child: Text("회원정보 수정"),
-                          onPressed: () {},
-                        ),
-                        SizedBox(width: 20),
+                        // ElevatedButton(
+                        //   child: Text("회원정보 수정"),
+                        //   onPressed: () {},
+                        // ),
+                        // SizedBox(width: 20),
                         ElevatedButton(
                           child: Text("나의 장비"),
                           onPressed: () {

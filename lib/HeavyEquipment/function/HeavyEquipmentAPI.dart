@@ -11,11 +11,12 @@ import '../../main.dart';
 
 class HeavyEquipmentAPI {
   static final localHost = '10.0.2.2:7070';
+  static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
   static final heavyEquipmentUri = '/crane/v1/heavyEquipment';
 
   static Future<HeavyEquipmentRes> getAllHeavyEquipment() async {
     final response = await http.get(
-        Uri.http(localHost, heavyEquipmentUri),
+        Uri.http(herokuHost, heavyEquipmentUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -69,7 +70,7 @@ class HeavyEquipmentAPI {
 
   static Future<http.Response> createHeavyEquipmentWithPOST(
       HeavyEquipmentCreateReq heavyEquipmentCreateReq) async {
-    return await http.post(Uri.http(localHost, heavyEquipmentUri),
+    return await http.post(Uri.http(herokuHost, heavyEquipmentUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token

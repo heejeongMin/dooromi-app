@@ -172,7 +172,6 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                                         TextButton(
                                           child: Text('삭제'),
                                           onPressed: (){
-                                            Navigator.of(context).pop();
                                             DooroomiAPI.deleteWorklog(worklog, context);
                                           },
                                         ),
