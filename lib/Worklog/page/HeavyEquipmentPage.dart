@@ -70,8 +70,6 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
         equipment = element;
       }
     });
-    print("myyyyy");
-    print(equipment);
     return equipment;
   }
 

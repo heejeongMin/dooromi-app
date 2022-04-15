@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:dooromi/Partner/funciton/PartnerApi.dart';
 import 'package:dooromi/Partner/model/Partner.dart';
+import 'package:dooromi/Partner/model/PartnerRes.dart';
 import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:flutter/material.dart';
@@ -18,47 +19,41 @@ class ClientPage extends StatefulWidget {
 }
 
 class _ClientPageState extends State<ClientPage> {
-
+  final Future<PartnerRes> partnerRes =
+      PartnerApi.getAllPartner(0);
   final Worklog worklog;
   List<Partner> partnerList = [];
   var _selectedClient = '';
-
 
   _ClientPageState({required this.worklog});
 
   @override
   void initState() {
     super.initState();
+  }
 
-    PartnerApi.getAllPartner(0).then((result) {
-      partnerList = result.partners;
-      // result.partners.forEach((element) {
-      //   _clientMap.putIfAbsent(element.id.toString(), () => element.companyName);
-      // });
-
-      setState(() {
-        if(worklog.partner != null){
-          _selectedClient = worklog.partner!.companyName;
-        } else {
-          _selectedClient =  result.partners.first.companyName;
-        }
-      });
-    });
+  void syncData(partnerRes) {
+    partnerList = partnerRes.partners;
+    if(_selectedClient.isEmpty) {
+      _selectedClient = partnerRes.partners.first.companyName;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('두루미'),
-        ),
-        body:
-        new SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          padding: const EdgeInsets.all(40),
-          child:
-          new Column(
-              children: <Widget>[
+
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.headline2!,
+      textAlign: TextAlign.center,
+      child: FutureBuilder<PartnerRes>(
+        future: partnerRes,
+        builder:
+          (BuildContext context, AsyncSnapshot<PartnerRes> snapshot) {
+            List<Widget> children;
+            if (snapshot.hasData) {
+              syncData(snapshot.requireData);
+
+              children =  <Widget>[
                 new Container(
                   width: 250,
                   height: 60,
@@ -90,18 +85,19 @@ class _ClientPageState extends State<ClientPage> {
                         padding: const EdgeInsets.fromLTRB(30, 50, 30, 10),
                         child: DropdownButton(
                             value: _selectedClient,
-
                             items: partnerList.map((value) {
                               return DropdownMenuItem(
                                   value: value.companyName,
-                                  child: Text(value.companyName)
-                              );
-                            }
-                            ).toList(),
+                                  child: Text(value.companyName));
+                            }).toList(),
                             onChanged: (value){
+                              print("dddddd" + value!.toString());
                               setState(() {
                                 _selectedClient = value as String;
                               });
+                              print("_selectedClient" +
+                                  _selectedClient);
+
                             }
                         ),
                       ),
@@ -112,15 +108,15 @@ class _ClientPageState extends State<ClientPage> {
                     padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerRight,
                     child:
-                      ElevatedButton(
-                        child: Text('저장'),
-                        onPressed: () {
-                          partnerList.forEach((element) {
-                            if(element.companyName == _selectedClient) {
-                              worklog.setPartner(element);
-                              return;
-                            }
-                          });
+                    ElevatedButton(
+                      child: Text('저장'),
+                      onPressed: () {
+                        partnerList.forEach((element) {
+                          if(element.companyName == _selectedClient) {
+                            worklog.setPartner(element);
+                            return;
+                          }
+                        });
                         showDialog(
                             context: context,
                             barrierDismissible: false,
@@ -137,13 +133,11 @@ class _ClientPageState extends State<ClientPage> {
                                 ),
                                 actions: [
                                   TextButton(
-                                      child: Text('저장'),
-                                      onPressed: (){
-
-
-                                        Navigator.of(context,rootNavigator: true).pop();
-                                        DooroomiAPI.saveWorklog(worklog, context);
-                                      },
+                                    child: Text('저장'),
+                                    onPressed: (){
+                                      Navigator.of(context,rootNavigator: true).pop();
+                                      DooroomiAPI.saveWorklog(worklog, context);
+                                    },
                                   ),
                                   TextButton(
                                     child: Text('취소'),
@@ -154,15 +148,49 @@ class _ClientPageState extends State<ClientPage> {
                                 ],
                               );
                             }
-                          );
+                        );
                       },
                     )
                 ),
-              ]
-          ),
-        )
+              ];
+            } else if (snapshot.hasError) {
+              children = <Widget>[
+                const Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                  size: 60,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text('Error: ${snapshot.error}'),
+                )
+              ];
+            } else {
+              children = const <Widget>[
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: CircularProgressIndicator(),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Text('Awaiting result...'),
+                )
+              ];
+            }
+
+            return Scaffold(
+                appBar: AppBar(
+                  title: Text('두루미'),
+                ),
+                body: new SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    padding: const EdgeInsets.all(40),
+                    child: new Column(
+                      children: children,
+                    )));
+          }
+      )
     );
   }
-
-
 }

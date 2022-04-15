@@ -76,7 +76,6 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
       if (AuthToken.token == null || AuthToken.token.isEmpty) {
         return new LoginPage();
       }
-      print("build here");
       return WillPopScope(
         onWillPop: () async {
           final isFirstRouteInCurrentTab =
