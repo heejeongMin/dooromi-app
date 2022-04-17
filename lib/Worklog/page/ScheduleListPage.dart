@@ -20,7 +20,7 @@ class ScheduleListPage extends StatefulWidget {
 }
 
 class _ScheduleListPageState extends State<ScheduleListPage> {
-  final String partnerName;
+  String partnerName = "";
   List<Map<String, dynamic>> tableSource = [];
   DataTableSource data = new RowData(data: [], totalItems: 0);
   var offset = 0;
@@ -237,8 +237,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
 }
 
 class RowData extends DataTableSource {
-  final List<Map<String, dynamic>> data;
-  final int totalItems;
+  late List<Map<String, dynamic>> data;
+  late int totalItems = 0;
   late BuildContext scheduleListPageBuildContext;
 
   RowData({required this.data, required this.totalItems});

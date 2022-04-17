@@ -203,8 +203,8 @@ class _PartnerListPageState extends State<PartnerListPage> {
 }
 
 class RowData extends DataTableSource {
-  final List<Map<String, dynamic>> data;
-  final int totalItems;
+  late List<Map<String, dynamic>> data;
+  late int totalItems = 0;
   late BuildContext partnerListContext;
 
   RowData({required this.data, required this.totalItems});
