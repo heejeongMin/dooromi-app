@@ -51,7 +51,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
     _specs = [];
     apiResult = heavyEquipmentRes.equipments;
     heavyEquipmentRes.equipments.forEach((element) {
-      print("herererere");
+      print(element);
       String specString = element.spec.toString();
       print(specString);
       if (element.equipment == 'CRANE') {

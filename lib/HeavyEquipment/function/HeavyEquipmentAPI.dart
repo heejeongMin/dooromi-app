@@ -77,4 +77,52 @@ class HeavyEquipmentAPI {
         },
         body: jsonEncode(heavyEquipmentCreateReq.toJson()));
   }
+
+  static void deleteEquipment(int id, BuildContext context) {
+    final response = http.delete(
+        Uri.http(herokuHost, heavyEquipmentUri + "/" + id.toString()),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
+        });
+
+    response.then((value) {
+      print("statuscode : " + value.statusCode.toString());
+
+      if(value.statusCode != 200) {
+        print(value);
+      }
+
+      String message = (value.statusCode == 200) ? "성공적으로 삭제되었습니다." : "삭제에 실패하였습니다.";
+
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(''),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Text(message),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
+                            (route) => false);
+
+                  },
+                ),
+              ],
+            );
+          });
+    });
+  }
 }

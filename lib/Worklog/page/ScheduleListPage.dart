@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'WorklogToExcelPage.dart';
 
 class ScheduleListPage extends StatefulWidget {
-  late final String partnerName;
+  late String partnerName;
 
   ScheduleListPage({required this.partnerName});
 
@@ -276,6 +276,8 @@ class RowData extends DataTableSource {
   }
 
   void buttonPressed(value) {
+    print("schedule pressed");
+
     Worklog wl =
         new Worklog(value["date"], value["startTime"], value["endTime"]);
     wl.setId(value["id"]);
