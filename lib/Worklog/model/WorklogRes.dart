@@ -59,9 +59,8 @@ class WorklogRes {
 
 
       worklog.setPartner(
-          Partner.of(value['partnerDto']['id'], value['partnerDto']['partnerNumber'],
-          value['partnerDto']['companyName'], value['partnerDto']['ceoName'],
-          value['partnerDto']['phoneNumber'], value['partnerDto']['createdBy']));
+          Partner.ofSimple(value['partnerDto']['id'], value['partnerDto']['partnerNumber'],
+          value['partnerDto']['companyName']));
       worklogList.add(worklog);
     }
 

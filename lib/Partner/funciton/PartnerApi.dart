@@ -65,7 +65,6 @@ class PartnerApi {
   }
 
   static Future<PartnerRes> getAllPartner(offset) async {
-    print("in?");
     final queryParam = {
       'page': '0',
       'size': '100'

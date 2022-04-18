@@ -140,18 +140,6 @@ class RowData extends DataTableSource {
 
   int get selectedRowCount => 0;
 
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.hovered,
-      MaterialState.focused,
-    };
-    if (states.any(interactiveStates.contains)) {
-      return Colors.blue;
-    }
-    return Colors.red;
-  }
-
   DataRow getRow(int index) {
     return DataRow(cells: [
       DataCell(

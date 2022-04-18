@@ -63,7 +63,6 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
         });
       }
     } else {
-        print("not here?");
         setState(() {
           _currentPage = pageKeys[index];
           _selectedIndex = index;

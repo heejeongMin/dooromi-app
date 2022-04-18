@@ -3,7 +3,6 @@
 import 'Partner.dart';
 
 class PartnerRes {
-  late int totalItems;
   late List<Partner> partners;
 
   static PartnerRes fromJson(Map<String, dynamic> response) {
@@ -23,7 +22,6 @@ class PartnerRes {
 
     PartnerRes res = new PartnerRes();
     res.partners = partnerList;
-    res.totalItems = response['totalItems'];
     return res;
   }
 }

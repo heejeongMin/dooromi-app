@@ -21,6 +21,12 @@ class Partner {
     return partner;
   }
 
+  Partner.ofSimple(int id, String partnerNumber, String companyName){
+    this.id = id;
+    this.partnerNumber = partnerNumber;
+    this.companyName = companyName;
+  }
+
   Partner.of(int id, String partnerNumber, String companyName, String ceoName,
       String phoneNumber, int createdBy){
     this.id = id;
@@ -45,5 +51,4 @@ class Partner {
           + "사장님명 : " + ceoName + "\n"
           + "전화번호 : " + phoneNumber + "\n";
   }
-
 }
