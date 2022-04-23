@@ -48,73 +48,474 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  new Padding(
-                    child: new Icon(Icons.person,
-                        color: const Color(0xFF000000), size: 100.0),
-                    padding: const EdgeInsets.fromLTRB(24.0, 30.0, 24.0, 0.0),
-                  ),
-                  new Center(
-                    child: new Padding(
-                      child: new Text(
-                        AuthToken.user.username,
-                        style: new TextStyle(
-                            fontSize: 38.0,
-                            color: const Color(0xFF000000),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Roboto"),
-                      ),
-                      padding:
-                          const EdgeInsets.fromLTRB(24.0, 10.0, 24.0, 24.0),
-                    ),
-                  ),
-                  new Center(
-                    child: new Padding(
-                      child: new Text(
-                        AuthToken.user.email,
-                        style: new TextStyle(
-                            fontSize: 18.0,
-                            color: const Color(0xFF000000),
-                            fontWeight: FontWeight.w200,
-                            fontFamily: "Roboto"),
-                      ),
-                      padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 24.0),
-                    ),
-                  ),
-                  new Center(
-                    child: new Padding(
-                      child: new Text(
-                        AuthToken.user.joinedAt,
-                        style: new TextStyle(
-                            fontSize: 20.0,
-                            color: const Color(0xFF000000),
-                            fontWeight: FontWeight.w200,
-                            fontFamily: "Roboto"),
-                      ),
-                      padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 24.0),
-                    ),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Icon(Icons.person,
+                                color: Colors.orange, size: 80.0),
+                          ],
+                        ),
+                        SizedBox(
+                          width : 20,
+                          height : 20
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              AuthToken.user.fullname,
+                              style: new TextStyle(
+                                  fontSize: 25.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  SizedBox(
+                      height : 10
                   ),
                   new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Text(
+                        AuthToken.user.fullname + "님의 기본정보",
+                        style: new TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: "Roboto"),
+                      ),
+                      SizedBox(
+                        width: 45,
+                      ),
+                      SizedBox(
+                        width: 70,
+                        height: 18,
+                        child: ElevatedButton(
+                          child: Text(
+                            "로그아웃",
+                            style: new TextStyle(
+                                fontSize: 10.0,
+                                color: const Color(0xFF000000),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Roboto"),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              Colors.black.withOpacity(0.05),
+                            ),
+                            overlayColor:
+                            MaterialStateProperty.all(Colors.orange),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                settings: RouteSettings(
+                                    name: "/HeavyEquipmentListPage"),
+                                builder: (context) =>
+                                new HeavyEquipmentListPage()));
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  new Divider(
+                    color : Colors.brown,
+                    height: 10,
+                    thickness: 1.5,
+                  ),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                        // ElevatedButton(
-                        //   child: Text("회원정보 수정"),
-                        //   onPressed: () {},
-                        // ),
-                        // SizedBox(width: 20),
+                        new Column(
+                          children: [
+                            new Text(
+                              "    아이디       ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              AuthToken.user.username,
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w300,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Text(
+                              "    이메일       ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              AuthToken.user.email,
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w300,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Text(
+                              "    가입일자   ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              AuthToken.user.joinedAt,
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w300,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 80,
+                        height: 18,
+                        child: ElevatedButton(
+                          child: Text(
+                            "이메일변경",
+                            style: new TextStyle(
+                                fontSize: 10.0,
+                                color: const Color(0xFF000000),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Roboto"),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              Colors.black.withOpacity(0.05),
+                            ),
+                            overlayColor:
+                            MaterialStateProperty.all(Colors.orange),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                settings: RouteSettings(
+                                    name: "/HeavyEquipmentListPage"),
+                                builder: (context) =>
+                                new HeavyEquipmentListPage()));
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: 90,
+                        height: 18,
+                        child: ElevatedButton(
+                          child: Text(
+                            "비밀번호변경",
+                            style: new TextStyle(
+                                fontSize: 10.0,
+                                color: const Color(0xFF000000),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Roboto"),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              Colors.black.withOpacity(0.05),
+                            ),
+                            overlayColor:
+                            MaterialStateProperty.all(Colors.orange),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                settings: RouteSettings(
+                                    name: "/HeavyEquipmentListPage"),
+                                builder: (context) =>
+                                new HeavyEquipmentListPage()));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  new SizedBox(
+                    height: 20,
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Text(
+                        AuthToken.user.fullname + "님의 업무정보",
+                        style: new TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: "Roboto"),
+                      ),
+                    ],
+                  ),
+                  new Divider(
+                    color : Colors.brown,
+                    height: 10,
+                    thickness: 1.5,
+                  ),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Text(
+                              "    보유 장비 수             ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              "0",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Text(
+                              "    보유 거래처 수         ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              "0",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Text(
+                              "    이번 달 근무 일수    ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              "0",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Text(
+                              "    이번 달 총 수입        ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              "0",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Text(
+                              "    지난 달 근무 일수    ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              "0",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        new Column(
+                          children: [
+                            new Text(
+                              "    지난 달 총 수입        ",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                        new Column(
+                          children: [
+                            new Text(
+                              "0",
+                              style: new TextStyle(
+                                  fontSize: 15.0,
+                                  color: const Color(0xFF000000),
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  new Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
                         ElevatedButton(
                           child: Text("나의 장비"),
                           onPressed: () {
-                            Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    settings: RouteSettings(name: "/HeavyEquipmentListPage"),
-                                    builder: (context) => new HeavyEquipmentListPage()
-                                ));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                settings: RouteSettings(
+                                    name: "/HeavyEquipmentListPage"),
+                                builder: (context) =>
+                                    new HeavyEquipmentListPage()));
                           },
                         ),
                       ])
                 ]),
-            padding: const EdgeInsets.all(0.0),
-            alignment: Alignment.center,
           ),
         ));
   }
