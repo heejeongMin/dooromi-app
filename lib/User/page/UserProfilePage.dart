@@ -1,5 +1,7 @@
+import 'package:dooromi/User/function/AuthApi.dart';
 import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:flutter/material.dart';
+import '../../main.dart';
 import '../model/DetailUser.dart';
 
 import '../../HeavyEquipment/page/HeavyEquipmentListPage.dart';
@@ -21,13 +23,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("userprofile : " + AuthToken.token);
-    print(user.toString());
-    print(user.email);
-    print(user.joinedAt);
-    print(AuthToken.user.email);
-    print(AuthToken.user.joinedAt);
-
     if (AuthToken.token == null || AuthToken.token.isEmpty) {
       Navigator.pushAndRemoveUntil(
           context,
@@ -123,11 +118,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             MaterialStateProperty.all(Colors.orange),
                           ),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                settings: RouteSettings(
-                                    name: "/HeavyEquipmentListPage"),
-                                builder: (context) =>
-                                new HeavyEquipmentListPage()));
+                            AuthToken.token = null;
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    new DooroomiNavigator()),
+                                    (route) => false);
                           },
                         ),
                       )
@@ -256,11 +253,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             MaterialStateProperty.all(Colors.orange),
                           ),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                settings: RouteSettings(
-                                    name: "/HeavyEquipmentListPage"),
-                                builder: (context) =>
-                                new HeavyEquipmentListPage()));
+                            AuthApi.changeEmail(context);
                           },
                         ),
                       ),
@@ -287,11 +280,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             MaterialStateProperty.all(Colors.orange),
                           ),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                settings: RouteSettings(
-                                    name: "/HeavyEquipmentListPage"),
-                                builder: (context) =>
-                                new HeavyEquipmentListPage()));
+                            AuthApi.changePassword(context);
                           },
                         ),
                       ),

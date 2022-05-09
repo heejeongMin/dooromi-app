@@ -10,13 +10,13 @@ import 'package:http/http.dart' as http;
 import '../../main.dart';
 
 class HeavyEquipmentAPI {
-  static final localHost = '10.0.2.2:7070';
+  static final localHost = '10.0.2.2:5000';
   static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
   static final heavyEquipmentUri = '/crane/v1/heavyEquipment';
 
   static Future<HeavyEquipmentRes> getAllHeavyEquipment() async {
     final response = await http.get(
-        Uri.http(herokuHost, heavyEquipmentUri),
+        Uri.http(localHost, heavyEquipmentUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -70,7 +70,7 @@ class HeavyEquipmentAPI {
 
   static Future<http.Response> createHeavyEquipmentWithPOST(
       HeavyEquipmentCreateReq heavyEquipmentCreateReq) async {
-    return await http.post(Uri.http(herokuHost, heavyEquipmentUri),
+    return await http.post(Uri.http(localHost, heavyEquipmentUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -80,7 +80,7 @@ class HeavyEquipmentAPI {
 
   static void deleteEquipment(int id, BuildContext context) {
     final response = http.delete(
-        Uri.http(herokuHost, heavyEquipmentUri + "/" + id.toString()),
+        Uri.http(localHost, heavyEquipmentUri + "/" + id.toString()),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 
 class DooroomiAPI {
-  static final localHost = '10.0.2.2:7070';
+  static final localHost = '10.0.2.2:5000';
   static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
   static final worklogUri = '/crane/v1/worklog';
   static final heavyEquipmentUri = '/crane/v1/heavyEquipment';
@@ -27,7 +27,7 @@ class DooroomiAPI {
     };
 
     final response = await http.get(
-        Uri.http(herokuHost, worklogUri, queryParam),
+        Uri.http(localHost, worklogUri, queryParam),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -80,7 +80,7 @@ class DooroomiAPI {
   }
 
   static Future<http.Response> fetchPost(Worklog worklog) async {
-    return await http.post(Uri.http(herokuHost, worklogUri),
+    return await http.post(Uri.http(localHost, worklogUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -90,7 +90,7 @@ class DooroomiAPI {
 
   static deleteWorklog(Worklog worklog, BuildContext context) {
     final response = http.delete(
-        Uri.http(herokuHost, worklogUri + "/" + worklog.id.toString()),
+        Uri.http(localHost, worklogUri + "/" + worklog.id.toString()),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -146,7 +146,7 @@ class DooroomiAPI {
       "email" :  email,
     };
 
-    final response =  http.post(Uri.http(herokuHost, worklogUri + "/email"),
+    final response =  http.post(Uri.http(localHost, worklogUri + "/email"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token

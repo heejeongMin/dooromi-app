@@ -4,9 +4,10 @@ class Equipment {
   int id;
   String equipment;
   String spec;
+  double price;
   String createdAt;
 
-  Equipment(this.id, this.equipment, this.spec, this.createdAt);
+  Equipment(this.id, this.equipment, this.spec, this.price, this.createdAt);
 
   @override
   String toString() {

@@ -277,11 +277,16 @@ class RowData extends DataTableSource {
 
   void buttonPressed(value) {
     Worklog wl =
-        new Worklog(value["date"], value["startTime"], value["endTime"]);
+        new Worklog(value["date"], value["workTime"]);
     wl.setId(value["id"]);
     wl.setLocation(value["place"]);
-    wl.setEquipment(new Equipment(value["equipmentId"], value["equipmentName"],
-        value["equipmentSpec"], ""));
+    wl.setEquipment(
+        new Equipment(
+            value["equipmentId"],
+            value["equipmentName"],
+            value["equipmentSpec"],
+            value["equipmentPrice"],
+            ""));
     wl.setPartner(
         Partner.simplePartner(value["partnerId"], value["companyName"]));
 

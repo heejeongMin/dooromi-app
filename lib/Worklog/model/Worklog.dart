@@ -6,13 +6,15 @@ import 'package:intl/intl.dart';
 class Worklog {
   int? id;
   String date;
-  String startTime;
-  String endTime;
+  String workTime;
   String? location;
   Equipment? equipment;
+  double? workPay;
   Partner? partner;
+  String? createdAt;
 
-  Worklog(this.date, this.startTime, this.endTime);
+
+  Worklog(this.date, this.workTime);
 
   setId(id){
     this.id = id;
@@ -33,7 +35,7 @@ class Worklog {
   String forDialog(){
     return
             "근무일자 : " + date + "\n"
-          + "근무시간 : " + startTime + " ~ " + endTime + "\n"
+          + "근무시간 : " + workTime + "\n"
           + "근무장소 : " + location! + "\n"
           + "근무장비 : " + equipment!.equipment + " " + equipment!.spec + "\n"
           + "근무거래처 : " + partner!.companyName + "\n";
@@ -44,7 +46,7 @@ class Worklog {
     return
           "id : " + id.toString() + "\n"
         + "근무일자 : " + date + "\n"
-        + "근무시간 : " + startTime + " ~ " + endTime + "\n"
+        + "근무시간 : " + workTime + "\n"
         + "근무장소 : " + location! + "\n"
         + "근무장비 : " + equipment!.toString() + "\n"
         + "근무거래처 : " + partner!.companyName +  "\n";
@@ -52,8 +54,7 @@ class Worklog {
 
   Map<String, dynamic> toJson() => {
     "id" : this.id.toString(),
-    "startedAt" : this.date.trimRight()+ "T" + this.startTime + ":00",
-    "finishedAt" :  this.date.trimRight()+ "T" + this.endTime + ":00",
+    "workTime" : this.workTime,
     "equipmentId" : this.equipment!.id,
     "location" : this.location,
     "partnerId" : this.partner!.id
@@ -62,21 +63,16 @@ class Worklog {
   static List<Worklog> fromJson(Map<String, dynamic> response) {
     List<dynamic> body = response['worklogDtoList'];
     final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
-    final DateFormat timeFormatter = DateFormat('HH:mm');
 
     List<Worklog> worklogList = [];
 
     for (var value in body) {
-      String startDateAndTime = value['startDate'];
-      String endDateAndTime = value['endDate'];
+      String createdAt = value['createdAt'];
+      String workTime = value['workTime'];
 
-      print("hour " + DateTime.parse(startDateAndTime).hour.toString());
 
       Worklog worklog =
-        new Worklog(
-          dateFormatter.format(DateTime.parse(startDateAndTime)),
-          timeFormatter.format(DateTime.parse(startDateAndTime)),
-          timeFormatter.format(DateTime.parse(endDateAndTime)));
+        new Worklog(dateFormatter.format(DateTime.parse(createdAt)), workTime);
       worklog.setId(value['id']);
       worklog.setLocation(value['workLocationDto']['gu'] + " "
           + value['workLocationDto']['dong']);
@@ -88,6 +84,7 @@ class Worklog {
               value['heavyEquipmentDto']['weight'].toString()
                   +
                   value['heavyEquipmentDto']['equipmentUnit'],
+          value['heavyEquipmentDto']['price'],
           value['heavyEquipmentDto']['createdAt']));
 
       worklog.setPartner(Partner.simplePartner(value['partnerId'], ""));

@@ -21,29 +21,12 @@ class WorklogRes {
 
     for (var value in body) {
 
-      String startDateAndTime = value['workPeriodDto']['startedAt'];
-      String endDateAndTime = value['workPeriodDto']['finishedAt'];
-
-      String startHour = (DateTime.parse(startDateAndTime).hour < 10)
-          ? "0" + DateTime.parse(startDateAndTime).hour.toString()
-          : DateTime.parse(startDateAndTime).hour.toString();
-
-      String startMinute = (DateTime.parse(startDateAndTime).minute < 10)
-          ? "0" + DateTime.parse(startDateAndTime).minute.toString()
-          : DateTime.parse(startDateAndTime).minute.toString();
-
-      String endHour = (DateTime.parse(endDateAndTime).hour < 10)
-          ? "0" + DateTime.parse(endDateAndTime).hour.toString()
-          : DateTime.parse(endDateAndTime).hour.toString();
-
-      String endMinute = (DateTime.parse(endDateAndTime).minute < 10)
-          ? "0" + DateTime.parse(endDateAndTime).minute.toString()
-          : DateTime.parse(endDateAndTime).minute.toString();
+      String createdAt = value['workPeriodDto']['createdAt'];
+      String workTime = value['workPeriodDto']['workTime'];
 
       Worklog worklog =
         new Worklog(
-          dateFormatter.format(DateTime.parse(startDateAndTime)),
-            startHour + ":" + startMinute, endHour + ":" + endMinute);
+          dateFormatter.format(DateTime.parse(createdAt)), workTime);
 
       worklog.setId(value['id']);
       worklog.setLocation(value['location']);
@@ -55,6 +38,7 @@ class WorklogRes {
               value['heavyEquipmentDto']['equipmentWeight'].toString()
                   +
                   value['heavyEquipmentDto']['equipmentUnit'],
+              value['heavyEquipmentDto']['price'],
               value['heavyEquipmentDto']['createdAt']));
 
 

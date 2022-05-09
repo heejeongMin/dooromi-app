@@ -18,8 +18,9 @@ class DateAndTimePage extends StatefulWidget {
 class _DateAndTimePageState extends State<DateAndTimePage> {
   final Worklog? worklog;
   var _workDate = '';
-  var _startTime = '';
-  var _endTime= '';
+  var _workTime = '';
+  var _times = ["반나절", "하루", "야간"];
+  var _selectedTime = '';
 
   _DateAndTimePageState({this.worklog});
 
@@ -28,8 +29,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
     super.initState();
     if(worklog != null) {
       this._workDate = worklog!.date;
-      this._startTime = worklog!.startTime;
-      this._endTime = worklog!.endTime;
+      this._workTime = worklog!.workTime;
     }
   }
 
@@ -111,74 +111,24 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(40.0, 5.0, 30.0, 10.0),
                         child:  ElevatedButton(
-                          onPressed: (){
-                            Future<TimeOfDay?> selectedTime = showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now()
-                            );
-
-                            selectedTime.then((timeOfDay){
-                              setState((){
-
-                                var hour = timeOfDay!.hour < 10 ? "0"+ timeOfDay.hour.toString()
-                                    : timeOfDay.hour;
-                                var min = timeOfDay.minute < 10 ? "0"+ timeOfDay.minute.toString()
-                                    : timeOfDay.minute;
-
-                                _startTime = '${hour}:${min}';
-                              });
-                            });
-                          },
-                          child: Text('시작'),
+                          onPressed: (){},
+                          child: Text('시간'),
                         ),
                       ),
-                      Text(
-                          '$_startTime',
-                           style: new TextStyle(
-                              fontSize: 12.0,
-                              color: const Color(0xFF000000),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Roboto"),
-                      )
-                    ]
-                ),
-                new Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(40.0, 5.0, 30.0, 10.0),
-                        child:  ElevatedButton(
-                          onPressed: (){
-                            Future<TimeOfDay?> selectedTime = showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now()
-                            );
-
-                            selectedTime.then((timeOfDay){
-                              setState((){
-                                var hour = timeOfDay!.hour < 10 ? "0"+ timeOfDay.hour.toString()
-                                    : timeOfDay.hour;
-                                var min = timeOfDay.minute < 10 ? "0"+ timeOfDay.minute.toString()
-                                    : timeOfDay.minute;
-
-                                _endTime = '${hour}:${min}';
-                              });
+                      DropdownButton(
+                          value: _times[0],
+                          items: _times.map((value) {
+                            return new DropdownMenuItem(
+                                value: value, child: Text(value));
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              this._selectedTime = value as String;
+                              // });
                             });
-                          },
-                          child: Text('종료'),
-                        ),
+                          }
                       ),
-                      Text(
-                        '$_endTime',
-                        style: new TextStyle(
-                            fontSize: 12.0,
-                            color: const Color(0xFF000000),
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Roboto"),
-                      )
-                    ]
+                      ]
                 ),
                 new Container(
                     margin: const EdgeInsets.only(top: 70.0),
@@ -188,9 +138,8 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                     ElevatedButton(
                         child: Text('다음'),
                         onPressed: () {
-
                           final Worklog? myWorklog =
-                          (worklog == null)? new Worklog(_workDate, _startTime, _endTime) : this.worklog;
+                          (worklog == null)? new Worklog(_workDate, _selectedTime) : this.worklog;
 
 
                           Navigator.of(context).push(

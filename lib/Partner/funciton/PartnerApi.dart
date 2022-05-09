@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 
 class PartnerApi {
-  static final localHost = '10.0.2.2:7070';
+  static final localHost = '10.0.2.2:5000';
   static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
   static final partnerUri = '/crane/v1/partner';
 
@@ -56,7 +56,7 @@ class PartnerApi {
 
   static Future<http.Response> createPartnerWithPOST(
       Partner partner) async {
-    return await http.post(Uri.http(herokuHost, partnerUri),
+    return await http.post(Uri.http(localHost, partnerUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -71,7 +71,7 @@ class PartnerApi {
     };
 
     final response = await http.get(
-        Uri.http(herokuHost, partnerUri, queryParam),
+        Uri.http(localHost, partnerUri, queryParam),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token

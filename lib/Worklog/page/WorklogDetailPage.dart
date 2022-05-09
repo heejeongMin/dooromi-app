@@ -78,22 +78,7 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                       ),
                       new Padding(
                         padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-                        child:Text(worklog.startTime),
-                      ),
-                    ]
-                ),
-                new Row(
-                    mainAxisSize : MainAxisSize.max,
-                    mainAxisAlignment : MainAxisAlignment.start,
-                    crossAxisAlignment : CrossAxisAlignment.center,
-                    children: [
-                      new Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 10, 55, 10),
-                        child:Text('종료'),
-                      ),
-                      new Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-                        child:Text(worklog.endTime),
+                        child:Text(worklog.workTime),
                       ),
                     ]
                 ),

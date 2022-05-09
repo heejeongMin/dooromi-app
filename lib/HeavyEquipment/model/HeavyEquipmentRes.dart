@@ -17,6 +17,7 @@ class HeavyEquipmentRes {
               value['id'],
               value['equipmentType'],
               value['equipmentWeight'].toString() + value['equipmentUnit'],
+              value['eqiupmentPrice'],
               dateFormatter.format(DateTime.parse(value['createdAt']))));
     }
 
