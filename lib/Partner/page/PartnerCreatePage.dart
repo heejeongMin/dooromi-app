@@ -70,7 +70,6 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
                         fontWeight: FontWeight.w500,
                         fontFamily: "Roboto"),
                   ),
-
                   padding: const EdgeInsets.fromLTRB(24.0, 15.0, 24.0, 0.0),
                 ),
 

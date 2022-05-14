@@ -32,13 +32,22 @@ class Worklog {
     this.partner = partner;
   }
 
+  setWorkPay(workPay){
+    this.workPay = workPay;
+  }
+
+  setCreatedAt(createdAt){
+    this.createdAt = createdAt;
+  }
+
   String forDialog(){
     return
             "근무일자 : " + date + "\n"
           + "근무시간 : " + workTime + "\n"
           + "근무장소 : " + location! + "\n"
-          + "근무장비 : " + equipment!.equipment + " " + equipment!.spec + "\n"
-          + "근무거래처 : " + partner!.companyName + "\n";
+          + "근무장비 : " + equipment!.equipmentKR() + " " + equipment!.spec + "\n"
+          + "근무거래처 : " + partner!.companyName + "\n"
+          + "금액 : " + workPay.toString() + "\n";
   }
 
   @override
@@ -54,10 +63,12 @@ class Worklog {
 
   Map<String, dynamic> toJson() => {
     "id" : this.id.toString(),
+    "workDate" : this.date,
     "workTime" : this.workTime,
     "equipmentId" : this.equipment!.id,
     "location" : this.location,
-    "partnerId" : this.partner!.id
+    "partnerId" : this.partner!.id,
+    "workPay" : this.workPay
   };
 
   static List<Worklog> fromJson(Map<String, dynamic> response) {
@@ -94,5 +105,14 @@ class Worklog {
       worklogList.add(worklog);
     }
     return worklogList;
+  }
+  String workTimeKR(){
+    if(workTime == 'DAY'){
+      return "하루";
+    } else if(workTime == 'NIGHT') {
+      return "야간";
+    } else {
+      return "반나절";
+    }
   }
 }

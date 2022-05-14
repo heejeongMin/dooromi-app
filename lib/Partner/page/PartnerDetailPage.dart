@@ -24,13 +24,13 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
       body:
       new SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.all(40),
+        padding: const EdgeInsets.all(20),
         child:
             new Column(
               children: [
                 new Container(
-                  width: 250,
-                  height: 60,
+                  width: 150,
+                  height: 45,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: Colors.brown,
@@ -40,7 +40,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
                   new Text(
                     "거래처 상세",
                     style: new TextStyle(
-                        fontSize:25.0,
+                        fontSize: 20.0,
                         color: Colors.white,
                         fontFamily: "Roboto"
                     ),

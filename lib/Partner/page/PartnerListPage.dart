@@ -59,8 +59,8 @@ class _PartnerListPageState extends State<PartnerListPage> {
 
               children = [
                 new Container(
-                  width: 250,
-                  height: 60,
+                  width: 150,
+                  height: 45,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: Colors.brown,
@@ -68,13 +68,13 @@ class _PartnerListPageState extends State<PartnerListPage> {
                   child: new Text(
                     "거래처 목록",
                     style: new TextStyle(
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         color: Colors.white,
                         fontFamily: "Roboto"),
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 PaginatedDataTable(
                   source: data,
@@ -100,7 +100,7 @@ class _PartnerListPageState extends State<PartnerListPage> {
                   ],
                   columnSpacing: 5,
                   horizontalMargin: 10,
-                  rowsPerPage: 8,
+                  rowsPerPage: 5,
                   showCheckboxColumn: true,
                 ),
                 new Row(
@@ -109,7 +109,7 @@ class _PartnerListPageState extends State<PartnerListPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       new Container(
-                          margin: const EdgeInsets.only(top: 16.0),
+                          margin: const EdgeInsets.only(top: 0.0),
                           padding: const EdgeInsets.all(5.0),
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(

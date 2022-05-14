@@ -30,7 +30,7 @@ class _HeavyEquipmentCreatePageState extends State<HeavyEquipmentCreatePage> {
         ),
         body: new SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            padding: const EdgeInsets.all(40),
+            padding: const EdgeInsets.all(20),
             child: new Container(
               child: new Column(
                   mainAxisAlignment: MainAxisAlignment.start,

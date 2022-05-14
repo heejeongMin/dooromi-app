@@ -1,3 +1,4 @@
+import 'package:dooromi/Worklog/function/DooroomiAPI.dart';
 import 'package:dooromi/Worklog/model/Worklog.dart';
 import 'package:dooromi/Worklog/page/HeavyEquipmentPage.dart';
 import 'package:flutter/material.dart';
@@ -86,16 +87,16 @@ class _LocationPageState extends State<LocationPage> {
                     ElevatedButton(
                       child: Text('다음'),
                       onPressed: () {
-                        worklog.setLocation(_location);
-                        Navigator.of(context).push(
-                            MaterialPageRoute(
-                              settings: RouteSettings(name: "/HeavyEquipmentPage"),
-                              builder: (context) => new HeavyEquipmentPage(worklog: worklog)
-                            ));
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(builder: (context) => new HeavyEquipmentPage(worklog: worklog))
-                        // );
+                        if(_location.length == 0) {
+                          DooroomiAPI.showInputValidationAlert(context);
+                        } else {
+                          worklog.setLocation(_location);
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  settings: RouteSettings(name: "/HeavyEquipmentPage"),
+                                  builder: (context) => new HeavyEquipmentPage(worklog: worklog)
+                              ));
+                        }
                       },
                     )
                 ),

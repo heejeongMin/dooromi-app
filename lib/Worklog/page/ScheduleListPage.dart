@@ -42,8 +42,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
         "name": element.partner!.companyName,
         "place": element.location,
         "date": element.date,
-        "startTime": element.startTime,
-        "endTime": element.endTime,
+        "workTime": element.workTime,
+        "workPay": element.workPay,
         "equipmentId": element.equipment!.id,
         "equipmentName": element.equipment!.equipment,
         "equipmentSpec": element.equipment!.spec,
@@ -77,8 +77,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
 
                 children = [
                   new Container(
-                    width: 250,
-                    height: 60,
+                    width: 150,
+                    height: 45,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Colors.brown,
@@ -86,7 +86,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                     child: new Text(
                       "근무일정 목록",
                       style: new TextStyle(
-                          fontSize: 25.0,
+                          fontSize: 20.0,
                           color: Colors.white,
                           fontFamily: "Roboto"),
                     ),
@@ -117,11 +117,47 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                         ),
                       ],
                     ),
-                    padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 50.0),
+                    padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
                   ),
                   SizedBox(
                     height: 10,
                   ),
+                  new Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        new Container(
+                            margin: const EdgeInsets.only(top: 0.0),
+                            padding: const EdgeInsets.all(5.0),
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton(
+                              child: Text('엑셀로 추출'),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  settings: RouteSettings(
+                                      name: "/WorklogToExcelPage"),
+                                  builder: (context) =>
+                                      new WorklogToExcelPage(),
+                                ));
+                              },
+                            )),
+                        new Container(
+                            margin: const EdgeInsets.only(top: 0.0),
+                            padding: const EdgeInsets.all(5.0),
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton(
+                              child: Text('근무일정 생성'),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  settings:
+                                      RouteSettings(name: "/DateAndTimePage"),
+                                  builder: (context) =>
+                                      new DateAndTimePage(worklog: null),
+                                ));
+                              },
+                            )),
+                      ]),
                   PaginatedDataTable(
                     source: data,
                     //header: Text('My Products'),
@@ -156,42 +192,6 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                     rowsPerPage: 8,
                     showCheckboxColumn: true,
                   ),
-                  new Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        new Container(
-                            margin: const EdgeInsets.only(top: 16.0),
-                            padding: const EdgeInsets.all(5.0),
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              child: Text('엑셀로 추출'),
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  settings: RouteSettings(
-                                      name: "/WorklogToExcelPage"),
-                                  builder: (context) =>
-                                      new WorklogToExcelPage(),
-                                ));
-                              },
-                            )),
-                        new Container(
-                            margin: const EdgeInsets.only(top: 16.0),
-                            padding: const EdgeInsets.all(5.0),
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              child: Text('근무일정 생성'),
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  settings:
-                                      RouteSettings(name: "/DateAndTimePage"),
-                                  builder: (context) =>
-                                      new DateAndTimePage(worklog: null),
-                                ));
-                              },
-                            )),
-                      ]),
                 ];
               } else if (snapshot.hasError) {
                 children = <Widget>[
@@ -276,19 +276,18 @@ class RowData extends DataTableSource {
   }
 
   void buttonPressed(value) {
-    Worklog wl =
-        new Worklog(value["date"], value["workTime"]);
+    Worklog wl = new Worklog(value["date"], value["workTime"]);
     wl.setId(value["id"]);
     wl.setLocation(value["place"]);
-    wl.setEquipment(
-        new Equipment(
-            value["equipmentId"],
-            value["equipmentName"],
-            value["equipmentSpec"],
-            value["halfDayAmount"],
-            value["fullDayAmount"],
-            value["nightShiftAmount"],
-            value["createdAt"]));
+    wl.setWorkPay(value["workPay"]);
+    wl.setEquipment(new Equipment(
+        value["equipmentId"],
+        value["equipmentName"],
+        value["equipmentSpec"],
+        value["halfDayAmount"],
+        value["fullDayAmount"],
+        value["nightShiftAmount"],
+        value["createdAt"]));
     wl.setPartner(
         Partner.simplePartner(value["partnerId"], value["companyName"]));
 

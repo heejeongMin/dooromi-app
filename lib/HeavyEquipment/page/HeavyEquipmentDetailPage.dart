@@ -16,7 +16,7 @@ class HeavyEquipmentDetailPage extends StatefulWidget {
 
 class _HeavyEquipmentDetailPageState extends State<HeavyEquipmentDetailPage> {
   final Equipment equipment;
-  var _formatter = NumberFormat('#,##,000');
+  final NumberFormat numberFormat = NumberFormat.decimalPattern('en_us');
 
   _HeavyEquipmentDetailPageState({required this.equipment});
 
@@ -28,7 +28,7 @@ class _HeavyEquipmentDetailPageState extends State<HeavyEquipmentDetailPage> {
         ),
         body: new SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            padding: const EdgeInsets.all(40),
+            padding: const EdgeInsets.all(20),
             child: new Column(
               children: [
                 new Container(
@@ -110,7 +110,7 @@ class _HeavyEquipmentDetailPageState extends State<HeavyEquipmentDetailPage> {
                     ),
                     new Padding(
                       child: new Text(
-                        _formatter.format(equipment.halfDayAmount) + " 원",
+                        numberFormat.format(equipment.halfDayAmount) + " 원",
                         style: new TextStyle(
                             fontSize: 16.0,
                             color: const Color(0xFF000000),
@@ -135,7 +135,7 @@ class _HeavyEquipmentDetailPageState extends State<HeavyEquipmentDetailPage> {
                     ),
                     new Padding(
                       child: new Text(
-                        _formatter.format(equipment.fullDayAmount) + " 원",
+                        numberFormat.format(equipment.fullDayAmount) + " 원",
                         style: new TextStyle(
                             fontSize: 16.0,
                             color: const Color(0xFF000000),
@@ -160,7 +160,7 @@ class _HeavyEquipmentDetailPageState extends State<HeavyEquipmentDetailPage> {
                     ),
                     new Padding(
                       child: new Text(
-                        _formatter.format(equipment.nightShiftAmount) + " 원",
+                        numberFormat.format(equipment.nightShiftAmount) + " 원",
                         style: new TextStyle(
                             fontSize: 16.0,
                             color: const Color(0xFF000000),

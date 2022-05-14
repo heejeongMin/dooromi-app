@@ -24,8 +24,10 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
   var _equipments = HashSet<String>();
   var _specs = [];
   var _selectedEquipment = '크레인';
-  var _selectedSpec = '25TON';
+  var _selectedSpec = '';
   var apiResult;
+  double _workPay = 0;
+  var _workPayController = TextEditingController();
 
   _HeavyEquipmentState({required this.worklog});
 
@@ -44,6 +46,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
             "T";
       }
     }
+
   }
 
   void syncData(heavyEquipmentRes) {
@@ -51,9 +54,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
     _specs = [];
     apiResult = heavyEquipmentRes.equipments;
     heavyEquipmentRes.equipments.forEach((element) {
-      print(element);
       String specString = element.spec.toString();
-      print(specString);
       if (element.equipment == 'CRANE') {
         _equipments.add("크레인");
         if(!(_specs.contains(specString))) {
@@ -61,6 +62,24 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
         }
       }
     });
+
+    _selectedSpec = _specs[0];
+
+    Equipment equipment = findEquipment();
+    print(worklog.workTime);
+    if(worklog.workTime == 'DAY') {
+      _workPayController.text =
+          equipment.fullDayAmount.toInt().toString();
+      _workPay = equipment.fullDayAmount;
+    } else if(worklog.workTime == 'NIGHT') {
+      _workPayController.text =
+          equipment.nightShiftAmount.toInt().toString();
+      _workPay = equipment.nightShiftAmount;
+    } else {
+      _workPayController.text =
+          equipment.halfDayAmount.toInt().toString();
+      _workPay = equipment.halfDayAmount;
+    }
   }
 
   Equipment findEquipment(){
@@ -75,6 +94,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(_specs);
     return DefaultTextStyle(
       style: Theme.of(context).textTheme.headline2!,
       textAlign: TextAlign.center,
@@ -123,7 +143,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                         onChanged: (value) {
                           setState(() {
                             this._selectedEquipment = value as String;
-                            print(_selectedEquipment);
+
                           });
                         }),
                   ),
@@ -149,8 +169,57 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                           onChanged: (value){
                             setState(() {
                               _selectedSpec = value as String;
+
+                              Equipment equipment = findEquipment();
+                              print(worklog.workTime);
+                              if(worklog.workTime == 'DAY') {
+                                _workPayController.text =
+                                    equipment.fullDayAmount.toInt().toString();
+                                _workPay = equipment.fullDayAmount;
+                              } else if(worklog.workTime == 'NIGHT') {
+                                _workPayController.text =
+                                    equipment.nightShiftAmount.toInt().toString();
+                                _workPay = equipment.nightShiftAmount;
+                              } else {
+                                _workPayController.text =
+                                    equipment.halfDayAmount.toInt().toString();
+                                _workPay = equipment.halfDayAmount;
+                              }
                             });
                           }
+                      ),
+                    ),
+                  ]),
+              new Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    new Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                      child: Text('금액'),
+                    ),
+                    new Container(
+                      width: 130,
+                      height: 60,
+                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                      child: new TextFormField(
+                        controller: _workPayController,
+                        onChanged: (amount) {
+                          RegExp regex = new RegExp(r'([0-9]$)');
+                          if (!regex.hasMatch(amount)) {
+                            _workPayController.text = "0";
+                          }
+                          _workPay =
+                              double.parse(amount.replaceAll("[^\\d.]", ""));
+                        },
+                        textAlign: TextAlign.right,
+                        decoration: InputDecoration(
+                          // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 10.0),
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ),
                   ]),
@@ -162,6 +231,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                     child: Text('다음'),
                     onPressed: () {
                       worklog.setEquipment(findEquipment());
+                      worklog.setWorkPay(_workPay);
 
                       Navigator.of(context).push(MaterialPageRoute(
                           settings: RouteSettings(name: "/ClientPage"),

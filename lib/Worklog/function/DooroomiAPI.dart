@@ -19,8 +19,8 @@ class DooroomiAPI {
     var now = DateTime.now();
 
     final queryParam = {
-      'startedAt': now.subtract(const Duration(days: 90)).toIso8601String(),
-      'finishedAt': now.add(const Duration(days: 1)).toIso8601String(),
+      'workDateFrom': now.subtract(const Duration(days: 90)).toIso8601String(),
+      'workDateTo': now.add(const Duration(days: 1)).toIso8601String(),
       'partnerName' : partnerName,
       'page': offset.toString(),
       'size': '8'
@@ -43,7 +43,7 @@ class DooroomiAPI {
 
     response.then((value) {
       if(value.statusCode != 201) {
-        print(value);
+        print(value.toString());
       }
         String message = value.statusCode == 201? "성공적으로 저장되었습니다." : "저장에 실패하였습니다.";
 
@@ -80,6 +80,7 @@ class DooroomiAPI {
   }
 
   static Future<http.Response> fetchPost(Worklog worklog) async {
+    print(worklog.toJson());
     return await http.post(Uri.http(localHost, worklogUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -141,8 +142,8 @@ class DooroomiAPI {
   static sendEmail(String from, String to, String email, BuildContext context) {
 
     Map<String, dynamic> json = {
-      "from" : from.trim() +  "T" + "00:00:00",
-      "to" : to.trim() +  "T" + "23:59:59",
+      "from" : from.trim(),
+      "to" : to.trim(),
       "email" :  email,
     };
 
@@ -190,5 +191,31 @@ class DooroomiAPI {
             );
           });
     });
+  }
+
+  static showInputValidationAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(''),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  Text("모든 항목을 입력하여주세요"),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }

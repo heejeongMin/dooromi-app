@@ -15,21 +15,29 @@ class WorklogRes {
 
     List<dynamic> body = response['worklogDtos'];
     final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
-    final DateFormat timeFormatter = DateFormat('H:m');
 
+    if(body == null) {
+      WorklogRes res = new WorklogRes();
+      res.worklogList = [];
+      res.totalItems = 0;
+      return res;
+    }
     List<Worklog> worklogList = [];
 
     for (var value in body) {
 
-      String createdAt = value['workPeriodDto']['createdAt'];
-      String workTime = value['workPeriodDto']['workTime'];
+      String createdAt = value['createdAt'];
+      String workDate = value['workDate'];
+      String workTime = value['workTime'];
 
       Worklog worklog =
         new Worklog(
-          dateFormatter.format(DateTime.parse(createdAt)), workTime);
+          dateFormatter.format(DateTime.parse(workDate)), workTime);
 
       worklog.setId(value['id']);
       worklog.setLocation(value['location']);
+      worklog.setWorkPay(value['workPay']);
+      worklog.setCreatedAt(dateFormatter.format(DateTime.parse(createdAt)));
 
       worklog.setEquipment(
           new Equipment(
