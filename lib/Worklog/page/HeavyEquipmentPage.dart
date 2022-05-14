@@ -64,7 +64,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
   }
 
   Equipment findEquipment(){
-    Equipment equipment = new Equipment(0, "", "", 0, "");
+    Equipment equipment = new Equipment(0, "", "", 0.0, 0.0, 0.0, "");
     apiResult.forEach((element) {
       if (element.spec == _selectedSpec) {
         equipment = element;

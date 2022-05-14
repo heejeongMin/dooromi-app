@@ -285,8 +285,10 @@ class RowData extends DataTableSource {
             value["equipmentId"],
             value["equipmentName"],
             value["equipmentSpec"],
-            value["equipmentPrice"],
-            ""));
+            value["halfDayAmount"],
+            value["fullDayAmount"],
+            value["nightShiftAmount"],
+            value["createdAt"]));
     wl.setPartner(
         Partner.simplePartner(value["partnerId"], value["companyName"]));
 

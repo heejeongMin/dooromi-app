@@ -17,9 +17,13 @@ class HeavyEquipmentRes {
               value['id'],
               value['equipmentType'],
               value['equipmentWeight'].toString() + value['equipmentUnit'],
-              value['eqiupmentPrice'],
+              value['equipmentPrice']['halfDayAmount'],
+              value['equipmentPrice']['fullDayAmount'],
+              value['equipmentPrice']['nightShiftAmount'],
               dateFormatter.format(DateTime.parse(value['createdAt']))));
     }
+
+    print(heavyEquipments);
 
     HeavyEquipmentRes res = new HeavyEquipmentRes();
     res.equipments = heavyEquipments;

@@ -79,12 +79,14 @@ class Worklog {
 
       worklog.setEquipment(
           new Equipment(
-             1,
+             value['heavyEquipmentDto']['id'],
               value['heavyEquipmentDto']['equipmentType'],
               value['heavyEquipmentDto']['weight'].toString()
                   +
                   value['heavyEquipmentDto']['equipmentUnit'],
-          value['heavyEquipmentDto']['price'],
+          value['heavyEquipmentDto']['halfDayAmount'],
+          value['heavyEquipmentDto']['fullDayAmount'],
+          value['heavyEquipmentDto']['nightShiftAmount'],
           value['heavyEquipmentDto']['createdAt']));
 
       worklog.setPartner(Partner.simplePartner(value['partnerId'], ""));

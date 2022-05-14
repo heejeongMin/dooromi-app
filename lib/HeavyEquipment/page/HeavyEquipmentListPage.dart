@@ -1,7 +1,9 @@
 import 'package:dooromi/HeavyEquipment/function/HeavyEquipmentAPI.dart';
+import 'package:dooromi/HeavyEquipment/model/Equipment.dart';
 import 'package:flutter/material.dart';
 
 import 'HeavyEquipmentCreatePage.dart';
+import 'HeavyEquipmentDetailPage.dart';
 
 class HeavyEquipmentListPage extends StatefulWidget {
   const HeavyEquipmentListPage({Key? key}) : super(key: key);
@@ -27,13 +29,16 @@ class _HeavyEquipmentListPageState extends State<HeavyEquipmentListPage> {
           "id": element.id,
           "equipment": element.equipmentKR(),
           "spec": element.spec,
+          "halfDayAmount": element.halfDayAmount,
+          "fullDayAmount": element.fullDayAmount,
+          "nightShiftAmount": element.nightShiftAmount,
           "createdAt": element.createdAt
         };
         tableSource.add(map);
       });
 
       setState(() {
-        if (size - tableSource.length > 8) offset++;
+        if (size - tableSource.length > 5) offset++;
         this.data = new RowData(data: tableSource, totalItems: size);
       });
     });
@@ -49,15 +54,15 @@ class _HeavyEquipmentListPageState extends State<HeavyEquipmentListPage> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          padding: const EdgeInsets.all(40),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               new Container(
-                width: 250,
-                height: 60,
+                width: 150,
+                height: 45,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: Colors.brown,
@@ -65,13 +70,13 @@ class _HeavyEquipmentListPageState extends State<HeavyEquipmentListPage> {
                 child: new Text(
                   "나의 장비",
                   style: new TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 20.0,
                       color: Colors.white,
                       fontFamily: "Roboto"),
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               PaginatedDataTable(
                 source: data,
@@ -97,7 +102,7 @@ class _HeavyEquipmentListPageState extends State<HeavyEquipmentListPage> {
                 ],
                 columnSpacing: 5,
                 horizontalMargin: 10,
-                rowsPerPage: 8,
+                rowsPerPage: 5,
                 showCheckboxColumn: true,
               ),
               new Row(
@@ -148,26 +153,45 @@ class RowData extends DataTableSource {
             style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
           ), onLongPress: () {
         onLongPress(data[index]);
+      }, onTap: () {
+        onTap(data[index]);
       }),
       DataCell(
-        Text(
-          data[index]["spec"],
-          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
-        ),
-        onLongPress: () {
-          onLongPress(data[index]);
-        },
-      ),
+          Text(
+            data[index]["spec"],
+            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+          ), onLongPress: () {
+        onLongPress(data[index]);
+      }, onTap: () {
+        onTap(data[index]);
+      }),
       DataCell(
-        Text(
-          data[index]["createdAt"],
-          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
-        ),
-        onLongPress: () {
-          onLongPress(data[index]);
-        },
-      )
+          Text(
+            data[index]["createdAt"],
+            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+          ), onLongPress: () {
+        onLongPress(data[index]);
+      }, onTap: () {
+        onTap(data[index]);
+      })
     ]);
+  }
+
+  void onTap(value) {
+    Equipment equipment = Equipment(
+        value["id"],
+        value["equipment"],
+        value["spec"],
+        value["halfDayAmount"],
+        value["fullDayAmount"],
+        value["nightShiftAmount"],
+        value["createdAt"]);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (partnerListContext) =>
+                new HeavyEquipmentDetailPage(equipment: equipment)));
   }
 
   void onLongPress(value) {
