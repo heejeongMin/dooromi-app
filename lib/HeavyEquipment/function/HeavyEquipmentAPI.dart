@@ -2,21 +2,21 @@ import 'dart:convert';
 
 import 'package:dooromi/HeavyEquipment/model/HeavyEquipmentCreateReq.dart';
 import 'package:dooromi/HeavyEquipment/model/HeavyEquipmentRes.dart';
+import 'package:dooromi/HeavyEquipment/page/HeavyEquipmentListPage.dart';
 import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Env.dart';
 import '../../main.dart';
 
 class HeavyEquipmentAPI {
-  static final localHost = '10.0.2.2:5000';
-  static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
   static final heavyEquipmentUri = '/crane/v1/heavyEquipment';
 
   static Future<HeavyEquipmentRes> getAllHeavyEquipment() async {
     final response = await http.get(
-        Uri.http(localHost, heavyEquipmentUri),
+        Uri.http(Env.host, heavyEquipmentUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -28,6 +28,7 @@ class HeavyEquipmentAPI {
 
   static createHeavyEquipment(HeavyEquipmentCreateReq req, BuildContext context) async {
     Future<http.Response> response = createHeavyEquipmentWithPOST(req);
+
 
     response.then((value) {
       if(value.statusCode != 201) {
@@ -52,7 +53,6 @@ class HeavyEquipmentAPI {
                 TextButton(
                   child: Text('OK'),
                   onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop();
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -70,7 +70,7 @@ class HeavyEquipmentAPI {
 
   static Future<http.Response> createHeavyEquipmentWithPOST(
       HeavyEquipmentCreateReq heavyEquipmentCreateReq) async {
-    return await http.post(Uri.http(localHost, heavyEquipmentUri),
+    return await http.post(Uri.http(Env.host, heavyEquipmentUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -80,7 +80,7 @@ class HeavyEquipmentAPI {
 
   static void deleteEquipment(int id, BuildContext context) {
     final response = http.delete(
-        Uri.http(localHost, heavyEquipmentUri + "/" + id.toString()),
+        Uri.http(Env.host, heavyEquipmentUri + "/" + id.toString()),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -113,6 +113,7 @@ class HeavyEquipmentAPI {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
+
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => new DooroomiNavigator()),

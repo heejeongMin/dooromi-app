@@ -2,6 +2,7 @@ import 'package:dooromi/HeavyEquipment/function/HeavyEquipmentAPI.dart';
 import 'package:dooromi/HeavyEquipment/model/Equipment.dart';
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
 import 'HeavyEquipmentCreatePage.dart';
 import 'HeavyEquipmentDetailPage.dart';
 

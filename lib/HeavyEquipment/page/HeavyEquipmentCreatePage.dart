@@ -1,6 +1,10 @@
 import 'package:dooromi/HeavyEquipment/function/HeavyEquipmentAPI.dart';
 import 'package:dooromi/HeavyEquipment/model/HeavyEquipmentCreateReq.dart';
+import 'package:dooromi/User/model/AuthToken.dart';
+import 'package:dooromi/User/page/UserProfilePage.dart';
 import 'package:flutter/material.dart';
+
+import '../../main.dart';
 
 class HeavyEquipmentCreatePage extends StatefulWidget {
   @override
@@ -256,7 +260,7 @@ class _HeavyEquipmentCreatePageState extends State<HeavyEquipmentCreatePage> {
                               equipmentType = "CRANE";
                             }
 
-                            Navigator.of(context, rootNavigator: true).pop();
+                            // Navigator.of(context, rootNavigator: true).pop();
                             HeavyEquipmentAPI.createHeavyEquipment(
                                 new HeavyEquipmentCreateReq(
                                     equipmentType,

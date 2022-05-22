@@ -9,11 +9,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Env.dart';
 import '../../main.dart';
 
 class AuthApi {
-  static final localHost = '10.0.2.2:5000';
-  static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
+  static final host = Env.env == 'local' ? '10.0.2.2:5000' : 'peaceful-mesa-17441.herokuapp.com' ;
   static final authUri = '/auth/';
 
   static createUser(CreateUser user, BuildContext context) async {
@@ -85,7 +85,7 @@ class AuthApi {
   }
 
   static Future<http.Response> createUserWithPOST(CreateUser user) async {
-    return await http.post(Uri.http(localHost, authUri + "signup"),
+    return await http.post(Uri.http(host, authUri + "signup"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -129,44 +129,45 @@ class AuthApi {
       String message = value.statusCode == 200 ? "환영합니다!" : "로그인에 실패하였습니다 :(";
 
       var token = jsonDecode(utf8.decode(value.bodyBytes))['token'];
-      updateUserDetail(token);
-      updateUserWorkInfo(token);
 
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(''),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: [
-                    Text(message),
+      updateUserDetail(token).then((value) async {
+        updateUserWorkInfo(token).then((value) async {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(''),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: [
+                        Text(message),
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
+                                (route) => true);
+                      },
+                    ),
                   ],
-                ),
-              ),
-              actions: [
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
-                            (route) => true);
-                  },
-                ),
-              ],
-            );
-          });
-
+                );
+              });
+        });
+      });
     });
   }
 
 
   static updateUserDetail(token) async{
     final userDetailResponse = await http.get(
-        Uri.http(localHost, authUri + "user/detail"),
+        Uri.http(host, authUri + "user/detail"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -179,7 +180,7 @@ class AuthApi {
 
   static updateUserWorkInfo(token) async {
     final userWorkInfoResponse = await http.get(
-        Uri.http(localHost, authUri + "workInfo"),
+        Uri.http(host, authUri + "workInfo"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -191,7 +192,7 @@ class AuthApi {
   }
 
   static Future<http.Response> signinWithPost(SigninUser user) async {
-    return await http.post(Uri.http(localHost, authUri + "signin"),
+    return await http.post(Uri.http(host, authUri + "signin"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -268,7 +269,7 @@ class AuthApi {
 
   static Future<http.Response> changeEmailWithPUT(String email) async {
     print(jsonEncode({"email": email.trim()}));
-    return await http.put(Uri.http(localHost, authUri + "email"),
+    return await http.put(Uri.http(host, authUri + "email"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -348,7 +349,7 @@ class AuthApi {
   }
 
   static Future<http.Response> changePasswordWithPUT(String password) async {
-    return await http.put(Uri.http(localHost, authUri + "password"),
+    return await http.put(Uri.http(host, authUri + "password"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token

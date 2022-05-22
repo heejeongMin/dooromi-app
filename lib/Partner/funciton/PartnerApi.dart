@@ -6,11 +6,10 @@ import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
+import '../../Env.dart';
 import '../../main.dart';
 
 class PartnerApi {
-  static final localHost = '10.0.2.2:5000';
-  static final herokuHost = 'peaceful-mesa-17441.herokuapp.com';
   static final partnerUri = '/crane/v1/partner';
 
   static createPartner(Partner partner, BuildContext context) async {
@@ -56,7 +55,7 @@ class PartnerApi {
 
   static Future<http.Response> createPartnerWithPOST(
       Partner partner) async {
-    return await http.post(Uri.http(localHost, partnerUri),
+    return await http.post(Uri.http(Env.host, partnerUri),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -71,7 +70,7 @@ class PartnerApi {
     };
 
     final response = await http.get(
-        Uri.http(localHost, partnerUri, queryParam),
+        Uri.http(Env.host, partnerUri, queryParam),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + AuthToken.token
@@ -80,5 +79,55 @@ class PartnerApi {
     print(jsonDecode(utf8.decode(response.bodyBytes)));
     return PartnerRes.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   }
+
+  static deletePartner(Partner partner, BuildContext context) {
+    final response = http.delete(
+        Uri.http(Env.host, partnerUri + "/" + partner.id.toString()),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + AuthToken.token
+        });
+
+
+    response.then((value) {
+      print("statuscode : " + value.statusCode.toString());
+
+      if(value.statusCode != 200) {
+        print(value);
+      }
+
+      String message = (value.statusCode == 200) ? "성공적으로 삭제되었습니다." : "삭제에 실패하였습니다.";
+
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(''),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Text(message),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
+                            (route) => false);
+
+                  },
+                ),
+              ],
+            );
+          });
+    });
+  }
+
 
 }

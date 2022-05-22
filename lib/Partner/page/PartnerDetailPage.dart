@@ -1,4 +1,6 @@
+import 'package:dooromi/Partner/funciton/PartnerApi.dart';
 import 'package:dooromi/Partner/model/Partner.dart';
+import 'package:dooromi/Partner/page/PartnerListPage.dart';
 import 'package:flutter/material.dart';
 
 class PartnerDetailPage extends StatefulWidget {
@@ -115,7 +117,70 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
                       ),
                     ]
                 ),
-
+                new Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      new Container(
+                          margin: const EdgeInsets.only(top: 30.0),
+                          padding: const EdgeInsets.all(5.0),
+                          alignment: Alignment.centerRight,
+                          child: ElevatedButton(
+                            child: Text('삭제'),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('근무일정 삭제'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: [
+                                            Text('정말 삭제하시겠습니까?'),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          child: Text('삭제'),
+                                          onPressed: () {
+                                            PartnerApi.deletePartner(
+                                                partner, context);
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text('취소'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                          )),
+                      new Container(
+                          margin: const EdgeInsets.only(top: 30.0),
+                          padding: const EdgeInsets.all(5.0),
+                          alignment: Alignment.centerRight,
+                          child: ElevatedButton(
+                            child: Text('목록'),
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          PartnerListPage()),
+                                      (route) => false);
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(builder: (context) => new ScheduleListPage(),)
+                              // );
+                            },
+                          )),
+                    ]),
                 // _buildBottom()
               ],
             )
