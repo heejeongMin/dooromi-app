@@ -1,3 +1,4 @@
+import 'package:dooromi/User/model/WorkInfo.dart';
 import 'package:intl/intl.dart';
 
 class DetailUser {
@@ -6,6 +7,7 @@ class DetailUser {
   String fullname;
   String email;
   String joinedAt;
+  late WorkInfo userWorkInfo;
 
   DetailUser(
       this.username,

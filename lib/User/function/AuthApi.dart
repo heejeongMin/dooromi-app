@@ -4,6 +4,7 @@ import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:dooromi/User/model/CreateUser.dart';
 import 'package:dooromi/User/model/DetailUser.dart';
 import 'package:dooromi/User/model/SigninUser.dart';
+import 'package:dooromi/User/model/WorkInfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -128,6 +129,8 @@ class AuthApi {
       String message = value.statusCode == 200 ? "환영합니다!" : "로그인에 실패하였습니다 :(";
 
       var token = jsonDecode(utf8.decode(value.bodyBytes))['token'];
+      updateUserDetail(token);
+      updateUserWorkInfo(token);
 
       showDialog(
           context: context,
@@ -147,35 +150,44 @@ class AuthApi {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
-                    // Navigator.pushAndRemoveUntil(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => new DooroomiNavigator(token : token)),
-                    //     (route) => false);
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
+                            (route) => true);
                   },
                 ),
               ],
             );
           });
 
-      final userDetailResponse = await http.get(
-          Uri.http(localHost, authUri + "user/detail"),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer ' + token
-          });
-
-      DetailUser detailUser = DetailUser.fromJson(
-          jsonDecode(utf8.decode(userDetailResponse.bodyBytes)));
-
-      AuthToken.token = token;
-      AuthToken.user = detailUser;
-
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
-          (route) => true);
     });
+  }
+
+
+  static updateUserDetail(token) async{
+    final userDetailResponse = await http.get(
+        Uri.http(localHost, authUri + "user/detail"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        });
+
+    AuthToken.token = token;
+    AuthToken.user = DetailUser.fromJson(
+        jsonDecode(utf8.decode(userDetailResponse.bodyBytes)));
+  }
+
+  static updateUserWorkInfo(token) async {
+    final userWorkInfoResponse = await http.get(
+        Uri.http(localHost, authUri + "workInfo"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        });
+
+    AuthToken.user.userWorkInfo =
+        WorkInfo.fromJson(
+          jsonDecode(utf8.decode(userWorkInfoResponse.bodyBytes)));
   }
 
   static Future<http.Response> signinWithPost(SigninUser user) async {

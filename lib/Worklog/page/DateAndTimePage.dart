@@ -111,7 +111,6 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                       onChanged: (value) {
                         setState(() {
                           this._selectedTime = value as String;
-                          // });
                         });
                       }),
                 ]),

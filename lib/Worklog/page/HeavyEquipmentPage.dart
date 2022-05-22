@@ -63,7 +63,9 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
       }
     });
 
-    _selectedSpec = _specs[0];
+    if(_selectedSpec == '') {
+      _selectedSpec = _specs[0];
+    }
 
     Equipment equipment = findEquipment();
     print(worklog.workTime);
@@ -168,7 +170,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                           }).toList(),
                           onChanged: (value){
                             setState(() {
-                              _selectedSpec = value as String;
+                              this._selectedSpec = value as String;
 
                               Equipment equipment = findEquipment();
                               print(worklog.workTime);

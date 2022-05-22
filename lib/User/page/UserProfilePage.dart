@@ -1,6 +1,7 @@
 import 'package:dooromi/User/function/AuthApi.dart';
 import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../main.dart';
 import '../model/DetailUser.dart';
 
@@ -18,6 +19,8 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   final DetailUser user;
+  final NumberFormat numberFormat = NumberFormat.decimalPattern('en_us');
+
 
   _UserProfilePageState({required this.user});
 
@@ -295,13 +298,25 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       new Text(
-                        AuthToken.user.fullname + "님의 업무정보",
+                        AuthToken.user.fullname + "님의 업무정보 ",
                         style: new TextStyle(
                             fontSize: 18.0,
                             color: Colors.black54,
                             fontWeight: FontWeight.w700,
                             fontStyle: FontStyle.italic,
                             fontFamily: "Roboto"),
+                      ),
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: BoxConstraints(),
+                        icon: const Icon(
+                            Icons.refresh,
+                            color: Colors.orange, size: 20.0),
+                        color: Colors.orange,
+                        onPressed: () {
+                          AuthApi.updateUserWorkInfo(AuthToken.token);
+                          setState(() {});
+                        },
                       ),
                     ],
                   ),
@@ -330,7 +345,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         new Column(
                           children: [
                             new Text(
-                              "0",
+                              AuthToken.user.userWorkInfo.numberOfHeavyEquipment.toString(),
                               style: new TextStyle(
                                   fontSize: 15.0,
                                   color: const Color(0xFF000000),
@@ -360,7 +375,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         new Column(
                           children: [
                             new Text(
-                              "0",
+                              AuthToken.user.userWorkInfo.numberOfPartners.toString(),
                               style: new TextStyle(
                                   fontSize: 15.0,
                                   color: const Color(0xFF000000),
@@ -390,7 +405,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         new Column(
                           children: [
                             new Text(
-                              "0",
+                              AuthToken.user.userWorkInfo.workDaysOfTheMonth.toString(),
                               style: new TextStyle(
                                   fontSize: 15.0,
                                   color: const Color(0xFF000000),
@@ -420,7 +435,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         new Column(
                           children: [
                             new Text(
-                              "0",
+                              numberFormat.format(AuthToken.user.userWorkInfo.workPayOfTheMonth),
                               style: new TextStyle(
                                   fontSize: 15.0,
                                   color: const Color(0xFF000000),
@@ -450,7 +465,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         new Column(
                           children: [
                             new Text(
-                              "0",
+                              AuthToken.user.userWorkInfo.workDaysOfLastMonth.toString(),
                               style: new TextStyle(
                                   fontSize: 15.0,
                                   color: const Color(0xFF000000),
@@ -480,7 +495,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         new Column(
                           children: [
                             new Text(
-                              "0",
+                              numberFormat.format(AuthToken.user.userWorkInfo.workPayOfLastMonth),
                               style: new TextStyle(
                                   fontSize: 15.0,
                                   color: const Color(0xFF000000),
