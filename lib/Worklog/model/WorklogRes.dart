@@ -36,7 +36,7 @@ class WorklogRes {
 
       worklog.setId(value['id']);
       worklog.setLocation(value['location']);
-      worklog.setWorkPay(value['workPay']);
+      worklog.setWorkPay(value['workPay'] == null? 0.0 : value['workPay']);
       worklog.setCreatedAt(dateFormatter.format(DateTime.parse(createdAt)));
 
       worklog.setEquipment(
