@@ -46,9 +46,9 @@ class WorklogRes {
               value['heavyEquipmentDto']['equipmentWeight'].toString()
                   +
                   value['heavyEquipmentDto']['equipmentUnit'],
-              value['heavyEquipmentDto']['halfDayAmount'],
-              value['heavyEquipmentDto']['fullDayAmount'],
-              value['heavyEquipmentDto']['nightShiftAmount'],
+              value['heavyEquipmentDto']['equipmentPrice']['halfDayAmount'],
+              value['heavyEquipmentDto']['equipmentPrice']['fullDayAmount'],
+              value['heavyEquipmentDto']['equipmentPrice']['nightShiftAmount'],
               value['heavyEquipmentDto']['createdAt']));
 
 

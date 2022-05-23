@@ -9,7 +9,7 @@ class Worklog {
   String workTime;
   String? location;
   Equipment? equipment;
-  double? workPay;
+  double? workPay = 0.0;
   Partner? partner;
   String? createdAt;
 

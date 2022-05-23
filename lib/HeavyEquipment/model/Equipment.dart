@@ -4,9 +4,9 @@ class Equipment {
   int id;
   String equipment;
   String spec;
-  double halfDayAmount;
-  double fullDayAmount;
-  double nightShiftAmount;
+  double halfDayAmount = 0.0;
+  double fullDayAmount = 0.0;
+  double nightShiftAmount = 0.0;
   String createdAt;
 
   Equipment(this.id, this.equipment, this.spec, this.halfDayAmount,
