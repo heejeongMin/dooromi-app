@@ -12,6 +12,6 @@ import 'package:http/http.dart' as http;
 import '../../main.dart';
 
 class Env {
-  static final env = 'local';
+  static final env = 'heroku';
   static final host = Env.env == 'local' ? '10.0.2.2:5000' : 'peaceful-mesa-17441.herokuapp.com' ;
 }
