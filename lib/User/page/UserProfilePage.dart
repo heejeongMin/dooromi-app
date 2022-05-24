@@ -122,6 +122,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ),
                           onPressed: () {
                             AuthToken.token = null;
+                            AuthToken.user = new DetailUser("", "", "", "", "");
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
