@@ -123,12 +123,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           onPressed: () {
                             AuthToken.token = null;
                             AuthToken.user = new DetailUser("", "", "", "", "");
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    new DooroomiNavigator()),
-                                    (route) => false);
+
+                            Navigator.of(context, rootNavigator: true).pushReplacement(
+                                MaterialPageRoute(builder: (context) => DooroomiNavigator()));
                           },
                         ),
                       )

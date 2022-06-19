@@ -80,7 +80,6 @@ class _DooroomiNavigatorState extends State<DooroomiNavigator> {
 
     @override
     Widget build(BuildContext context) {
-      print("hererer");
       print(AuthToken.token);
       if (AuthToken.token == null || AuthToken.token.isEmpty) {
         return new LoginPage();
