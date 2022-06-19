@@ -1,6 +1,8 @@
 import 'package:dooromi/User/function/AuthApi.dart';
 import 'package:dooromi/User/model/SigninUser.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 
 import 'JoinPage.dart';
 
@@ -14,6 +16,33 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   var _username = "";
   var _password = "";
+  String? userInfo = ""; //user의 정보를 저장하기 위한 변수
+
+  static final storage = new FlutterSecureStorage(); //flutter_secure_storage 사용을 위한 초기화 작업
+
+  @override
+  void initState() {
+    super.initState();
+    //비동기로 flutter secure storage 정보를 불러오는 작업.
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
+  }
+
+  _asyncMethod() async {
+    //read 함수를 통하여 key값에 맞는 정보를 불러오게 됩니다. 이때 불러오는 결과의 타입은 String 타입임을 기억해야 합니다.
+    //(데이터가 없을때는 null을 반환을 합니다.)
+    userInfo = await storage.read(key: "signin");
+    print(userInfo);
+
+    //user의 정보가 있다면 바로 로그아웃 페이지로 넝어가게 합니다.
+    if (userInfo != null) {
+      AuthApi.signin(
+          new SigninUser(userInfo!.split(",")[1], userInfo!.split(",")[3]),
+          context,
+          storage);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +111,8 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 ElevatedButton(
                   child: Text("회원가입"),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.indigo),
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(
@@ -93,9 +124,11 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(width: 20),
                 ElevatedButton(
                   child: Text("로그인"),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.indigo),
                   onPressed: () {
                     AuthApi.signin(
-                        new SigninUser(_username, _password), context);
+                        new SigninUser(_username, _password), context, storage);
                   },
                 ),
               ],

@@ -2,6 +2,7 @@
 import 'package:dooromi/TabNavigatorRoutes.dart';
 import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'User/model/AuthToken.dart';
 import 'User/page/LoginPage.dart';
@@ -18,9 +19,16 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Generated App',
       theme: new ThemeData(
-        primarySwatch: Colors.orange,
+        primaryColor: Colors.white,
       ),
-      home: new DooroomiNavigator()
+      home: new DooroomiNavigator(),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ko', 'KR'),
+      ],
     );
   }
 }

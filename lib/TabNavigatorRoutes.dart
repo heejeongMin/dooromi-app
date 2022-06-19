@@ -1,5 +1,4 @@
 import 'package:dooromi/User/model/AuthToken.dart';
-import 'package:dooromi/User/page/LoginPage.dart';
 import 'package:flutter/material.dart';
 
 import 'Partner/page/PartnerListPage.dart';

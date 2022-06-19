@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import '../../Env.dart';
-import '../../main.dart';
+import '../../Main.dart';
 
 class PartnerApi {
   static final partnerUri = '/crane/v1/partner';

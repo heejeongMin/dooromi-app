@@ -4,7 +4,7 @@ import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:dooromi/User/page/UserProfilePage.dart';
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
+import '../../Main.dart';
 
 class HeavyEquipmentCreatePage extends StatefulWidget {
   @override
@@ -254,6 +254,8 @@ class _HeavyEquipmentCreatePageState extends State<HeavyEquipmentCreatePage> {
                         alignment: Alignment.centerRight,
                         child: ElevatedButton(
                           child: Text('저장'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.indigo),
                           onPressed: () {
                             var equipmentType = "CRANE";
                             if (_selectedEquipment == "크레인") {

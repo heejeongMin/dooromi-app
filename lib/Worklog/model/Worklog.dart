@@ -43,7 +43,7 @@ class Worklog {
   String forDialog(){
     return
             "근무일자 : " + date + "\n"
-          + "근무시간 : " + workTime + "\n"
+          + "근무시간 : " + workTimeKR() + "\n"
           + "근무장소 : " + location! + "\n"
           + "근무장비 : " + equipment!.equipmentKR() + " " + equipment!.spec + "\n"
           + "근무거래처 : " + partner!.companyName + "\n"
@@ -106,6 +106,7 @@ class Worklog {
     }
     return worklogList;
   }
+
   String workTimeKR(){
     if(workTime == 'DAY'){
       return "하루";

@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../main.dart';
+import '../../Main.dart';
 
 class Env {
   static final env = 'heroku';

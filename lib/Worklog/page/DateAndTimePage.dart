@@ -47,7 +47,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
               height: 60,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: Colors.brown, borderRadius: BorderRadius.circular(30)),
+                  color: Colors.indigo, borderRadius: BorderRadius.circular(30)),
               child: new Text(
                 "근무시간 입력",
                 style: new TextStyle(
@@ -62,12 +62,31 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(40.0, 50.0, 30.0, 10.0),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo),
                       onPressed: () {
                         Future<DateTime?> selectedDate = showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2021),
                           lastDate: DateTime(2026),
+                            builder: (context, child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme: ColorScheme.light(
+                                    primary: Colors.indigo, // header background color
+                                    onPrimary: Colors.white, // header text color
+                                    onSurface: Colors.black, // body text color
+                                  ),
+                                  textButtonTheme: TextButtonThemeData(
+                                    style: TextButton.styleFrom(
+                                      primary: Colors.indigo, // button text color
+                                    ),
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            }
                         );
                         selectedDate.then((dateTime) {
                           setState(() {
@@ -98,6 +117,8 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(40.0, 5.0, 30.0, 10.0),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo),
                       onPressed: () {},
                       child: Text('시간'),
                     ),
@@ -120,6 +141,8 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   child: Text('다음'),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.indigo),
                   onPressed: () {
 
                     if (_workDate.length == 0) {

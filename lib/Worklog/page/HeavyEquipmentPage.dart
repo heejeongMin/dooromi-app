@@ -96,7 +96,6 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_specs);
     return DefaultTextStyle(
       style: Theme.of(context).textTheme.headline2!,
       textAlign: TextAlign.center,
@@ -114,7 +113,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                 height: 60,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: Colors.brown,
+                    color: Colors.indigo,
                     borderRadius: BorderRadius.circular(30)),
                 child: new Text(
                   "근무장비 입력",
@@ -231,6 +230,8 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     child: Text('다음'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.indigo),
                     onPressed: () {
                       worklog.setEquipment(findEquipment());
                       worklog.setWorkPay(_workPay);
@@ -268,7 +269,7 @@ class _HeavyEquipmentState extends State<HeavyEquipmentPage> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('Awaiting result...'),
+                child: Text('보유장비와 기본금액 조회중...'),
               )
             ];
           }

@@ -36,7 +36,7 @@ class _HeavyEquipmentDetailPageState extends State<HeavyEquipmentDetailPage> {
                   height: 45,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.brown,
+                      color: Colors.indigo,
                       borderRadius: BorderRadius.circular(30)),
                   child: new Text(
                     "장비 상세",

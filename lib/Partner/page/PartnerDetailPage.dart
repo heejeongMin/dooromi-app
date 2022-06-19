@@ -35,7 +35,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
                   height: 45,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.brown,
+                      color: Colors.indigo,
                       borderRadius: BorderRadius.circular(30)
                   )   ,
                   child:
@@ -128,6 +128,8 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                             child: Text('삭제'),
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.indigo),
                             onPressed: () {
                               showDialog(
                                   context: context,
@@ -167,6 +169,8 @@ class _PartnerDetailPageState extends State<PartnerDetailPage> {
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                             child: Text('목록'),
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.indigo),
                             onPressed: () {
                               Navigator.pushAndRemoveUntil(
                                   context,

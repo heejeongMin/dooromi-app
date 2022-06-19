@@ -107,6 +107,8 @@ class _JoinPageState extends State<JoinPage> {
                       child:
                       ElevatedButton(
                         child: Text('회원가입'),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.indigo),
                         onPressed: () {
                           AuthApi.createUser(
                               new CreateUser(_username, _password, _fullname, _email),

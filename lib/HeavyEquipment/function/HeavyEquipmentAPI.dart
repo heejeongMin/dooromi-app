@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Env.dart';
-import '../../main.dart';
+import '../../Main.dart';
 
 class HeavyEquipmentAPI {
   static final heavyEquipmentUri = '/crane/v1/heavyEquipment';

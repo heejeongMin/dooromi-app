@@ -122,6 +122,8 @@ class _PartnerCreatePageState extends State<PartnerCreatePage> {
                     child:
                     ElevatedButton(
                       child: Text('저장'),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo),
                       onPressed: () {
                         final partner = Partner(_companyName, _ceoName, _phoneNumber);
 

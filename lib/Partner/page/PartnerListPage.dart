@@ -63,7 +63,7 @@ class _PartnerListPageState extends State<PartnerListPage> {
                   height: 45,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.brown,
+                      color: Colors.indigo,
                       borderRadius: BorderRadius.circular(30)),
                   child: new Text(
                     "거래처 목록",
@@ -114,6 +114,8 @@ class _PartnerListPageState extends State<PartnerListPage> {
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                             child: Text('거래처 생성'),
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.indigo),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                 settings:
@@ -145,7 +147,7 @@ class _PartnerListPageState extends State<PartnerListPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 16),
-                  child: Text('Awaiting result...'),
+                  child: Text('거래처 목록 조회중...'),
                 )
               ];
             }

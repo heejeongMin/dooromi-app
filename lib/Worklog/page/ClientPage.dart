@@ -1,4 +1,3 @@
-import 'dart:collection';
 
 import 'package:dooromi/Partner/funciton/PartnerApi.dart';
 import 'package:dooromi/Partner/model/Partner.dart';
@@ -59,7 +58,7 @@ class _ClientPageState extends State<ClientPage> {
                   height: 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.brown,
+                      color: Colors.indigo,
                       borderRadius: BorderRadius.circular(30)
                   )   ,
                   child:
@@ -110,6 +109,8 @@ class _ClientPageState extends State<ClientPage> {
                     child:
                     ElevatedButton(
                       child: Text('저장'),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo),
                       onPressed: () {
                         partnerList.forEach((element) {
                           if(element.companyName == _selectedClient) {
@@ -174,7 +175,7 @@ class _ClientPageState extends State<ClientPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 16),
-                  child: Text('Awaiting result...'),
+                  child: Text('거래처 조회중...'),
                 )
               ];
             }

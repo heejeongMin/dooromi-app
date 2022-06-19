@@ -81,7 +81,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                     height: 45,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: Colors.brown,
+                        color: Colors.indigo,
                         borderRadius: BorderRadius.circular(30)),
                     child: new Text(
                       "근무일정 목록",
@@ -106,6 +106,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                         ),
                         ElevatedButton(
                           child: Text('검색'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.indigo),
                           onPressed: () => {
                             Navigator.of(context).push(MaterialPageRoute(
                               settings:
@@ -133,6 +135,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               child: Text('엑셀로 추출'),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.indigo),
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   settings: RouteSettings(
@@ -148,6 +152,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               child: Text('근무일정 생성'),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.indigo),
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   settings:

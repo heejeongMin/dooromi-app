@@ -45,7 +45,7 @@ class _LocationPageState extends State<LocationPage> {
                   height: 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.brown,
+                      color: Colors.indigo,
                       borderRadius: BorderRadius.circular(30)
                   )   ,
                   child:
@@ -86,6 +86,8 @@ class _LocationPageState extends State<LocationPage> {
                     child:
                     ElevatedButton(
                       child: Text('다음'),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo),
                       onPressed: () {
                         if(_location.length == 0) {
                           DooroomiAPI.showInputValidationAlert(context);

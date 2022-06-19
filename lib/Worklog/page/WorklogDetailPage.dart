@@ -36,7 +36,7 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
               height: 45,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: Colors.brown, borderRadius: BorderRadius.circular(30)),
+                  color: Colors.indigo, borderRadius: BorderRadius.circular(30)),
               child: new Text(
                 "근무일정 상세",
                 style: new TextStyle(
@@ -156,6 +156,8 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
                         child: Text('삭제'),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.indigo),
                         onPressed: () {
                           showDialog(
                               context: context,
@@ -195,6 +197,8 @@ class _WorklogDetailPageState extends State<WorklogDetailPage> {
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
                         child: Text('목록'),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.indigo),
                         onPressed: () {
                           Navigator.pushAndRemoveUntil(
                               context,

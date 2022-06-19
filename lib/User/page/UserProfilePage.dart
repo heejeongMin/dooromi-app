@@ -2,7 +2,7 @@ import 'package:dooromi/User/function/AuthApi.dart';
 import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../main.dart';
+import '../../Main.dart';
 import '../model/DetailUser.dart';
 
 import '../../HeavyEquipment/page/HeavyEquipmentListPage.dart';
@@ -61,7 +61,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         new Column(
                           children: [
                             new Icon(Icons.person,
-                                color: Colors.orange, size: 80.0),
+                                color: Colors.indigo, size: 80.0),
                           ],
                         ),
                         SizedBox(
@@ -118,7 +118,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               Colors.black.withOpacity(0.05),
                             ),
                             overlayColor:
-                            MaterialStateProperty.all(Colors.orange),
+                            MaterialStateProperty.all(Colors.white),
                           ),
                           onPressed: () {
                             AuthToken.token = null;
@@ -135,7 +135,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ],
                   ),
                   new Divider(
-                    color : Colors.brown,
+                    color : Colors.indigo,
                     height: 10,
                     thickness: 1.5,
                   ),
@@ -254,7 +254,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               Colors.black.withOpacity(0.05),
                             ),
                             overlayColor:
-                            MaterialStateProperty.all(Colors.orange),
+                            MaterialStateProperty.all(Colors.indigo),
                           ),
                           onPressed: () {
                             AuthApi.changeEmail(context);
@@ -281,7 +281,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               Colors.black.withOpacity(0.05),
                             ),
                             overlayColor:
-                            MaterialStateProperty.all(Colors.orange),
+                            MaterialStateProperty.all(Colors.indigo),
                           ),
                           onPressed: () {
                             AuthApi.changePassword(context);
@@ -312,8 +312,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         constraints: BoxConstraints(),
                         icon: const Icon(
                             Icons.refresh,
-                            color: Colors.orange, size: 20.0),
-                        color: Colors.orange,
+                            color: Colors.indigo, size: 20.0),
+                        color: Colors.indigo,
                         onPressed: () {
                           AuthApi.updateUserWorkInfo(AuthToken.token);
                           setState(() {});
@@ -322,7 +322,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ],
                   ),
                   new Divider(
-                    color : Colors.brown,
+                    color : Colors.indigo,
                     height: 10,
                     thickness: 1.5,
                   ),
@@ -511,6 +511,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       children: <Widget>[
                         ElevatedButton(
                           child: Text("나의 장비"),
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.indigo),
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 settings: RouteSettings(

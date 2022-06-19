@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dooromi/SplashScreen.dart';
 import 'package:dooromi/User/model/AuthToken.dart';
 import 'package:dooromi/User/model/CreateUser.dart';
 import 'package:dooromi/User/model/DetailUser.dart';
@@ -7,10 +8,11 @@ import 'package:dooromi/User/model/SigninUser.dart';
 import 'package:dooromi/User/model/WorkInfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Env.dart';
-import '../../main.dart';
+import '../../Main.dart';
 
 class AuthApi {
   static final host = Env.env == 'local' ? '10.0.2.2:5000' : 'peaceful-mesa-17441.herokuapp.com' ;
@@ -92,7 +94,7 @@ class AuthApi {
         body: jsonEncode(user.toJson()));
   }
 
-  static signin(SigninUser user, BuildContext context) async {
+  static signin(SigninUser user, BuildContext context, FlutterSecureStorage storage) async {
     if (!user.validate()) {
       showDialog(
           context: context,
@@ -120,45 +122,58 @@ class AuthApi {
       return;
     }
 
+    await storage.write(
+        key: "signin",
+        value: "username," + user.username + "password," + user.password);
+
+    Navigator.of(context).push(MaterialPageRoute(
+        settings: RouteSettings(name: "/SplashScreen"),
+        builder: (context) =>
+        new SplashScreen()));
+
     Future<http.Response> response = signinWithPost(user);
 
     response.then((value) async {
-      if (value.statusCode != 200) {
+      if(value.statusCode != 200) {
         print(value);
+
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text(''),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: [
+                      Text("로그인에 실패하였습니다 :("),
+                    ],
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
+                              (route) => true);
+                    },
+                  ),
+                ],
+              );
+            });
       }
-      String message = value.statusCode == 200 ? "환영합니다!" : "로그인에 실패하였습니다 :(";
 
       var token = jsonDecode(utf8.decode(value.bodyBytes))['token'];
 
       updateUserDetail(token).then((value) async {
         updateUserWorkInfo(token).then((value) async {
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(''),
-                  content: SingleChildScrollView(
-                    child: ListBody(
-                      children: [
-                        Text(message),
-                      ],
-                    ),
-                  ),
-                  actions: [
-                    TextButton(
-                      child: Text('OK'),
-                      onPressed: () {
-                        Navigator.of(context, rootNavigator: true).pop();
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
-                                (route) => true);
-                      },
-                    ),
-                  ],
-                );
-              });
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => new DooroomiNavigator()),
+                    (route) => true);
         });
       });
     });

@@ -2,7 +2,6 @@ import 'package:dooromi/HeavyEquipment/function/HeavyEquipmentAPI.dart';
 import 'package:dooromi/HeavyEquipment/model/Equipment.dart';
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
 import 'HeavyEquipmentCreatePage.dart';
 import 'HeavyEquipmentDetailPage.dart';
 
@@ -66,7 +65,7 @@ class _HeavyEquipmentListPageState extends State<HeavyEquipmentListPage> {
                 height: 45,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: Colors.brown,
+                    color: Colors.indigo,
                     borderRadius: BorderRadius.circular(30)),
                 child: new Text(
                   "나의 장비",
@@ -117,6 +116,8 @@ class _HeavyEquipmentListPageState extends State<HeavyEquipmentListPage> {
                         alignment: Alignment.centerRight,
                         child: ElevatedButton(
                           child: Text('장비 등록'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.indigo),
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               settings: RouteSettings(
